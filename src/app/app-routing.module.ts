@@ -26,9 +26,9 @@ const appRoutes: Routes = [
   imports: [RouterModule.forRoot(
     appRoutes,
       {
-        enableTracing: false, // <-- debugging purposes only
-        //preloadingStrategy: SelectivePreloadingStrategyService,
-      }
+    enableTracing: false,
+    relativeLinkResolution: 'legacy'
+}
     )],
   exports: [RouterModule]
 })
