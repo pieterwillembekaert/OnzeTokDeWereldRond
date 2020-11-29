@@ -43,10 +43,6 @@ import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { HomeRoutingModule } from './home-routing.module';
 
 
-
-
-
-
 @NgModule({
   imports: [
     CommonModule,

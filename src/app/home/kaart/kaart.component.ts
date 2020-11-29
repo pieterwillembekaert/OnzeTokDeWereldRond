@@ -1,6 +1,7 @@
 import { analyzeAndValidateNgModules } from '@angular/compiler';
-import { Component, OnInit, ViewChild,HostListener ,Directive} from '@angular/core';
+import { Component, OnInit, ViewChild,HostListener ,Directive, ChangeDetectorRef} from '@angular/core';
 import { ElementRef } from '@angular/core';
+import {Router, Resolve,RouterStateSnapshot,ActivatedRouteSnapshot} from '@angular/router';
 import { VisitorsService } from '../../visitors.service';
 import { CountriesService } from '../../countries.service';
 
@@ -12,11 +13,7 @@ function clamp(n: number, min: number, max: number) {
   return Math.min(max, Math.max(min, n));
 }
 
-import {
-  Router, Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+
 
 
 
@@ -41,6 +38,7 @@ export class KaartComponent implements OnInit {
   browserType: string; 
   OpenBrikboard: boolean=true;
 
+  
   //zoom
   scale = 1;
   translate: [number, number] = [0, 0];
@@ -65,23 +63,29 @@ export class KaartComponent implements OnInit {
   PbLand: string=""; 
   PbNumbersVisit: string="0";
 
+ 
+
   options
   constructor(
     private elementRef: ElementRef,
     private __VisitorsService: VisitorsService,
     private __CountriesService: CountriesService,
     private __Router: Router,
+    private changeDetectorRef: ChangeDetectorRef,
     
-  ) { }
+  ) {
+   
+   }
 
   ngOnInit(): void {
     this.visitors= this.__VisitorsService.getData(); 
     
-
     if(!this.visitors){
       this.__Router.navigate(['/']);
     }
   }
+
+
 
 
 
@@ -96,6 +100,7 @@ export class KaartComponent implements OnInit {
         
        }
   }
+
 
   getDataFromServer(): void {
     console.log("getDataFromServer")
@@ -179,8 +184,6 @@ export class KaartComponent implements OnInit {
 
     var $this = this;
    
-    var _PbNumbersVisit, _OpenBrikboard, _PbLand;
-
     ms.onclick = function (e) {
       var color = '#34642d';
       //console.log($this.GvCountryClick)
@@ -190,10 +193,10 @@ export class KaartComponent implements OnInit {
 
       //Prikboard
       $this.PbNumbersVisit = String($this.getDataFromCountry(DataFromJs, country)); 
-      $this.OpenBrikboard= true;
       $this.PbLand= country; 
-
-
+      $this.OpenBrikboard= true;
+      $this.changeDetectorRef.detectChanges()
+      
       //color country 
       if ($this.GvCountryClick !== null || undefined) {
         let LcountryV = $this.GvCountryClick;
@@ -455,6 +458,13 @@ export class KaartComponent implements OnInit {
     }
   }
 
+  trackByVisitors(index: number, aPrikboardList: any): string {  
+    console.log("trackByVisitors")
+    console.log(index)
+    return aPrikboardList.name;  
+
+  }  
+
  
 
   closePBdata() {
@@ -504,9 +514,8 @@ export class KaartComponent implements OnInit {
   }
 
   moveLeft() {
-    console.log("move left")
-    let y=  this.translate[0]
-    console.log(y)
+    //console.log("move left")
+   
     this.translate = [
       this.translateOnPanStart[0]=this.translateOnPanStart[0] -10,
       this.translateOnPanStart[1]
@@ -516,9 +525,7 @@ export class KaartComponent implements OnInit {
 
   
   moveRight() {
-    console.log("move right")
-    let y=  this.translate[0]
-    console.log(y)
+    //console.log("move right")
     this.translate = [
       this.translateOnPanStart[0]=this.translateOnPanStart[0] +10,
       this.translateOnPanStart[1]
@@ -530,27 +537,6 @@ export class KaartComponent implements OnInit {
 
 
 
-
-  @HostListener("panstart", ["$event"])
-  onPanStart(e: Event) {
-    console.log('click')
-    this.translateOnPanStart = [...this.translate] as [number, number];
-    e.preventDefault();
-  }
-
-  @HostListener("pan", ["$event"])
-
-  onPan(e: Event & { deltaX: number; deltaY: number }) {
-    console.log('click')
-    this.translate = [
-      this.translateOnPanStart[0] + e.deltaX,
-      this.translateOnPanStart[1] + e.deltaY
-    ];
-    this.updateTransformAnimationState("0s");
-    
-   
-    e.preventDefault();
-  }
 
 
   

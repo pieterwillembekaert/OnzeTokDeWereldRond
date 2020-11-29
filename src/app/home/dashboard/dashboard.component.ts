@@ -18,7 +18,7 @@ import { DashboardVars } from './DashboardVars';
 export class DashboardComponent implements OnInit {
 
  
-  data :DashboardVars; 
+  data: DashboardVars; 
   LoadData: boolean; 
 
   

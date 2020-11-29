@@ -7,7 +7,6 @@ import { CountriesService } from '../countries.service';
 import { TotalDistService } from '../total-dist.service';
 import { GeneralService } from '../general.service';
 
-declare var $: any;
 
 @Component({
   selector: 'app-home',
