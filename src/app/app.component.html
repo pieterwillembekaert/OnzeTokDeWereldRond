@@ -8,23 +8,69 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <!--<img src="./assets/img/banners/wolk.png" alt="Italian Trulli">-->
+<mdb-navbar color="primary" SideClass="navbar navbar-expand-lg navbar-dark orange accent-3 ie-nav fixed-top" [containerInside]="false">
+  <mdb-navbar-brand>
+      <a class="logo navbar-brand" href=""><strong>Onze Tok de wereld rond</strong></a>
+  </mdb-navbar-brand>
+  <links>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active waves-light" mdbWavesEffect>
+        <a class="nav-link"  [routerLink]="['/']" routerLinkActive="active" mat-button>Home</a>
+      </li>
+      <li class="nav-item waves-light" mdbWavesEffect>
+          <a class="nav-link"  [routerLink]="['/kaart']" routerLinkActive="active"  mat-button>Kaart</a>
+      </li>
+      <li class="nav-item waves-light" mdbWavesEffect>
+          <a class="nav-link"  [routerLink]="['/Prikbord']" routerLinkActive="active" mat-button>Prikbord</a>
+      </li>
+      <li class="nav-item waves-light" mdbWavesEffect>
+        <a class="nav-link"  [routerLink]="['/TekenOnzeTok']" routerLinkActive="active" mat-button>TekenOnzeTok</a>
+      </li>
+      <li class="nav-item waves-light" mdbWavesEffect>
+        <a class="nav-link" href="#" [routerLink]="['/OverOns']" routerLinkActive="active" mat-button>OverOns</a>
+      </li>
+  </ul>
+      <ul class="navbar-nav nav-flex-icons">
+          <li class="nav-item waves-light" mdbWavesEffect>
+              <a class="nav-link"><mdb-icon fab icon="facebook-f"></mdb-icon></a>
+          </li>
+          <li class="nav-item waves-light" mdbWavesEffect>
+              <a class="nav-link"><mdb-icon fab icon="twitter"></mdb-icon></a>
+          </li>
+          <li class="nav-item waves-light" mdbWavesEffect>
+              <a class="nav-link"><mdb-icon fab icon="instagram"></mdb-icon></a>
+          </li>
+      </ul>
+  </links>
+</mdb-navbar>
+<!-- Main -->
+<main>
+  <div style="min-height:1500px;">
+    
+      <router-outlet></router-outlet>
+   
+    </div>
+</main>
 
-<div style="height: 100vh;">
-  <mat-toolbar color="primary">
+
+<!-- /.Main -->
+
+ <!-- <mat-toolbar color="primary" class="z-depth-5">
     <span>Onze tok de wereld rond</span>
 
     <span class="example-spacer"></span>
 
     <div fxShow="true" fxHide.lt-md="true">
-        <a href="#" [routerLink]="['/']" mat-button>Home</a>
-        <a href="#" [routerLink]="['/kaart']" mat-button>Kaart</a>
-        <a href="#" [routerLink]="['/Prikbord']" mat-button>Prikbord</a>
-        <a href="#" [routerLink]="['/TekenOnzeTok']" mat-button>TekenOnzeTok</a>
-        <a href="#" [routerLink]="['/OverOns']" mat-button>OverOns</a>
+        <a class="white-text" href="#" [routerLink]="['/']" mat-button>Home</a>
+        <a class="white-text" href="#" [routerLink]="['/kaart']" mat-button>Kaart</a>
+        <a class="white-text" href="#" [routerLink]="['/Prikbord']" mat-button>Prikbord</a>
+        <a class="white-text" href="#" [routerLink]="['/TekenOnzeTok']" mat-button>TekenOnzeTok</a>
+        <a class="white-text" href="#" [routerLink]="['/OverOns']" mat-button>OverOns</a>
+        <a class="white-text" href="#" [routerLink]="['/VolgOns']" mat-button>Volg ons</a>
     </div>
 
     <div fxShow="true" fxHide.gt-sm="true">
-      <a href="#" (click)="sidenav.toggle()">Show Side Menu</a>
+      <a (click)="sidenav.toggle()"><mat-icon>more_vert</mat-icon></a>
     </div>
   </mat-toolbar>
 
@@ -38,15 +84,14 @@
         <a href="#" [routerLink]="['/TekenOnzeTok']" mat-button>TekenOnzeTok</a>
         <a href="#" [routerLink]="['/OverOns']" mat-button>OverOns</a>
       </div>
-    </mat-sidenav>
-    <mat-sidenav-content fxFlexFill> 
-    
+    </mat-sidenav>-->
+      
+   <!-- <mat-sidenav-content fxFlexFill> 
         <router-outlet></router-outlet>
-   
-    
     </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
+  </mat-sidenav-container>-->
+
+
 
 <!-- Footer -->
 <footer class="page-footer font-small blue pt-4">
@@ -61,61 +106,57 @@
       <div class="col-md-6 mt-md-0 mt-3">
 
         <!-- Content -->
-        <h5 class="text-uppercase">Footer Content</h5>
-        <p>Here you can use rows and columns here to organize your footer content.</p>
+        <h5 class="text-uppercase">Onze tok de wereld rond</h5>
+        <p> KSA Noordzeegouw vzw <br> Dwarsweg 1<br> 8560 Gullegem<br>
+          <br> 056 40 48 12<br> info@ksanoordzeegouw.be</p>
 
       </div>
       <!-- Grid column -->
 
-      <hr class="clearfix w-100 d-md-none pb-3">
+      <hr class="clearfix w-100 d-md-none pb-2">
 
-      <!-- Grid column -->
-      <div class="col-md-3 mb-md-0 mb-3">
-
-          <!-- Links -->
-          <h5 class="text-uppercase">Links</h5>
-
-          <ul class="list-unstyled">
-            <li>
-              <a href="#!">Link 1</a>
-            </li>
-            <li>
-              <a href="#!">Link 2</a>
-            </li>
-            <li>
-              <a href="#!">Link 3</a>
-            </li>
-            <li>
-              <a href="#!">Link 4</a>
-            </li>
-          </ul>
-
-        </div>
         <!-- Grid column -->
 
         <!-- Grid column -->
         <div class="col-md-3 mb-md-0 mb-3">
 
+          <h5 class="text-uppercase">Volg ons:</h5>
+
+          <table width="200">
+
+            <tbody>
+              <tr>
+                <td>
+                  <a href="https://www.facebook.com/noordzeegouw/" target="new"><img src="./assets/img/fb.png"></a>
+                </td>
+                <td>
+                  <a href=" https://www.instagram.com/ksanoordzeegouw" target="new"><img
+                      src="./assets/img/instagram.png"></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <img src="./assets/img/LOGOKSA.png" width="90%">
+
+        </div>
+
+        
+        <!-- Grid column -->
+        <div class="col-md-3 mb-md-0 mb-3">
+
           <!-- Links -->
-          <h5 class="text-uppercase">Links</h5>
+          <h5 class="text-uppercase">Menu</h5>
 
           <ul class="list-unstyled">
-            <li>
-              <a href="#!">Link 1</a>
-            </li>
-            <li>
-              <a href="#!">Link 2</a>
-            </li>
-            <li>
-              <a href="#!">Link 3</a>
-            </li>
-            <li>
-              <a href="#!">Link 4</a>
-            </li>
+            <li><a href="#" [routerLink]="['/']" mat-button>Home</a> </li>
+            <li><a href="#" [routerLink]="['/kaart']" mat-button>Kaart</a> </li>
+            <li><a href="#" [routerLink]="['/Prikbord']" mat-button>Prikbord</a> </li>
+            <li><a href="#" [routerLink]="['/TekenOnzeTok']" mat-button>TekenOnzeTok</a> </li>
+            <li><a href="#" [routerLink]="['/OverOns']" mat-button>OverOns</a> </li>
           </ul>
 
         </div>
-        <!-- Grid column -->
 
     </div>
     <!-- Grid row -->
@@ -125,9 +166,8 @@
 
   <!-- Copyright -->
   <div class="footer-copyright text-center py-3">© 2020 Copyright:
-    <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+    <a href="https://www.ksa.be/werkkringen/ksa-noordzeegouw">KSA NZG WERKGROEP MULTIMEDIA</a>
   </div>
   <!-- Copyright -->
-
 </footer>
 <!-- Footer -->

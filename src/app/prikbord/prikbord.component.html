@@ -1,0 +1,49 @@
+<br>
+<br>
+<div class="background-Prikbord">
+  <p>
+    <!-- #docregion toolbar-simple -->
+    <mat-toolbar color="accent" class="z-depth-0">
+      <span>Prikbord</span>
+    </mat-toolbar>
+    <!-- #enddocregion toolbar-simple -->
+  </p>
+
+  <div class="container">
+    <div class="row">
+      <!-- post -->
+      <div class="col-12 col-sm-4" *ngFor="let x of data; let i = index">
+        <!-- Card -->
+        <mdb-card>
+          <div class="view rgba-white-slight waves-light" mdbWavesEffect>
+            <!-- Card img -->
+            <mdb-card-img src="{{x.imgScr}}" alt="Card image cap"></mdb-card-img>
+            <a>
+              <div class="mask"></div>
+            </a>
+          </div>
+          <!--Card content-->
+          <mdb-card-body>
+            <!--Title-->
+            <mdb-card-title>
+              <h4>{{x.name}}</h4>
+            </mdb-card-title>
+
+            <!--Text-->
+            <mdb-card-text>
+              LAND: {{x.countryTanslation}} <br>
+              AFSTAND: {{x.distance}} <br>
+              DATUM: {{x.dateConvert}}
+
+            </mdb-card-text>
+
+            <!--<a href="#" mdbBtn color="primary" mdbWavesEffect>Button</a>-->
+          </mdb-card-body>
+        </mdb-card>
+        <!-- Card -->
+        <br>
+      </div>
+      <!-- einde -->
+    </div>
+  </div>
+</div>

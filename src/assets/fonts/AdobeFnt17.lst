@@ -1,0 +1,73 @@
+%!Adobe-FontList 1.17
+%Locale:0x409
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Bahnschrift
+FamilyName:Bahnschrift
+StyleName:Regular
+MenuName:Bahnschrift
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Bahnschrift
+WritingScript:Roman
+OutlineFileName:\BAHNSCHRIFT 8.TTF
+DataFormat:sfntData
+FileLength:323004
+FileModTime:1554484228
+NameArray:0,Mac,4,Bahnschrift
+NameArray:0,Win,1,Bahnschrift
+NameArray:0,Win,16,Bahnschrift
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:MinionPro-Regular
+FamilyName:Minion Pro
+StyleName:Regular
+MenuName:Minion Pro
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Minion Pro
+WritingScript:Roman
+OutlineFileName:\MinionPro-Regular.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+FileLength:218640
+FileModTime:1486656940
+DesignSize:110
+NameArray:0,Mac,4,Minion Pro
+NameArray:0,Win,1,Minion Pro
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:CampingHolidayDEMO-Regular
+FamilyName:Camping Holiday DEMO
+StyleName:Regular
+MenuName:Camping Holiday DEMO
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Camping Holiday DEMO Regular
+WritingScript:Roman
+OutlineFileName:\Camping Holiday DEMO.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+FileLength:51160
+FileModTime:1526036236
+NameArray:0,Mac,18,Camping Holiday DEMO Regular
+NameArray:0,Mac,4,Camping Holiday DEMO Regular
+NameArray:0,Win,1,Camping Holiday DEMO
+%EndFont
+

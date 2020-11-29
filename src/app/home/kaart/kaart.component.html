@@ -1,0 +1,80 @@
+<br>
+<br>
+<br>
+<div class="container" id="Kaart">
+  <h1>Kaart</h1>
+  <p>Welke landen bezocht de tok? Op de kaart is een overzicht te zien. Klik op een land en ontdek meer!</p>
+  <button mat-icon-button color="primary" aria-label="Example icon button with a refresh icon">
+    <mat-icon>refresh</mat-icon>
+  </button>
+
+  <button class="btn material-icons" (click)="zoomIn()">zoom_in</button>
+  <button class="btn material-icons" (click)="zoomOut()"  id="zoom-out">zoom_out</button>
+  <button class="btn material-icons" (click)="resetZoom()" id="reset">replay</button>
+  <button class="btn material-icons" (click)="moveUp()"  >arrow_drop_up</button>
+  <button class="btn material-icons" (click)="moveDown()"  >arrow_drop_down</button>
+  <button class="btn material-icons" (click)="moveLeft()"  >arrow_left</button>
+  <button class="btn material-icons" (click)="moveRight()"  >arrow_right</button>
+</div>
+
+<!--Load data-->
+<mat-progress-bar *ngIf="!visitors" mode="indeterminate"></mat-progress-bar>
+
+<div class="grid-container-map">
+
+  <div class="grid-item-map"  >
+    <object [@transformAnimation]="transformAnimationState" #mySvg id='map' data='./assets/img/map/World_map.svg' class="map-svg" type='image/svg+xml'></object>
+  </div>
+
+
+
+  <div *ngIf="OpenBrikboard" class="grid-item-map-data background-Prikbord">
+    <button class="btn material-icons" (click)="zoomIn()">zoom_in</button>
+    <button class="btn material-icons" (click)="zoomOut()">zoom_out</button>
+    <button class="btn material-icons" (click)="resetZoom()">replay</button>
+    <button class="btn red material-icons" (click)="closePBdata()">close</button>
+
+    <div>Land: <span id="PbLand">{{PbLand}}</span><br>bezoekers: <span id="PbNumbersVisit">{{PbNumbersVisit}}</span>
+    </div>
+
+
+    <div id="dataPostMap" class="grid-container-map-data-PB" *ngFor="let PB_Element of aPrikboardList; let i = index">
+      <div class="grid-container-map-data-Image-PB" *ngIf="PB_Element.Name">
+        <div class="grid-item-map-data-PB">
+          <div class="grid-item-map-data-Image-PB">
+            <div class="grid-item-map-data-Image-PB"><img class="grid-item-map-data-Image-Style-PB"
+                src="{{PB_Element.ImageScr}}" alt="Foto van {{PB_Element.Name}}"></div>
+            <div class="grid-item-map-data-Text-PB">{{PB_Element.Name}}</div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <!--old-->
+    <!-- <div class="grid-container-map">
+   
+    <div class="grid-item-map">
+      <object #mySvg id='map' data='./assets/img/map/World_map.svg' class="map-svg" type='image/svg+xml'></object>
+    </div>
+
+
+    <div class="grid-item-map-data background-Prikbord">-->
+    <!--<button class="btn KSA-blue material-icons" (click)="ZoomIn()">zoom_in</button>-->
+    <!--<button class="btn KSA-blue material-icons" onclick="ZoomOut()" id="zoom-out">zoom_out</button>-->
+    <!--<button class="btn KSA-blue material-icons" onclick="ZoomReset()" id="reset">replay</button>-->
+    <!--<button class="btn red material-icons" (click)="closePBdata()" onclick="closePBdata()" id="close">close</button>
+
+      <div>Land: <span id="PbLand"></span><br>bezoekers: <span id="PbNumbersVisit"></span></div>
+
+      <div id="dataPostMap" class="grid-container-map-data-PB"></div>
+    </div>
+  </div>-->

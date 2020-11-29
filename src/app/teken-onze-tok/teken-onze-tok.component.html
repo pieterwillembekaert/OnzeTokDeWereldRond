@@ -1,0 +1,78 @@
+<br>
+<br>
+<p>
+  <!-- #docregion toolbar-simple -->
+  <mat-toolbar color="accent" class="z-depth-0">
+    <span>Teken onze tok</span>
+  </mat-toolbar>
+  <!-- #enddocregion toolbar-simple -->
+</p>
+
+
+<div class="container" id="TekenOnzeTok">
+  <h1>Teken onze tok!</h1>
+  <p>Teken je mee? Teken onze tok en pimp zo boeken, cursussen,...</p>
+
+  <p>Volg de instructies in de onderstaande video:</p>
+
+  <div class="container">
+        
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <h2>Deel 1</h2>
+        <video id="myvideo" height="400" width="500" controls>
+          <source class="active" src="video/Tok-Deel1.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="col-12 col-lg-6">
+        <h2>Deel 2</h2>
+        <video id="myvideo" height="400" width="500" controls>
+          <source src="video/Tok-Deel2.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  <script>
+    var myvid = document.getElementById('myvideo');
+    console.log("myvid", myvid)
+
+    myvid.addEventListener('ended', function (e) {
+      // get the active source and the next video source.
+      // I set it so if there's no next, it loops to the first one
+      var activesource = document.querySelector("#myvideo source.active");
+      console.log("activesource")
+      console.log(activesource)
+      var nextsource = document.querySelector("#myvideo source.active + source") || document
+        .querySelector("#myvideo source:first-child");
+
+      // deactivate current source, and activate next one
+      activesource.className = "";
+      nextsource.className = "active";
+
+      // update the video source and play
+      myvid.src = nextsource.src;
+      myvid.play();
+    });
+
+  </script>
+
+  <p>
+    <a class="btn blue" color="primary" href="/downloadSjabloon" role="button" target="new">DOWNLOAD SJABLOON</a>
+  </p>
+
+  <p>
+    Stuur het resultaat gerust door naar info@ksanoordzeegouw.be!
+  </p>
+
+</div>

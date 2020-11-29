@@ -1,0 +1,87 @@
+
+/*Prikbord */
+
+.grid-container-Prikbord {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    grid-column-gap: 20px;
+    grid-row-gap: 10px;
+    padding: 10px;  
+}
+
+.PrikboardMapEmty {
+    visibility: hidden;
+}
+
+.grid-item-Prikbord:hover {
+    transform: rotate(1deg);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.grid-item-Prikbord {
+    background-color: white;
+    padding: 0px;
+    font-size: 30px;
+    border-radius: 5px;
+}
+
+.grid-container-PB-Image {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto 60px;
+    padding: 10px;
+}
+
+.grid-item-PB-Image {
+    color: black;
+    padding: 5px;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.grid-item-PB-Image-Style {
+    height: 100%;
+}
+
+.grid-item-PB-Text {
+    color: black;
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+    font-family: ChildWriting !important;
+    font-weight: bold;
+}
+
+
+
+/*@media screen and (min-width: 280px)  {
+    .grid-container-map {
+        grid-template-columns: auto; 
+        
+    } 
+
+    .grid-container-map-data-PB {
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+        max-width: 150px;
+    }
+
+    .grid-container-Prikbord {
+        grid-template-columns: auto;
+    }
+
+    .grid-item-Prikbord{
+        max-width: 400px;
+    }
+
+    .grid-item-PB-Image{
+        max-width: 180px; 
+
+    }
+
+    .grid-item-PB-Image-Style{
+        max-width: 175px;
+    }
+    
+} */

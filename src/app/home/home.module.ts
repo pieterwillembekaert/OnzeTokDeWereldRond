@@ -1,16 +1,10 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { MatSliderModule } from '@angular/material/slider';
@@ -33,79 +27,62 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {LayoutModule} from '@angular/cdk/layout';
-
+import {MatProgressBarModule} from '@angular/material/progress-bar'; 
 
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatListModule } from '@angular/material/list';
 
-import { PrikbordComponent } from './prikbord/prikbord.component';
-import { OverOnsComponent } from './over-ons/over-ons.component';
-import { TekenOnzeTokComponent } from './teken-onze-tok/teken-onze-tok.component';
-import { VolgOnsComponent } from './volg-ons/volg-ons.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import {HomeComponent } from './home.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {KaartComponent} from './kaart/kaart.component';
 
 import { MatCarouselModule } from '@ngmodule/material-carousel';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
-import { WavesModule, ButtonsModule, IconsModule } from 'angular-bootstrap-md';
-import {MatProgressBarModule} from '@angular/material/progress-bar'; 
-import { HomeRoutingModule } from './home/home-routing.module';
+import { HomeRoutingModule } from './home-routing.module';
+
+
+
 
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PrikbordComponent,
-    OverOnsComponent,
-    TekenOnzeTokComponent,
-    VolgOnsComponent,
-    PageNotFoundComponent,
-  ],
   imports: [
-    BrowserModule,
-    MatProgressBarModule,
-    BrowserAnimationsModule,
     CommonModule,
-    WavesModule,
-    ButtonsModule,
-    IconsModule,
-    RouterModule,
-    MatToolbarModule,
-    MatFormFieldModule,
-    MatAutocompleteModule,
-    MatSlideToggleModule,
-    MatSidenavModule,
-    MatSelectModule, 
-    MatInputModule,
-    MatRadioModule,
-    MatDatepickerModule,
-    MatCheckboxModule,
-    MatMenuModule,
-    MatTableModule,
-    MatIconModule,
-    MatCardModule,
-    MatButtonModule,  
+    MatProgressBarModule,
     FormsModule,
-    MatSliderModule,
+    HomeRoutingModule,
+    MatCarouselModule,
     ReactiveFormsModule,
-    HttpClientModule,
-    AppRoutingModule,
     MatSliderModule,
     FlexLayoutModule,
-    MDBBootstrapModule.forRoot(),
+    MatToolbarModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTableModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatSidenavModule,
     MatGridListModule,
     LayoutModule,
     DragDropModule,
     MatTreeModule,
     MatListModule,
-    MatCarouselModule.forRoot(),
-    HomeRoutingModule,
-
+    RouterModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  declarations: [
+    HomeComponent,
+    DashboardComponent,
+    KaartComponent
+  ]
 })
-export class AppModule { }
+export class HomeModule {}
