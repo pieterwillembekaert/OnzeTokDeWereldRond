@@ -1,21 +1,21 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {CommonModule} from '@angular/common';
 
 
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
-import { MatSliderModule } from '@angular/material/slider';
+import {MatSliderModule} from '@angular/material/slider';
 
-import { FlexLayoutModule } from '@angular/flex-layout';
+import {FlexLayoutModule } from '@angular/flex-layout';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
@@ -33,12 +33,17 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {LayoutModule} from '@angular/cdk/layout';
-
-
+import {QuillModule} from 'ngx-quill'
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatListModule } from '@angular/material/list';
+
+import { MatCarouselModule } from '@ngmodule/material-carousel';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+
+import { WavesModule, ButtonsModule, IconsModule } from 'angular-bootstrap-md';
+import { MatProgressBarModule} from '@angular/material/progress-bar'; 
 
 import { PrikbordComponent } from './prikbord/prikbord.component';
 import { OverOnsComponent } from './over-ons/over-ons.component';
@@ -46,13 +51,10 @@ import { TekenOnzeTokComponent } from './teken-onze-tok/teken-onze-tok.component
 import { VolgOnsComponent } from './volg-ons/volg-ons.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
-import { MatCarouselModule } from '@ngmodule/material-carousel';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
-
-import { WavesModule, ButtonsModule, IconsModule } from 'angular-bootstrap-md';
-import {MatProgressBarModule} from '@angular/material/progress-bar'; 
 import { HomeRoutingModule } from './home/home-routing.module';
-
+import { DatabaseRoutingModule } from './Database/database-routing.module';
+import { InterviewsComponent } from './interviews/interviews.component';
+import { DeelnemenComponent } from './deelnemen/deelnemen.component';
 
 
 @NgModule({
@@ -63,6 +65,8 @@ import { HomeRoutingModule } from './home/home-routing.module';
     TekenOnzeTokComponent,
     VolgOnsComponent,
     PageNotFoundComponent,
+    InterviewsComponent,
+    DeelnemenComponent, 
   ],
   imports: [
     BrowserModule,
@@ -103,6 +107,9 @@ import { HomeRoutingModule } from './home/home-routing.module';
     MatListModule,
     MatCarouselModule.forRoot(),
     HomeRoutingModule,
+    DatabaseRoutingModule,
+    QuillModule.forRoot(),
+  
 
   ],
   providers: [],

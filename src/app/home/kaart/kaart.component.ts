@@ -14,9 +14,6 @@ function clamp(n: number, min: number, max: number) {
 }
 
 
-
-
-
 @Component({
   selector: 'app-kaart',
   templateUrl: './kaart.component.html',

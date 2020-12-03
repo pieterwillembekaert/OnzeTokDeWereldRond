@@ -16,7 +16,7 @@ export class TotalDistService {
   //http://localhost:3000/
   getDataAsyn(urlYear) {
     return new Promise(resolve => {
-      this.http.get("http://localhost:3000/TotalDist/"+urlYear)
+      this.http.get("/TotalDist/"+urlYear)
       .subscribe(data => {
         //console.log(data);
         this.dataYear=data;

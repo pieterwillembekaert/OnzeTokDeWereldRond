@@ -6,7 +6,6 @@ import {CountriesService} from './countries.service';
 import { RouterOutlet } from '@angular/router';
 
 
-declare var $: any;
 
 @Component({
   selector: 'app-root',
@@ -15,8 +14,6 @@ declare var $: any;
 })
 export class AppComponent {
   title = 'OnzeTokDeWereldRond';
-
-  @ViewChild('mySvg') mySvg;
 
   mobileQuery: MediaQueryList;
   fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
@@ -28,7 +25,7 @@ constructor(
   media: MediaMatcher,
   private elementRef: ElementRef,
   private __VisitorsService : VisitorsService, 
-  private __CountriesService : CountriesService, 
+  private __CountriesService : CountriesService,
   
   ) {
   this.mobileQuery = media.matchMedia('(max-width: 600px)');
