@@ -190,7 +190,7 @@ export class KaartComponent implements OnInit {
 
       //Prikboard
       $this.PbNumbersVisit = String($this.getDataFromCountry(DataFromJs, country)); 
-      $this.PbLand= country; 
+      $this.PbLand= String($this.__CountriesService.convertCountryToTranslateCountry(country));
       $this.OpenBrikboard= true;
       $this.changeDetectorRef.detectChanges()
       
@@ -456,13 +456,12 @@ export class KaartComponent implements OnInit {
   }
 
   trackByVisitors(index: number, aPrikboardList: any): string {  
-    console.log("trackByVisitors")
-    console.log(index)
+    //console.log("trackByVisitors")
+    //console.log(index)
     return aPrikboardList.name;  
 
   }  
 
- 
 
   closePBdata() {
     this.OpenBrikboard= false; 

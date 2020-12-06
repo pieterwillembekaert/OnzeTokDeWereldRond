@@ -1,0 +1,14 @@
+<br>
+<br>
+<br>
+
+<div class="container">
+  <a class="btn " color="primary" role="button" (click)="openBezoekers()">Bezoekers</a>
+  <a class="btn " color="primary" role="button" (click)="openInterviews()">Interviews</a>
+  <a class="btn " color="primary" role="button" matBadge="{{AantalNieuweDeelnemers}}" matBadgePosition="after" matBadgeColor="accent"
+    (click)="openNieuweDeelnemers()">Nieuwe deelnemers</a>
+
+   <a class="btn " color="primary" role="button" (click)="logout()">Uitloggen</a>
+</div>
+
+<router-outlet></router-outlet>

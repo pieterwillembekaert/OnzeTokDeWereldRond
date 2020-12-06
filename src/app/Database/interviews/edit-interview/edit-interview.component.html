@@ -1,0 +1,86 @@
+<br>
+<br>
+<br>
+<div class="container">
+  <mdb-breadcrumb>
+    <mdb-breadcrumb-item class="blue-text">Home</mdb-breadcrumb-item>
+    <mdb-breadcrumb-item class="blue-text">Overzicht interviews</mdb-breadcrumb-item>
+    <mdb-breadcrumb-item class="blue-text active">Bewerk interview</mdb-breadcrumb-item>
+  </mdb-breadcrumb>
+</div>
+
+<div class="container">
+  <p>
+    <a class="btn blue material-icons" color="primary" role="button" matTooltip="Terug naar overzicht" aria-label="" (click)="backToOverview()">arrow_back</a>
+    <a class="btn blue material-icons" color="primary" role="button" matTooltip="Bewaar aanpassingen" aria-label="" (click)="backToOverview()"(click)="saveInterviews()">save</a>
+  </p>
+  <h2 class="example-h2">Bewerk het interview</h2>
+  <form [formGroup]="richTextForm">
+    <div class="form-group">
+      <label for="Title">Titel</label>
+      <input formControlName="title" class="form-control" id="Title" aria-describedby="Title">
+    </div>
+    <div class="form-group">
+      <label for="Subtitle">Subtitel</label>
+      <input formControlName="subtitle" class="form-control" id="Subtitle" aria-describedby="Subtitle">
+    </div>
+    <!--Kies een land-->
+    <mat-form-field>
+      <mat-select [formControl]="CountrysServerSideCtrl" placeholder="{{Country}}">
+        <!-- place ngx-mat-select-search inside mat-option to allow opening without initial selection -->
+        <mat-option>
+          <ngx-mat-select-search [formControl]="CountrysServerSideFilteringCtrl" [searching]="searching">
+          </ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let country of filteredServerSideCounrtys | async" [value]="country">
+          {{country}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!--Afstand van huis-->
+    <mat-form-field appearance="fill">
+      <mat-label>Afstand</mat-label>
+      <input matInput formControlName="distance">
+    </mat-form-field>
+    <!--name-->
+    <mat-form-field appearance="fill">
+      <mat-label>Naam</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+
+    <!--Datum -->
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="datum" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <!--imgScr-->
+    <mat-form-field appearance="fill">
+      <mat-label>imgScr</mat-label>
+      <input matInput formControlName="imgScr">
+    </mat-form-field>
+
+    <!--Upload file-->
+    <input ngf type="file" accept="*" [(files)]="files" capturePaste="1" />
+    <button *ngIf="files" (click)="uploadFiles(files)">send files</button>
+
+    <ngfFormData [files]="files" [(FormData)]="myFormData" postName="file"></ngfFormData>
+    <ngfUploadStatus [(percent)]="uploadPercent" [httpEvent]="httpEvent"></ngfUploadStatus>
+
+    <div *ngIf="uploadPercent">
+      <h2 class="example-h2">Upload Progress: {{ uploadPercent }}%</h2>
+      <mat-progress-bar mode="determinate" value="{{ uploadPercent}}"></mat-progress-bar>
+    </div>
+
+    <div class="form-group">
+      <label>Artiekel</label>
+      <rich-text-editor [control]="descriptionRichControl"></rich-text-editor>
+    </div>
+  </form>
+  <!--<div class="alert alert-info">
+    {{ richTextForm.value | json }}
+  </div>-->
+
+</div>

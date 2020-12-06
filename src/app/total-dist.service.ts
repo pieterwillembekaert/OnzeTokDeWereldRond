@@ -7,16 +7,18 @@ import {HttpClient} from "@angular/common/http";
 export class TotalDistService {
 
   dataYear;
+  //UrlServer: string= "http://localhost:3000/TotalDist/"
+  UrlServer: string= "/TotalDist/"
 
 
   constructor(
     private http: HttpClient
   ) { }
 
-  //http://localhost:3000/
+ 
   getDataAsyn(urlYear) {
     return new Promise(resolve => {
-      this.http.get("/TotalDist/"+urlYear)
+      this.http.get(this.UrlServer+urlYear)
       .subscribe(data => {
         //console.log(data);
         this.dataYear=data;

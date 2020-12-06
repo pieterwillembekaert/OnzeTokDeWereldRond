@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {CommonModule} from '@angular/common';
-
+import { ngfModule, ngf } from "angular-file"
 
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 import {MatSliderModule} from '@angular/material/slider';
 
@@ -26,6 +26,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
@@ -34,6 +35,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {LayoutModule} from '@angular/cdk/layout';
 import {QuillModule} from 'ngx-quill'
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import {MatStepperModule} from '@angular/material/stepper'; 
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatTreeModule } from '@angular/material/tree';
@@ -57,6 +60,7 @@ import { InterviewsComponent } from './interviews/interviews.component';
 import { DeelnemenComponent } from './deelnemen/deelnemen.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,11 +70,13 @@ import { DeelnemenComponent } from './deelnemen/deelnemen.component';
     VolgOnsComponent,
     PageNotFoundComponent,
     InterviewsComponent,
-    DeelnemenComponent, 
+    DeelnemenComponent,
   ],
   imports: [
     BrowserModule,
     MatProgressBarModule,
+    MatStepperModule,
+    MatNativeDateModule,
     BrowserAnimationsModule,
     CommonModule,
     WavesModule,
@@ -109,10 +115,12 @@ import { DeelnemenComponent } from './deelnemen/deelnemen.component';
     HomeRoutingModule,
     DatabaseRoutingModule,
     QuillModule.forRoot(),
-  
-
+    NgxMatSelectSearchModule,
+    ngfModule,
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

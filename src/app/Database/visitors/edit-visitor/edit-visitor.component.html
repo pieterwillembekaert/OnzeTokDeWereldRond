@@ -1,0 +1,110 @@
+<br>
+<br>
+<br>
+<div class="container">
+  <mdb-breadcrumb>
+    <mdb-breadcrumb-item class="blue-text">Home</mdb-breadcrumb-item>
+    <mdb-breadcrumb-item class="blue-text">Overzicht bezoekers</mdb-breadcrumb-item>
+    <mdb-breadcrumb-item class="blue-text active">Bewerk bezoeker</mdb-breadcrumb-item>
+  </mdb-breadcrumb>
+</div>
+<div class="container">
+  <p>
+    <a class="btn material-icons" color="primary" role="button" matTooltip="Terug naar het overzicht" aria-label="Button that displays a tooltip when focused or hovered over" (click)="backToOverview()">arrow_back</a>
+    <a class="btn material-icons" color="primary" role="button" matTooltip="Bewaar aanpassing" aria-label="Button that displays a tooltip when focused or hovered over"(click)="saveInterviews()">save</a>
+  </p>
+  <h1>Bewerk bezoeker</h1>
+  <form [formGroup]="richTextForm">
+    <!--Kies een land-->
+    <mat-form-field>
+      <mat-select [formControl]="CountrysServerSideCtrl" placeholder="{{Country}}">
+        <!-- place ngx-mat-select-search inside mat-option to allow opening without initial selection -->
+        <mat-option>
+          <ngx-mat-select-search [formControl]="CountrysServerSideFilteringCtrl" [searching]="searching">
+          </ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let country of filteredServerSideCounrtys | async" [value]="country">
+          {{country}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!--name-->
+    <mat-form-field appearance="fill">
+      <mat-label>Naam</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+
+    <!--imgScr-->
+    <mat-form-field appearance="fill">
+      <mat-label>imgScr</mat-label>
+      <input matInput formControlName="imgScr">
+    </mat-form-field>
+
+
+    <!--Afstand van huis-->
+    <mat-form-field appearance="fill">
+      <mat-label>Afstand</mat-label>
+      <input matInput formControlName="distance">
+    </mat-form-field>
+
+    <!--Datum -->
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="datum" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </form>
+
+  <!--Upload file-->
+  <input ngf type="file" accept="*" [(files)]="files" capturePaste="1" />
+  <button *ngIf="files" (click)="uploadFiles(files)">send files</button>
+
+  <ngfFormData [files]="files" [(FormData)]="myFormData" postName="file"></ngfFormData>
+
+  <ngfUploadStatus [(percent)]="uploadPercent" [httpEvent]="httpEvent"></ngfUploadStatus>
+
+  <div *ngIf="uploadPercent">
+    Upload Progress: {{ uploadPercent }}%
+  </div>
+
+  <br>
+  <br>
+  <br>
+  <!--Voorbeeld-->
+  <div class="row">
+    <!-- post -->
+    <div class="col-12 col-sm-4">
+      <!-- Card -->
+      <mdb-card>
+        <div class="view rgba-white-slight waves-light" mdbWavesEffect>
+          <!-- Card img -->
+          <mdb-card-img src="{{OpenVisitorViewEditText.imgScr}}" alt="Card image cap"></mdb-card-img>
+          <a>
+            <div class="mask"></div>
+          </a>
+        </div>
+        <!--Card content-->
+        <mdb-card-body>
+          <!--Title-->
+          <mdb-card-title>
+            <h4>{{OpenVisitorViewEditText.name}}</h4>
+          </mdb-card-title>
+
+          <!--Text-->
+          <mdb-card-text>
+            LAND: {{OpenVisitorViewEditText.countryTanslation}} <br>
+            AFSTAND: {{OpenVisitorViewEditText.distance}} km <br>
+            DATUM: {{OpenVisitorViewEditText.date | date:"dd/MM/yy"}}
+
+          </mdb-card-text>
+
+          <!--<a href="#" mdbBtn color="primary" mdbWavesEffect>Button</a>-->
+        </mdb-card-body>
+      </mdb-card>
+      <!-- Card -->
+      <br>
+    </div>
+    <!-- einde -->
+  </div>
+</div>

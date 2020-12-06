@@ -1007,4 +1007,25 @@ getCountryAllTranslation(){
   return this.countryAllTranslation;
 }
 
+convertTranslateCountryToCountry(countryToSearch: String): String{
+  for (let i = 0; i < this.countryAllTranslation.length; i++) {
+    if(this.countryAllTranslation[i]==countryToSearch){
+      return this.countryAll[i];
+
+    }
+  } 
+} 
+
+  convertCountryToTranslateCountry(countryToSearch: String): String{
+    for (let i = 0; i < this.countryAll.length; i++) {
+      if(this.countryAll[i]==countryToSearch){
+        return this.countryAllTranslation[i];
+      }
+    } 
+  } 
+  
+
+
 }
+
+

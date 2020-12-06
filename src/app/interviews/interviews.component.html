@@ -1,0 +1,164 @@
+<br>
+<br>
+<div class="background-Prikbord">
+  <p>
+    <!-- #docregion toolbar-simple -->
+    <mat-toolbar color="accent" class="z-depth-0">
+      <span>Interviews</span>
+    </mat-toolbar>
+    <!-- #enddocregion toolbar-simple -->
+  </p>
+
+  <div class="container">
+    <div class="row">
+      <!-- post -->
+      <div class="col-12 col-sm-6" *ngFor="let dataInterview  of dataInterviews;">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>{{dataInterview.title}}</mat-card-title>
+            <mat-card-subtitle>{{dataInterview.subTitle}}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image src="{{dataInterview.imgScr}}" alt="Foto">
+          <mat-card-content [innerHTML]="dataInterview.text">
+            
+
+          </mat-card-content>
+          <mat-card-actions>
+            <!--<button mat-button>LIKE</button>-->
+            <!--<button mat-button>SHARE</button>-->
+          </mat-card-actions>
+        </mat-card>
+        <br>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <div class="container">
+    <div class="row">-->
+<!-- post -->
+<!-- <div class="col-12 col-sm-6">
+
+        <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>De tok in Suriname</mat-card-title>
+            <mat-card-subtitle>Met Bram Vantorre van KSA de Blauwvoet Koolkerke</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image src="./assets/img/interview/Bram.jpg" alt="Bram">
+          <mat-card-content>
+            <p>
+              Ik heb mijn tok meegenomen naar Suriname, Zuid-Amerika. Ik ben hier op stage en werk hier aan m’n
+              eind-werk!
+              Het
+              doel van mijn stage is het ontwerp en de bouw van een heisys-teem op een boot om stukjes kustlijn van
+              Suriname
+              te beschermen tegen de opkomende zeespiegel.
+            </p>
+
+            <p>
+              Buiten het werk geniet ik natuurlijk
+              ook volop van de natuur hier! Dat is
+              ook een van de redenen waarom ik
+              voor Suriname heb gekozen: het regenwoud,
+              de amazone en altijd 30°C.
+              Ik heb hier al samen met mijn tok
+              apen gespot, kaaimannen eten gegeven
+              en tussen de piranha’s gezwommen.
+              Maar het meest spannende
+              moment was toch wel de reuze zeeschildpad
+              die aan land kwam om op
+              het strand eitjes te leggen!
+            </p>
+            <q>
+              Samen met mijn tok
+              heb ik al kaaimannen
+              eten gegeven.
+            </q>
+            <br>
+            <br>
+
+            <p>
+              Mijn volgend uitstapje zal waarschijnlijk
+              het KSA-kamp worden deze zomer
+              dus daar mag mijn tok ook sowieso
+              mee naar toe!
+            </p>
+          </mat-card-content>
+          <mat-card-actions> -->
+<!--<button mat-button>LIKE</button>-->
+<!--<button mat-button>SHARE</button>-->
+<!-- </mat-card-actions>
+        </mat-card>
+        </div>
+        <br>
+
+        <div class="col-12 col-sm-6">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>De tok in Nepal</mat-card-title>
+            <mat-card-subtitle>Met David De Langhe van KSA De Tokke Knokke</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image src="./assets/img/interview/david.jpg" alt="Bram">
+          <mat-card-content>
+            <p>
+                Dag dagboek,
+                Van 4 december 2016 t.e.m. 23 december
+                2016 trok ik met mijn baasje, David De Langhe
+                en zijn vrouw (Stéphanie) naar het verre
+                Nepal. Voor mijn baasje was het de eerste
+                reis buiten de grenzen van Europa. Hoofdbezigheid
+                van de reis was de Annapuna-Base-
+                Camp
+                trek. Een prachtige trektocht als
+                ik mijn baasje mag geloven, helaas voor mij
+                was het vaak te warm om uit de rugzak te
+                mogen springen. Enkel ’s avonds en op de
+                toppen van de bergen mocht ik me nog eens
+                op het hoofd van mijn baasje settelen en kon
+                ik meegenieten van de prachtige uitzichten.
+                De basecamp-trek werd twee dagen vroeger
+                dan voorzien afgerond waardoor mijn baasjes
+                ook na de trek nog konden genieten van
+                wat Nepal (Pohkara en Kathmandu) hen nog
+                te bieden had. Ze genoten van een welverdiende
+                rust na de trektocht met de nodige
+                activiteiten die de reis compleet maakten
+                zoals paragliden, buitencinema, dineren bij
+                kaarslicht … Op 23 december nam ik helaas
+                terug plaats in het bagageruim van het vliegtuig.
+                De eerstvolgende keer dat ik terug buiten
+                kom zal wellicht op één van de prachtige
+                KSA-initiatieven zijn, tot dan!
+                Vele Oranje-Blauwe Groetjes
+            </p>
+
+         <q>
+            Ze genoten van een welverdiende
+            rust na de trektocht met
+            de nodige activiteiten die de reis
+            compleet maakten zoals
+            paragliden, buitencinema,
+            dineren bij kaarslicht …
+         </q>
+          </mat-card-content>
+          <mat-card-actions>-->
+<!--<button mat-button>LIKE</button>-->
+<!--<button mat-button>SHARE</button>-->
+<!-- </mat-card-actions>
+        </mat-card>
+        </div>
+      </div>
+
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+  </div>-->

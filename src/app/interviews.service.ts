@@ -4,22 +4,23 @@ import {HttpClient} from "@angular/common/http";
 @Injectable({
   providedIn: 'root'
 })
-export class VisitorsService {
-  Visitors;
-  //UrlServer: string= "http://localhost:3000/data/"
-  UrlServer: string= "/data/"
+export class InterviewsService {
+
+  Interviews;
+  //UrlServer: string= "http://localhost:3000/interviewsdata/"
+  UrlServer: string= "/interviewsdata/"
 
   constructor(
     private http: HttpClient
   ) { }
 
-  
+ 
   getDataAsyn() {
     return new Promise(resolve => {
       this.http.get(this.UrlServer)
       .subscribe(data => {
         //console.log(data);
-        this.Visitors=data;
+        this.Interviews=data;
         resolve(data);
         //return data; 
       });
@@ -34,9 +35,7 @@ export class VisitorsService {
   }
 
   getData() {
-    //console.log(this.Visitors);
-    return  this.Visitors;
+    //console.log(this.Interviews);
+    return  this.Interviews;
   }
-
 }
-

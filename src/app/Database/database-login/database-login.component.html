@@ -1,0 +1,25 @@
+<br>
+<br>
+<br>
+
+<div class="container">
+  <h2>LOGIN</h2>
+  <form [formGroup]="loginForm">
+  <mat-form-field appearance="fill">
+    <mat-label>Gebruikersnaam</mat-label>
+    <input matInput formControlName="name">
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Wachtwoord</mat-label>
+    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+  </mat-form-field>
+</form>
+  <p>{{message}}</p>
+
+  <button (click)="login()"  *ngIf="!__GuardsService.isLoggedIn">Login</button>
+  <button (click)="logout()" *ngIf="__GuardsService.isLoggedIn">Logout</button>
+</div>

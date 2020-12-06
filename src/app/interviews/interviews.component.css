@@ -1,0 +1,14 @@
+
+  
+  .example-header-image {
+    background-image: url('/assets/img/logotok.png');
+    background-size: cover;
+  }
+
+
+  
+blockquote{
+    color: blue; 
+    font-size: large;
+}
+  
