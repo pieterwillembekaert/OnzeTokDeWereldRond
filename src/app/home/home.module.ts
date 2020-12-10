@@ -28,6 +28,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {LayoutModule} from '@angular/cdk/layout';
 import {MatProgressBarModule} from '@angular/material/progress-bar'; 
+import { CarouselModule, WavesModule } from 'angular-bootstrap-md'
 
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -48,6 +49,8 @@ import { HomeRoutingModule } from './home-routing.module';
     CommonModule,
     MatProgressBarModule,
     FormsModule,
+    CarouselModule,
+    WavesModule,
     HomeRoutingModule,
     MatCarouselModule,
     ReactiveFormsModule,
