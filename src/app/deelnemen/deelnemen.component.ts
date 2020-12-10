@@ -216,7 +216,6 @@ export class DeelnemenComponent implements OnInit {
 
     this.done= true; 
 
-
     //Basis gegevens
     this.SaveNewVisitorEditText.name= this.basisGevensDeelnemer.value.name;
     this.SaveNewVisitorEditText.email= this.basisGevensDeelnemer.value.email;

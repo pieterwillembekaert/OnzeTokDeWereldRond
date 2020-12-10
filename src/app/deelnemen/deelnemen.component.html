@@ -33,23 +33,27 @@
     <form [formGroup]="basisGevensDeelnemer">
       <!-- #docregion step-label -->
       <ng-template matStepLabel>Basis gegevens</ng-template>
-      <!-- #enddocregion step-label -->
-      <p>
-        Vul uw naam en emailadres in. klik vervolgens op de volgende.
-      </p>
-      <!--name-->
-      <mat-form-field appearance="fill">
-        <mat-label>Naam</mat-label>
-        <input matInput formControlName="name">
-      </mat-form-field>
+      <div class="container">
+        <!-- #enddocregion step-label -->
+        <p>
+          Vul uw naam en emailadres in. klik vervolgens op de volgende.
+        </p>
+        <!--name-->
+        <mat-form-field appearance="fill">
+          <mat-label>Naam</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+        <br>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Vul uw emailadres in:</mat-label>
+          <input matInput placeholder="tok@ksa.be" formControlName="email" required>
+          <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <br>
+        <br>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Vul uw emailadres in:</mat-label>
-        <input matInput placeholder="tok@ksa.be" formControlName="email" required>
-        <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperNext>Volgende</button>
+        <button mat-raised-button matStepperNext color="primary">Volgende</button>
       </div>
     </form>
   </mat-step>
@@ -57,102 +61,161 @@
     <form [formGroup]="CountrysServerSideCtrl">
       <ng-template matStepLabel>Kies een land</ng-template>
       <!--Kies een land-->
-      <p>
-        Kies het land uit de lijst die u bezocht hebt.
-      </p>
-      <mat-form-field>
-        <mat-label>Kies een land</mat-label>
-        <mat-select [formControl]="CountrysServerSideCtrl" placeholder="{{Country}}">
-          <!-- place ngx-mat-select-search inside mat-option to allow opening without initial selection -->
-          <ngx-mat-select-search [formControl]="CountrysServerSideFilteringCtrl" [searching]="searching">
-          </ngx-mat-select-search>
-          <mat-option></mat-option>
-          <mat-option *ngFor="let country of filteredServerSideCounrtys | async" [value]="country">
-            {{country}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperPrevious>Terug</button>
-        <button mat-button matStepperNext>Volgende</button>
+      <div class="container">
+        <p>
+          Kies het land uit de lijst die u bezocht hebt.
+        </p>
+        <mat-form-field>
+          <mat-label>Kies een land</mat-label>
+          <mat-select [formControl]="CountrysServerSideCtrl" placeholder="{{Country}}">
+            <!-- place ngx-mat-select-search inside mat-option to allow opening without initial selection -->
+            <ngx-mat-select-search [formControl]="CountrysServerSideFilteringCtrl" [searching]="searching">
+            </ngx-mat-select-search>
+            <mat-option></mat-option>
+            <mat-option *ngFor="let country of filteredServerSideCounrtys | async" [value]="country">
+              {{country}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+        <br>
+        <div>
+          <button mat-raised-button matStepperPrevious color="primary">Terug</button>
+          <button mat-raised-button matStepperNext color="primary">Volgende</button>
+        </div>
       </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="bezoekGegevensDeelnemer" [editable]="isEditable">
     <form [formGroup]="bezoekGegevensDeelnemer">
       <ng-template matStepLabel>Bezoek gegevens</ng-template>
-      <p>
-        Hoe ver was u van huis? Wanneer is de foto genomen (bij benadering)?
-      </p>
-      <!--Afstand van huis-->
-      <mat-form-field appearance="fill">
-        <mat-label>Afstand van huis</mat-label>
-        <input matInput formControlName="distance">
-      </mat-form-field>
+      <div class="container">
+        <p>
+          Hoe ver was u van huis? Wanneer is de foto genomen (bij benadering)?
+        </p>
+        <!--Afstand van huis-->
+        <mat-form-field appearance="fill">
+          <mat-label>Afstand van huis</mat-label>
+          <input matInput formControlName="distance">
+        </mat-form-field>
+        <br>
+        <br>
 
-      <!--Datum -->
-      <mat-form-field>
-        <input matInput [matDatepicker]="picker" placeholder="datum" formControlName="date">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
+        <!--Datum -->
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="datum" formControlName="date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <br>
 
-      <div>
-        <button mat-button matStepperPrevious>Terug</button>
-        <button mat-button matStepperNext>Volgende</button>
+        <div>
+          <button mat-raised-button matStepperPrevious color="primary">Terug</button>
+          <button mat-raised-button matStepperNext color="primary">Volgende</button>
+        </div>
       </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="afbeeldingDeelnemer" [editable]="isEditable">
     <form [formGroup]="afbeeldingDeelnemer">
       <ng-template matStepLabel>Upload afbeelding</ng-template>
-      <p>
-        Load uw foto op! Klik op "bladeren" en kies de foto. Klik vervolgens "upload foto".
-      </p>
-      <!--Upload file -->
-      <input ngf type="file" accept="*" [(files)]="files" capturePaste="1" style="color: green;" />
-      <button *ngIf="files" color="primary" (click)="uploadFiles(files)" mat-raised-button color="primary">upload
-        foto</button>
+      <div class="container">
+        <p>
+          Load uw foto op! Klik op "bladeren" en kies de foto. Klik vervolgens "upload foto".
+        </p>
+        <!--Upload file -->
+        <input ngf type="file" accept="*" [(files)]="files" capturePaste="1" style="color: green;" />
+        <button *ngIf="files" color="primary" (click)="uploadFiles(files)" mat-raised-button color="primary">upload
+          foto</button>
+        <br>
+        <br>
 
-      <ngfFormData [files]="files" [(FormData)]="myFormData" postName="file"></ngfFormData>
+        <ngfFormData [files]="files" [(FormData)]="myFormData" postName="file"></ngfFormData>
 
-      <ngfUploadStatus [(percent)]="uploadPercent" [httpEvent]="httpEvent"></ngfUploadStatus>
-
-      <div>
-        <button mat-button matStepperPrevious>Terug</button>
-        <button mat-button matStepperNext>Volgende</button>
+        <ngfUploadStatus [(percent)]="uploadPercent" [httpEvent]="httpEvent"></ngfUploadStatus>
+        <br>
+        <br>
+        <div>
+          <button mat-raised-button matStepperPrevious color="primary">Terug</button>
+          <button mat-raised-button matStepperNext color="primary">Volgende</button>
+        </div>
       </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="doneDeelnemer" [editable]="isEditable">
     <form [formGroup]="doneDeelnemer">
       <ng-template matStepLabel>Opmerking</ng-template>
-      <!--Opmerking -->
-      <mat-form-field appearance="fill">
-        <mat-label>opmerking</mat-label>
-        <textarea matInput formControlName="opmerking"></textarea>
-      </mat-form-field>
-
-      <div>
-        <button mat-button matStepperPrevious>Terug</button>
-        <button mat-button matStepperNext>Volgende</button>
+      <div class="container">
+        <!--Opmerking -->
+        <mat-form-field appearance="fill">
+          <mat-label>opmerking</mat-label>
+          <textarea matInput formControlName="opmerking"></textarea>
+        </mat-form-field>
+        <br>
+        <br>
+        <div>
+          <button mat-button matStepperPrevious>Terug</button>
+          <button mat-raised-button matStepperNext color="primary">Volgende</button>
+        </div>
       </div>
     </form>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
-    <p>Afgewerkt! Klik op de knop om uw inzending te versturen!</p>
-    <p *ngIf="bFoutInFormulier">Fout gevonden controleer volgede velden: {{sFoutInFormulier}}</p>
-    <br>
-    <br>
-    <a class="btn blue" color="primary" role="button" *ngIf="!done" (click)="opsturen()">Deelnemen</a>
-    <br>
-    <br>
-    <p>Bedankt! We verwerken uw inzending. </p>
+    <div class="container">
 
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+      <p>Afgewerkt! Klik op de knop om uw inzending te versturen!</p>
+      <p *ngIf="bFoutInFormulier">Fout gevonden controleer volgede velden: {{sFoutInFormulier}}</p>
+
+      <p>Uw gegevens: </p>
+      <br>
+      <br>
+      <!--Voorbeeld-->
+      <!-- Card -->
+      <div class="row">
+        <!-- post -->
+        <div class="col-12 col-sm-4">
+          <mdb-card *ngIf="!bFoutInFormulier">
+            <div class="view rgba-white-slight waves-light" mdbWavesEffect>
+              <!-- Card img -->
+              <mdb-card-img src="{{afbeeldingDeelnemer.value.imgScr}}" alt="Card image cap"></mdb-card-img>
+              <a>
+                <div class="mask"></div>
+              </a>
+            </div>
+            <!--Card content-->
+            <mdb-card-body>
+              <!--Title-->
+              <mdb-card-title>
+                <h4>{{basisGevensDeelnemer.value.name}}</h4>
+              </mdb-card-title>
+
+              <!--Text-->
+              <mdb-card-text>
+                LAND: {{CountrysServerSideCtrl.value}} <br>
+                AFSTAND: {{bezoekGegevensDeelnemer.value.distance}} km <br>
+                DATUM: {{bezoekGegevensDeelnemer.value.date | date:"dd/MM/yy"}}
+
+              </mdb-card-text>
+
+              <a class="btn blue" color="primary" role="button" *ngIf="!done" (click)="opsturen()">Deelnemen</a>
+            </mdb-card-body>
+          </mdb-card>
+        </div>
+      </div>
+      <!-- Card -->
+      <br>
+      <br>
+      <br>
+      <br>
+      <p>Bedankt! We verwerken uw inzending. </p>
+      <br>
+      <br>
+
+      <div>
+        <button mat-raised-button matStepperPrevious color="primary">Terug</button>
+        <!--<button mat-button (click)="stepper.reset()">Reset</button>-->
+      </div>
     </div>
   </mat-step>
 </mat-horizontal-stepper>
