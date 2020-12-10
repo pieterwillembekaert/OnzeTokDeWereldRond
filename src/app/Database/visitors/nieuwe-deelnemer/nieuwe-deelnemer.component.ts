@@ -66,10 +66,7 @@ export class NieuweDeelnemerComponent implements OnInit {
 
     //delet row 
     this.delete(row);
-    
-    //save to visitors
-    this.saveVisitors(); 
-
+     
   }
 
   saveNieuweDeelnemers():void{
