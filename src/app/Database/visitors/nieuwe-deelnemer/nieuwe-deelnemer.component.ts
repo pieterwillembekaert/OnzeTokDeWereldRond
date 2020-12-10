@@ -19,7 +19,7 @@ export class NieuweDeelnemerComponent implements OnInit {
   dataVisitors; 
   dataVisitor: visitorsItem; 
   LoadData: boolean; 
-  displayedColumns: string[] = ['Bewerken', 'Naam', 'Land','Afstand', 'Datum', 'Afbeelding'];
+  displayedColumns: string[] = ['Bewerken', 'Naam', 'Land','Afstand', 'Datum', 'Afbeelding',"Email","Opmerking"];
   @ViewChild(MatTable) table: MatTable<any>;
 
   constructor(
