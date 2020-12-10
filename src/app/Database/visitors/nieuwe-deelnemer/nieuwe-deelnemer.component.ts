@@ -35,6 +35,7 @@ export class NieuweDeelnemerComponent implements OnInit {
     this.__NieuweDeelnemerDataService.getDataFromHttp().then(
       function (response) {
         $this.dataNewVisitors= response.members;
+        $this.__NieuweDeelnemerDataService.setNieuweDeelnemersData(response.members);
         //console.log(response)
         
       },
@@ -46,7 +47,7 @@ export class NieuweDeelnemerComponent implements OnInit {
     this.__VisitorsService.getDataFromHttp().then(
       function (response) {
         $this.dataVisitors= response.members;
-        $this.__EditVisitorsDataService.setEditInterviews(response.members);
+        $this.__EditVisitorsDataService.setEditVisitors(response.members);
         //console.log(response)
         
       },
@@ -58,19 +59,23 @@ export class NieuweDeelnemerComponent implements OnInit {
 
   }
 
-  newVisitor():void{
-    var newData= new c_visitorsItem(); 
+  accept(row: any) :void{
+    //Add To data visitors
+    this.dataVisitors.push(row); 
+    this.__EditVisitorsDataService.setEditVisitors(this.dataVisitors);
+
+    //delet row 
+    this.delete(row);
     
-    //nieuwe index
-    newData.id= this.dataNewVisitors.length; 
-    //add data
-    this.dataNewVisitors.push(newData); 
-    this.table.renderRows();
+    //save to visitors
+    this.saveVisitors(); 
+
   }
 
-
   saveNieuweDeelnemers():void{
-    console.log("save visitor")
+    console.log("save Nieuwe Deelnemers")
+    console.log(this.dataNewVisitors); 
+    this.__NieuweDeelnemerDataService.setNieuweDeelnemersData(this.dataNewVisitors)
     this.__NieuweDeelnemerDataService.saveDataToServer();
   }
 
@@ -93,11 +98,6 @@ export class NieuweDeelnemerComponent implements OnInit {
     this.table.renderRows();
   }
 
-  edit(row: any): void {
-    console.log(row);
-    //this.__EditVisitorsDataService.setOpenVisitorEdit(row)
-    //this.__Router.navigate(['/Database/EditVisitor']);
-  }
 
   sort():void{
     for (let i = 0; i < this.dataNewVisitors.length; i++) {
@@ -109,13 +109,6 @@ export class NieuweDeelnemerComponent implements OnInit {
     this.table.renderRows();
   }
 
-  accept(row: any) :void{
-    this.dataVisitors.push(row); 
-    this.__EditVisitorsDataService.setEditInterviews(this.dataVisitors);
 
-    this.delete(row);
-    this.saveVisitors(); 
-
-  }
 
 }

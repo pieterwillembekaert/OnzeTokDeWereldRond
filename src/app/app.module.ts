@@ -61,6 +61,7 @@ import { DeelnemenComponent } from './deelnemen/deelnemen.component';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,

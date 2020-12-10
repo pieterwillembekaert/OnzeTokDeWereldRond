@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpClientModule, HttpRequest, HttpResponse, HttpEvent} from "@angular/common/http"
 import { Subscription } from 'rxjs'
 import { HttpHeaders } from '@angular/common/http';
+import {CLocationDatabase} from "../clocationDatabase";
 
 
 @Injectable({
@@ -10,11 +11,15 @@ import { HttpHeaders } from '@angular/common/http';
 export class NieuweDeelnemerDataService {
   NieuweDeelnemers
   OpenVisitorEdit; 
+  
+  Url= new CLocationDatabase;
+  UrlServer: string= this.Url.getUrl()+"nieuwedeelnemerdata/";  
+  UrlServerSave: string= this.Url.getUrl()+"saveToNieweDeelnemersDatabase/"; 
   //UrlServer: string= "http://localhost:3000/nieuwedeelnemerdata/"
-  UrlServer: string= "/nieuwedeelnemerdata/"
+  //UrlServer: string= "/nieuwedeelnemerdata/"
 
   //UrlServerSave: string= "http://localhost:3000/saveToNieweDeelnemersDatabase/"
-  UrlServerSave: string= "/saveToNieweDeelnemersDatabase/"
+  //UrlServerSave: string= "/saveToNieweDeelnemersDatabase/"
 
   constructor(
     private http: HttpClient
@@ -47,8 +52,8 @@ export class NieuweDeelnemerDataService {
   }
 
   saveDataToServer(){
-    //console.log("Save data to server")
-
+    console.log("Save data nieuwe deelnemers to server")
+    console.log(this.NieuweDeelnemers); 
     this.http.post<any>(this.UrlServerSave, this.NieuweDeelnemers).subscribe({
       error: error => {
           console.error('There was an error!', error);

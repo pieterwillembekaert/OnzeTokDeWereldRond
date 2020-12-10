@@ -34,6 +34,10 @@ export class HomeDatabaseComponent implements OnInit {
     )
   }
 
+  ngAfterViewInit(){
+    this.refreshData(); 
+  }
+
   openBezoekers(): void{
     this.__Router.navigate(['/Database/EditVisitors']);
   }
@@ -44,7 +48,10 @@ export class HomeDatabaseComponent implements OnInit {
 
   openNieuweDeelnemers() : void{
     this.__Router.navigate(['/Database/NieuweDeelnemers']);
+  }
 
+  openUploadFolder() : void{
+    this.__Router.navigate(['/Database/ManageUploadFolder']);
   }
 
   logout() {

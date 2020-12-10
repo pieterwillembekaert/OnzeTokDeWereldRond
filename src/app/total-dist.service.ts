@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {CLocationDatabase} from "./clocationDatabase";
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +8,10 @@ import {HttpClient} from "@angular/common/http";
 export class TotalDistService {
 
   dataYear;
+  Url= new CLocationDatabase; 
+  UrlServer: string= this.Url.getUrl()+"TotalDist/"; 
   //UrlServer: string= "http://localhost:3000/TotalDist/"
-  UrlServer: string= "/TotalDist/"
+  //UrlServer: string= "/TotalDist/"
 
 
   constructor(

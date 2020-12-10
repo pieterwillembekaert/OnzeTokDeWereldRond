@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpClientModule, HttpRequest, HttpResponse, HttpEvent} from "@angular/common/http"
 import { Subscription } from 'rxjs'
 import { HttpHeaders } from '@angular/common/http';
+import {CLocationDatabase} from "../clocationDatabase";
 
 
 @Injectable({
@@ -9,8 +10,10 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class NieuweDeelnemerOpsturenService {
 
+  Url= new CLocationDatabase; 
+  UrlServer: string= this.Url.getUrl()+"saveToNieweDeelnemers/";  
   //UrlServer: string= "http://localhost:3000/saveToNieweDeelnemers/"
-  UrlServer: string= "/saveToNieweDeelnemers/"
+  //UrlServer: string= "/saveToNieweDeelnemers/"
 
   constructor(
     private http: HttpClient

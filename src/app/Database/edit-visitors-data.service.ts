@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs'
 import { HttpHeaders } from '@angular/common/http';
 import { c_visitorsItem } from './DatabaseItem';
 import { visitorsItem } from './DatabaseItem';
+import {CLocationDatabase} from "../clocationDatabase";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -18,11 +19,17 @@ const httpOptions = {
 export class EditVisitorsDataService {
   editVisitors
   OpenVisitorEdit:visitorsItem; 
+
+  Url= new CLocationDatabase;
+  UrlServer: string= this.Url.getUrl()+"saveToDB/"; 
+  
+  postUrl= this.Url.getUrl()+"upload/"; 
   //UrlServer: string= "http://localhost:3000/saveToDB/"
-  UrlServer: string= "/saveToDB/"
+  //UrlServer: string= "/saveToDB/"
 
   //postUrl = 'http://localhost:3000/upload'
-  postUrl = '/upload'
+  //postUrl = '/upload'
+  
   httpEvent:HttpEvent<{}>
 
   constructor(
@@ -30,20 +37,20 @@ export class EditVisitorsDataService {
   ) { }
 
 
-  getEditInterviews(){
+  getEditVisitors(){
     return this.editVisitors; 
   }
 
-  setEditInterviews(interviewData){
-    this.editVisitors= interviewData; 
+  setEditVisitors(newData){
+    this.editVisitors= newData; 
   }
 
   getOpenVisitorEdit(){
     return this.OpenVisitorEdit; 
   }
 
-  setOpenVisitorEdit(interviewData){
-    this.OpenVisitorEdit= interviewData; 
+  setOpenVisitorEdit(newData){
+    this.OpenVisitorEdit= newData; 
   }
 
   saveData(SaveData:visitorsItem){

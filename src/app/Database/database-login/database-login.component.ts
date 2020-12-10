@@ -36,11 +36,9 @@ export class DatabaseLoginComponent implements OnInit {
 
   }
 
-
-
   login() {
     this.message = 'Bezig met inloggen...';
-    console.log(this.loginForm.value)
+    //console.log(this.loginForm.value)
 
     this.__GuardsService.loginUser(this.loginForm.value).subscribe(() => {
       this.setMessage();

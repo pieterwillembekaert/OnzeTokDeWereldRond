@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import { HttpHeaders } from '@angular/common/http';
 import { interviewItem } from '../DatabaseItem';
 import { c_interviewItem } from '../DatabaseItem';
+import {CLocationDatabase} from "../../clocationDatabase";
 
 
 const httpOptions = {
@@ -19,9 +20,12 @@ const httpOptions = {
 export class EditInterviewsDatabaseService {
   editInterviews
   OpenInterViewEditText:interviewItem; 
-  //UrlServer: string= "http://localhost:3000/saveToInterviews/"
-  UrlServer: string= "/saveToInterviews/"
 
+  Url= new CLocationDatabase;
+  UrlServer: string= this.Url.getUrl()+"saveToInterviews/";
+
+  //UrlServer: string= "http://localhost:3000/saveToInterviews/"
+  //UrlServer: string= "/saveToInterviews/"
 
 
   constructor(

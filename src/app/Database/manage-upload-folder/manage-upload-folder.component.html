@@ -1,0 +1,42 @@
+<br>
+<br>
+<br>
+<div class="container">
+  <mdb-breadcrumb>
+    <mdb-breadcrumb-item class="blue-text">Home</mdb-breadcrumb-item>
+    <mdb-breadcrumb-item class="blue-text active">Uploadfolder beheren</mdb-breadcrumb-item>
+  </mdb-breadcrumb>
+</div>
+<br>
+<br>
+<div class="container">
+
+  <table mat-table [dataSource]="folderContent" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="Bewerken">
+      <th mat-header-cell *matHeaderCellDef> Bewerken </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button color="warn" (click)="delete(element)"
+          aria-label="Example icon button with a menu icon">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="Bestand">
+      <th mat-header-cell *matHeaderCellDef> Bestand </th>
+      <td mat-cell *matCellDef="let element">{{element}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Afbeelding">
+      <th mat-header-cell *matHeaderCellDef> Afbeelding </th>
+      <td mat-cell *matCellDef="let element"><img [src]= element.imgScr alt="Foto van {{element}}" width="100px"> </td>
+    </ng-container>
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {CLocationDatabase} from "./clocationDatabase";
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +8,10 @@ import {HttpClient} from "@angular/common/http";
 export class InterviewsService {
 
   Interviews;
+  Url= new CLocationDatabase; 
+  UrlServer: string= this.Url.getUrl()+"interviewsdata/"; 
   //UrlServer: string= "http://localhost:3000/interviewsdata/"
-  UrlServer: string= "/interviewsdata/"
+  //UrlServer: string= "/interviewsdata/"
 
   constructor(
     private http: HttpClient

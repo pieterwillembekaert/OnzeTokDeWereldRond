@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {CLocationDatabase} from "./clocationDatabase";
 
 @Injectable({
   providedIn: 'root'
 })
 export class VisitorsService {
   Visitors;
+  Url= new CLocationDatabase;
+  UrlServer: string= this.Url.getUrl()+"data/";  
   //UrlServer: string= "http://localhost:3000/data/"
-  UrlServer: string= "/data/"
-
+  //UrlServer: string= this.__locationDatabase.getUrl()  + "data/"
+  
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    
   ) { }
 
   
@@ -30,6 +34,7 @@ export class VisitorsService {
     const data = <any>await this.getDataAsyn();
     //debug
     //console.log(data)
+    console.log(this.Url.getUrl())
     return data
   }
 

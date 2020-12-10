@@ -60,6 +60,7 @@ export class DeelnemenComponent implements OnInit {
   isEditable = true;
   bFoutInFormulier: boolean= false; 
   sFoutInFormulier: string= ";"
+  done: boolean= false;
 
   email = new FormControl('', [Validators.required, Validators.email]);
 
@@ -175,6 +176,7 @@ export class DeelnemenComponent implements OnInit {
 
   opsturen():void{
     this.bFoutInFormulier= false;
+    this.done= false; 
     this.sFoutInFormulier= "";
     //check data
     if(!this.basisGevensDeelnemer.value.name || ""){
@@ -211,6 +213,8 @@ export class DeelnemenComponent implements OnInit {
       console.log("geen afbeelding gevonden");
       return;
     }
+
+    this.done= true; 
 
 
     //Basis gegevens

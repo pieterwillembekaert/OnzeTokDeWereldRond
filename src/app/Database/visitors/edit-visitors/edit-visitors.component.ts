@@ -31,11 +31,11 @@ export class EditVisitorsComponent implements OnInit {
 
   ngOnInit(): void {
     var $this = this;
-    if(!this.__EditVisitorsDataService.getEditInterviews()){
+    if(!this.__EditVisitorsDataService.getEditVisitors()){
     this.__VisitorsService.getDataFromHttp().then(
       function (response) {
         $this.dataVisitors= response.members;
-        $this.__EditVisitorsDataService.setEditInterviews(response.members);
+        $this.__EditVisitorsDataService.setEditVisitors(response.members);
         //console.log(response)
         
       },
@@ -44,7 +44,7 @@ export class EditVisitorsComponent implements OnInit {
       }
     )
   }else{
-    this.dataVisitors= this.__EditVisitorsDataService.getEditInterviews();
+    this.dataVisitors= this.__EditVisitorsDataService.getEditVisitors();
 
   }
   }
@@ -56,7 +56,7 @@ export class EditVisitorsComponent implements OnInit {
     newData.id= this.dataVisitors.length; 
     //add data
     this.dataVisitors.push(newData); 
-    this.__EditVisitorsDataService.setEditInterviews(this.dataVisitors);
+    this.__EditVisitorsDataService.setEditVisitors(this.dataVisitors);
     this.table.renderRows();
   }
 
@@ -75,7 +75,7 @@ export class EditVisitorsComponent implements OnInit {
     if (index > -1) {
       this.dataVisitors.splice(index, 1);
     }
-    this.__EditVisitorsDataService.setEditInterviews(this.dataVisitors)
+    this.__EditVisitorsDataService.setEditVisitors(this.dataVisitors)
     this.table.renderRows();
   }
 
@@ -91,7 +91,7 @@ export class EditVisitorsComponent implements OnInit {
       
     } 
     this.dataVisitors = this.dataVisitors.slice().sort((a:any, b:any) => b.date - a.date)
-    this.__EditVisitorsDataService.setEditInterviews(this.dataVisitors);
+    this.__EditVisitorsDataService.setEditVisitors(this.dataVisitors);
     this.table.renderRows();
   }
 
