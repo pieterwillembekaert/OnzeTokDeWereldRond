@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
     'subtekst': ""
   },
   {
-    'image': './assets/img/Demo/OmslagTok2.jpg',
+    'image': './assets/img/Demo/deelnemers.jpg',
     'tekst': "Steek je tokmuts in je valies en neem de origineelste foto op reis!",
     'subtekst': ""
   },
