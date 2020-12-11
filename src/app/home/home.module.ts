@@ -30,7 +30,6 @@ import {LayoutModule} from '@angular/cdk/layout';
 import {MatProgressBarModule} from '@angular/material/progress-bar'; 
 import { CarouselModule, WavesModule } from 'angular-bootstrap-md'
 
-
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatListModule } from '@angular/material/list';
@@ -38,6 +37,7 @@ import { MatListModule } from '@angular/material/list';
 import {HomeComponent } from './home.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {KaartComponent} from './kaart/kaart.component';
+import {PageLoadComponent} from './page-load/page-load.component';
 
 import { MatCarouselModule } from '@ngmodule/material-carousel';
 
@@ -81,7 +81,9 @@ import { HomeRoutingModule } from './home-routing.module';
   declarations: [
     HomeComponent,
     DashboardComponent,
-    KaartComponent
+    KaartComponent,
+    PageLoadComponent,
+
   ]
 })
 export class HomeModule {}

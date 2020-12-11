@@ -9,10 +9,7 @@ export class TotalDistService {
 
   dataYear;
   Url= new CLocationDatabase; 
-  UrlServer: string= this.Url.getUrl()+"TotalDist/"; 
-  //UrlServer: string= "http://localhost:3000/TotalDist/"
-  //UrlServer: string= "/TotalDist/"
-
+  UrlServer: string= this.Url.getUrl()+"api/TotalDist/"; 
 
   constructor(
     private http: HttpClient

@@ -1,19 +1,7 @@
-import {
-  Injectable
-} from '@angular/core';
-import {
-  HttpClient,
-  HttpClientModule,
-  HttpRequest,
-  HttpResponse,
-  HttpEvent
-} from "@angular/common/http"
-import {
-  Subscription
-} from 'rxjs'
-import {
-  HttpHeaders
-} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient,HttpClientModule,HttpRequest,HttpResponse,HttpEvent} from "@angular/common/http"
+import {Subscription} from 'rxjs'
+import {HttpHeaders} from '@angular/common/http';
 
 import {CLocationDatabase} from "../../clocationDatabase";
 
@@ -27,11 +15,7 @@ export class ManageUploadFolderService {
   Url= new CLocationDatabase;
   UrlServerContenctServer: string= this.Url.getUrl()+"ContentFolderUpload/"; 
   UrlServerContenctDeletServer: string= this.Url.getUrl()+"DeletContentFolderUpload/"; 
-  //UrlServerContenctServer: string= "http://localhost:3000/ContentFolderUpload/"
-  //UrlServerContenctServer: string = "/ContentFolderUpload/"
-
-  //UrlServerContenctDeletServer: string= "http://localhost:3000/DeletContentFolderUpload/"
-  //UrlServerContenctDeletServer: string = "/DeletContentFolderUpload/"
+ 
 
   constructor(
     private http: HttpClient
@@ -57,9 +41,9 @@ export class ManageUploadFolderService {
   }
 
   deletFile(file: String) {
-    console.log(file)
-    
-    this.http.get(this.UrlServerContenctDeletServer+ "/" + file)
+    let url= this.UrlServerContenctDeletServer+ file
+    console.log(url)
+    this.http.get(url)
       .subscribe(data => {
 
         console.log(data);

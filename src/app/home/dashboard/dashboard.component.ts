@@ -9,6 +9,7 @@ import { CountriesService } from '../../countries.service';
 import { TotalDistService } from '../../total-dist.service';
 import { GeneralService } from '../../general.service';
 import { DashboardVars } from './DashboardVars';
+import { cDashbordVars } from './DashboardVars';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,7 @@ import { DashboardVars } from './DashboardVars';
 export class DashboardComponent implements OnInit {
 
  
-  data: DashboardVars; 
+  data= new cDashbordVars; 
   LoadData: boolean; 
 
   

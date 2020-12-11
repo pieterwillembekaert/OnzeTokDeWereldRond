@@ -9,9 +9,7 @@ export class InterviewsService {
 
   Interviews;
   Url= new CLocationDatabase; 
-  UrlServer: string= this.Url.getUrl()+"interviewsdata/"; 
-  //UrlServer: string= "http://localhost:3000/interviewsdata/"
-  //UrlServer: string= "/interviewsdata/"
+  UrlServer: string= this.Url.getUrl()+"api/interviewsdata/"; 
 
   constructor(
     private http: HttpClient

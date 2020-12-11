@@ -13,13 +13,9 @@ export class NieuweDeelnemerDataService {
   OpenVisitorEdit; 
   
   Url= new CLocationDatabase;
-  UrlServer: string= this.Url.getUrl()+"nieuwedeelnemerdata/";  
+  UrlServer: string= this.Url.getUrl()+"api/nieuwedeelnemerdata/";  
   UrlServerSave: string= this.Url.getUrl()+"saveToNieweDeelnemersDatabase/"; 
-  //UrlServer: string= "http://localhost:3000/nieuwedeelnemerdata/"
-  //UrlServer: string= "/nieuwedeelnemerdata/"
 
-  //UrlServerSave: string= "http://localhost:3000/saveToNieweDeelnemersDatabase/"
-  //UrlServerSave: string= "/saveToNieweDeelnemersDatabase/"
 
   constructor(
     private http: HttpClient

@@ -8,9 +8,7 @@ import {CLocationDatabase} from "./clocationDatabase";
 export class VisitorsService {
   Visitors;
   Url= new CLocationDatabase;
-  UrlServer: string= this.Url.getUrl()+"data/";  
-  //UrlServer: string= "http://localhost:3000/data/"
-  //UrlServer: string= this.__locationDatabase.getUrl()  + "data/"
+  UrlServer: string= this.Url.getUrl()+"api/visitors/";  
   
   constructor(
     private http: HttpClient,
