@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Router, Resolve,RouterStateSnapshot,ActivatedRouteSnapshot} from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-over-ons',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OverOnsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private __Router: Router,
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  deelnemen(){
+    this.__Router.navigate(['/Deelnemen']);
+
   }
 
 }

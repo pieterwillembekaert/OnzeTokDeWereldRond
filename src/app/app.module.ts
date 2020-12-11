@@ -60,8 +60,6 @@ import { InterviewsComponent } from './interviews/interviews.component';
 import { DeelnemenComponent } from './deelnemen/deelnemen.component';
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
