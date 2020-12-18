@@ -11,7 +11,8 @@ import {HttpClient, HttpClientModule, HttpRequest, HttpResponse, HttpEvent} from
 import {Subscription} from 'rxjs'
 import {FormBuilder,FormGroup,FormControl,Validators} from "@angular/forms";
 import {ErrorStateMatcher} from '@angular/material/core';
-import {QuillModule} from 'ngx-quill'
+import {QuillModule} from 'ngx-quill'; 
+import {CLocationDatabase} from "../clocationDatabase";
 
 import { CountriesService } from './../countries.service';
 import { NieuweDeelnemerOpsturenService } from './nieuwe-deelnemer-opsturen.service';
@@ -39,8 +40,9 @@ export class DeelnemenComponent implements OnInit {
   SaveVisitorViewEditText;
   SaveNewVisitorEditText= new c_nieuweDeelnemerItem;
 
-  postUrl = 'http://localhost:3000/upload'
-  //postUrl = '/upload'
+  //upload post
+  Url= new CLocationDatabase;
+  postUrl = this.Url.getUrl()+ 'upload'; 
   
   uploadPercent;
   files;
