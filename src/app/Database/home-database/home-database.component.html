@@ -1,15 +1,21 @@
 <br>
 <br>
 <br>
-
 <div class="container">
   <a class="btn " color="primary" role="button" (click)="openBezoekers()">Bezoekers</a>
   <a class="btn " color="primary" role="button" (click)="openInterviews()">Interviews</a>
   <a class="btn " color="primary" role="button" (click)="openUploadFolder()">Uploadfolder</a>
-  <a class="btn " color="primary" role="button" matBadge="{{AantalNieuweDeelnemers}}" matBadgePosition="after" matBadgeColor="accent"
-    (click)="openNieuweDeelnemers()">Nieuwe deelnemers</a>
+  <a class="btn " color="primary" role="button" matBadge="{{AantalNieuweDeelnemers}}" matBadgePosition="after"
+    matBadgeColor="accent" (click)="openNieuweDeelnemers()">Nieuwe deelnemers</a>
 
-   <a class="btn " color="primary" role="button" (click)="logout()">Uitloggen</a>
+  <a class="btn " color="primary" role="button" (click)="logout()">Uitloggen</a>
 </div>
 
+<div class="container" *ngIf="!StartUp" >
+  <h1>Welkom terug!</h1>
+  <p>
+    Wat wenst u te bewerken? Druk op één van de bovenstaande knoppen.
+  </p>
+
+</div>
 <router-outlet></router-outlet>

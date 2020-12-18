@@ -13,6 +13,7 @@ import { GuardsService } from '../../guards.service';
 export class HomeDatabaseComponent implements OnInit {
   AantalNieuweDeelnemers:Number=0; 
   refreshDataIntervar; 
+  StartUp: boolean= false;
 
   constructor(
     private __NieuweDeelnemerDataService: NieuweDeelnemerDataService,
@@ -40,18 +41,22 @@ export class HomeDatabaseComponent implements OnInit {
 
   openBezoekers(): void{
     this.__Router.navigate(['/Database/EditVisitors']);
+    this.StartUp= true; 
   }
 
   openInterviews(): void{
     this.__Router.navigate(['/Database/OverviewInterviews']);
+    this.StartUp= true; 
   }
 
   openNieuweDeelnemers() : void{
     this.__Router.navigate(['/Database/NieuweDeelnemers']);
+    this.StartUp= true; 
   }
 
   openUploadFolder() : void{
     this.__Router.navigate(['/Database/ManageUploadFolder']);
+    this.StartUp= true; 
   }
 
   logout() {
