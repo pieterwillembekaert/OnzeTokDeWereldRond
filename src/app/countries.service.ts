@@ -1,5 +1,9 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {
+  Injectable
+} from '@angular/core';
+import {
+  HttpClient
+} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +12,7 @@ export class CountriesService {
 
   country = [
     "kalimantan",
+    "latvia",
     "papua new guinea",
     "mexico",
     "estonia",
@@ -118,7 +123,7 @@ export class CountriesService {
     "taiwan",
     "kyushu",
     "shikoku",
-    "honshu",
+    "japan",
     "hokkaido",
     "iturup",
     "urup",
@@ -342,9 +347,11 @@ export class CountriesService {
     "greece",
     "thrace",
     "crete"
-];
+  ];
 
- countryAll = [
+  countryAll = [
+    "belgium",
+    "latvia",
     "kalimantan",
     "papua new guinea",
     "mexico",
@@ -446,7 +453,7 @@ export class CountriesService {
     "taiwan",
     "kyushu",
     "shikoku",
-    "honshu",
+    "japan",
     "hokkaido",
     "iturup",
     "urup",
@@ -667,9 +674,11 @@ export class CountriesService {
     "greece",
     "thrace",
     "crete"
-];
+  ];
 
-countryAllTranslation = [
+  countryAllTranslation = [
+    "België",
+    "Letland",
     "Kalimantan",
     "Papoea-Nieuw-Guinea",
     "Mexico",
@@ -771,7 +780,7 @@ countryAllTranslation = [
     "Taiwan",
     "Kyushu",
     "Shikoku",
-    "Honshu",
+    "Japan",
     "Hokkaido",
     "Itoeroep",
     "Oeroep",
@@ -992,40 +1001,38 @@ countryAllTranslation = [
     "Griekenland",
     "Thracië",
     "Kreta"
-]
+  ]
 
-//getters
-getCountry(){
-  return this.country;
-}
+  //getters
+  getCountry() {
+    return this.country;
+  }
 
-getCountryAll(){
-  return this.countryAll;
-}
+  getCountryAll() {
+    return this.countryAll;
+  }
 
-getCountryAllTranslation(){
-  return this.countryAllTranslation;
-}
+  getCountryAllTranslation() {
+    return this.countryAllTranslation;
+  }
 
-convertTranslateCountryToCountry(countryToSearch: String): String{
-  for (let i = 0; i < this.countryAllTranslation.length; i++) {
-    if(this.countryAllTranslation[i]==countryToSearch){
-      return this.countryAll[i];
+  convertTranslateCountryToCountry(countryToSearch: String): String {
+    for (let i = 0; i < this.countryAllTranslation.length; i++) {
+      if (this.countryAllTranslation[i] == countryToSearch) {
+        return this.countryAll[i];
 
+      }
     }
-  } 
-} 
+  }
 
-  convertCountryToTranslateCountry(countryToSearch: String): String{
+  convertCountryToTranslateCountry(countryToSearch: String): String {
     for (let i = 0; i < this.countryAll.length; i++) {
-      if(this.countryAll[i]==countryToSearch){
+      if (this.countryAll[i] == countryToSearch) {
         return this.countryAllTranslation[i];
       }
-    } 
-  } 
-  
+    }
+  }
+
 
 
 }
-
-
