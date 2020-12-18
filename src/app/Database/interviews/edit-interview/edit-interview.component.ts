@@ -6,7 +6,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatSelect } from '@angular/material/select';
 import { ReplaySubject, Subject } from 'rxjs';
 import {HttpClient, HttpClientModule, HttpRequest, HttpResponse, HttpEvent} from "@angular/common/http"
-import { Subscription } from 'rxjs'
+import { Subscription } from 'rxjs'; 
+import {CLocationDatabase} from "../../../clocationDatabase";
 
 import { CountriesService } from './../../../countries.service';
 import {EditInterviewsDatabaseService} from '../edit-interviews-database.service';
@@ -39,8 +40,9 @@ export class EditInterviewComponent implements OnInit {
   OpenInterViewEditText: interviewItem; 
   SaveInterViewEditText: interviewItem; 
 
-  postUrl = 'http://localhost:3000/upload'
-  //postUrl = '/upload'
+  //upload post
+  Url= new CLocationDatabase;
+  postUrl = this.Url.getUrl()+ 'upload'; 
 
   uploadPercent;
   files;
