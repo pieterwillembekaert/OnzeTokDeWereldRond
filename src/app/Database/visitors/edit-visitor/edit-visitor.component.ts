@@ -43,6 +43,7 @@ export class EditVisitorComponent implements OnInit {
   filesEmpty;
   myFormData:FormData//populated by ngfFormData directive
   httpEvent:HttpEvent<{}>
+  imagePath: string= "/upload/default.jpg"; 
 
   picker; 
   Country: String; 
@@ -128,14 +129,16 @@ export class EditVisitorComponent implements OnInit {
      date: [this.OpenVisitorViewEditText.date, Validators.required],
      distance: [this.OpenVisitorViewEditText.distance, Validators.required], 
    });
-   console.log(this.richTextForm)
+   //console.log(this.richTextForm)
  }
 
  ngOnDestroy() : void {
   this._onDestroy.next();
   this._onDestroy.complete();
 }
-saveInterviews():void{
+saveVisitor():void{
+
+  console.log(this.richTextForm.value.imgScr)
 
   if(this.CountrysServerSideCtrl.value){
     this.OpenVisitorViewEditText.countryTanslation= this.CountrysServerSideCtrl.value;
@@ -143,10 +146,15 @@ saveInterviews():void{
     this.OpenVisitorViewEditText.country= String(country);
   }
 
+  if(!this.richTextForm.value.imgScr){
+    this.OpenVisitorViewEditText.imgScr= this.imagePath; 
+  }else{
+    this.OpenVisitorViewEditText.imgScr=this.richTextForm.value.imgScr;
+  }
+
   let year= new Date(this.richTextForm.value.date).getFullYear()
   this.OpenVisitorViewEditText.year= String(year);
   this.OpenVisitorViewEditText.name=this.richTextForm.value.name; 
-  this.OpenVisitorViewEditText.imgScr=this.richTextForm.value.imgScr;
   this.OpenVisitorViewEditText.date= this.richTextForm.value.date; 
   this.OpenVisitorViewEditText.distance= this.richTextForm.value.distance; 
 }
@@ -161,6 +169,8 @@ onFileComplete(data: any) {
 
 uploadFiles(files:File) : Subscription {
   this.richTextForm.value.imgScr= 	"/upload/" + files[0].name;
+  this.imagePath= "/upload/" + files[0].name;
+
   this.__changeDetectorRef.detectChanges(); 
   const config = new HttpRequest('POST', this.postUrl, this.myFormData, {
     reportProgress: true
