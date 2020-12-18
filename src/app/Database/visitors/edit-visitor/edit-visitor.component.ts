@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, ChangeDetectorRef } from '@angular/core';
 import { AfterViewInit,  OnDestroy,  ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {debounceTime, delay, tap, filter, map, takeUntil} from 'rxjs/operators';
@@ -72,6 +72,7 @@ export class EditVisitorComponent implements OnInit {
     private __CountriesService: CountriesService,
     private __EditVisitorsDataService: EditVisitorsDataService,
     public __HttpClient:HttpClient,
+    private __changeDetectorRef: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -120,8 +121,6 @@ export class EditVisitorComponent implements OnInit {
    
    });
 
-   
-
    this.Country= this.OpenVisitorViewEditText.countryTanslation; 
    this.richTextForm = this._fb.group({
      name: [this.OpenVisitorViewEditText.name, Validators.required], 
@@ -162,6 +161,7 @@ onFileComplete(data: any) {
 
 uploadFiles(files:File) : Subscription {
   this.richTextForm.value.imgScr= 	"/upload/" + files[0].name;
+  this.__changeDetectorRef.detectChanges(); 
   const config = new HttpRequest('POST', this.postUrl, this.myFormData, {
     reportProgress: true
   })
@@ -172,11 +172,11 @@ uploadFiles(files:File) : Subscription {
     this.files= this.filesEmpty;
 
     if (event instanceof HttpResponse) {
-      alert('upload complete, old school alert used')
+      console.log('upload complete')
     }
   },
   error=>{
-    alert('!failure beyond compare cause:' + error.toString())
+    console.log('!failure beyond compare cause:' + error.toString())
   })
 }
 

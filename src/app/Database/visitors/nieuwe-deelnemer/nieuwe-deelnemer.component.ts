@@ -70,14 +70,14 @@ export class NieuweDeelnemerComponent implements OnInit {
   }
 
   saveNieuweDeelnemers():void{
-    console.log("save Nieuwe Deelnemers")
-    console.log(this.dataNewVisitors); 
+    //console.log("save Nieuwe Deelnemers")
+    //console.log(this.dataNewVisitors); 
     this.__NieuweDeelnemerDataService.setNieuweDeelnemersData(this.dataNewVisitors)
     this.__NieuweDeelnemerDataService.saveDataToServer();
   }
 
   saveVisitors():void{
-    console.log("save visitor")
+    //console.log("save visitor")
     this.__EditVisitorsDataService.saveDataToServer();
   }
 
