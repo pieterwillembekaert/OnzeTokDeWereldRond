@@ -7,7 +7,8 @@ import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { MatSelect } from '@angular/material/select';
 import { ReplaySubject, Subject } from 'rxjs';
 import {HttpClient, HttpClientModule, HttpRequest, HttpResponse, HttpEvent} from "@angular/common/http"
-import { Subscription } from 'rxjs'
+import { Subscription } from 'rxjs'; 
+import {CLocationDatabase} from "../../../clocationDatabase";
 
 
 import { CountriesService } from './../../../countries.service';
@@ -33,9 +34,10 @@ export class EditVisitorComponent implements OnInit {
   OpenVisitorViewEditText: visitorsItem; 
   SaveVisitorViewEditText: visitorsItem; 
 
-  postUrl = 'http://localhost:3000/upload'
-  //postUrl = '/upload'
-  
+  //upload post
+  Url= new CLocationDatabase;
+  postUrl = this.Url.getUrl()+ 'upload'; 
+ 
   uploadPercent;
   files;
   filesEmpty;
