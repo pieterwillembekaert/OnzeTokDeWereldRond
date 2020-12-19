@@ -17,7 +17,7 @@
         <mdb-card>
           <div class="view rgba-white-slight waves-light" mdbWavesEffect>
             <!-- Card img -->
-            <mdb-card-img src="{{x.imgScr}}" alt="Card image cap"></mdb-card-img>
+            <mdb-card-img src="{{x.imgScr}}" alt="Foto van {{x.name}} "></mdb-card-img>
             <a>
               <div class="mask"></div>
             </a>
@@ -33,7 +33,7 @@
             <mdb-card-text>
               LAND: {{x.countryTanslation}} <br>
               AFSTAND: {{x.distance}} <br>
-              DATUM: {{x.dateConvert}}
+              DATUM: {{x.date | date:"dd/MM/yy"}}
             </mdb-card-text>
 
             <!--<a href="#" mdbBtn color="primary" mdbWavesEffect>Button</a>-->
