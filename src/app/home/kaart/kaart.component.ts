@@ -1,7 +1,7 @@
 import { analyzeAndValidateNgModules } from '@angular/compiler';
-import { Component, OnInit, ViewChild,HostListener ,Directive, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, Directive, ChangeDetectorRef } from '@angular/core';
 import { ElementRef } from '@angular/core';
-import {Router, Resolve,RouterStateSnapshot,ActivatedRouteSnapshot} from '@angular/router';
+import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { VisitorsService } from '../../visitors.service';
 import { CountriesService } from '../../countries.service';
 
@@ -22,20 +22,20 @@ function clamp(n: number, min: number, max: number) {
     trigger('transformAnimation', [state(
       '*',
       style({ transform: '{{transform}}' }),
-      { params: { transform: 'scale(1)', duration: '0s' } }), 
-      transition('* => *', animate('{{duration}} ease'))])]
+      { params: { transform: 'scale(1)', duration: '0s' } }),
+    transition('* => *', animate('{{duration}} ease'))])]
 })
 
 export class KaartComponent implements OnInit {
   @ViewChild('mySvg') mySvg;
   GvCountryClick;
   objElm;
-  visitors; 
-  ErrorActive: boolean=false;
-  browserType: string; 
-  OpenBrikboard: boolean=true;
+  visitors;
+  ErrorActive: boolean = false;
+  browserType: string;
+  OpenBrikboard: boolean = true;
 
-  
+
   //zoom
   scale = 1;
   translate: [number, number] = [0, 0];
@@ -49,15 +49,15 @@ export class KaartComponent implements OnInit {
     }
   };
 
-  aPrikboardList: Array<PrikboardItem>=[
+  aPrikboardList: Array<PrikboardItem> = [
     new cPrikboardItem
   ];
 
 
-  PbLand: string=""; 
-  PbNumbersVisit: string="0";
+  PbLand: string = "";
+  PbNumbersVisit: string = "0";
 
- 
+
 
   options
   constructor(
@@ -66,15 +66,15 @@ export class KaartComponent implements OnInit {
     private __CountriesService: CountriesService,
     private __Router: Router,
     private changeDetectorRef: ChangeDetectorRef,
-    
+
   ) {
-   
-   }
+
+  }
 
   ngOnInit(): void {
-    this.visitors= this.__VisitorsService.getData(); 
-    
-    if(!this.visitors){
+    this.visitors = this.__VisitorsService.getData();
+
+    if (!this.visitors) {
       this.__Router.navigate(['/']);
     }
   }
@@ -84,15 +84,15 @@ export class KaartComponent implements OnInit {
 
 
   ngAfterViewInit(): void {
-     // initializing the function
-   
+    // initializing the function
 
-    var $this= this;
+
+    var $this = this;
     var __objElm = (this.mySvg.nativeElement as HTMLObjectElement);
-     __objElm.onload = () => {
-        $this.Main(__objElm);
-        
-       }
+    __objElm.onload = () => {
+      $this.Main(__objElm);
+
+    }
   }
 
 
@@ -104,28 +104,28 @@ export class KaartComponent implements OnInit {
     console.log("main")
     let country = this.__CountriesService.getCountry();
     let dataVisitor = this.__VisitorsService.getData().members;
-    this.ErrorActive= false; 
+    this.ErrorActive = false;
 
     if (country == null || undefined) {
-      this.ErrorActive= true; 
+      this.ErrorActive = true;
       console.log("data not load: counrtry")
       return;
     }
 
     if (dataVisitor == null || undefined) {
-      this.ErrorActive= true; 
+      this.ErrorActive = true;
       console.log("data not load: dataVisitor")
       return;
     }
 
     if (objElm == null || undefined) {
-      this.ErrorActive= true; 
+      this.ErrorActive = true;
       console.log("data not load: objElm")
       return;
     }
 
     if (objElm.contentDocument == null || undefined) {
-      this.ErrorActive= true; 
+      this.ErrorActive = true;
       console.log("data not load: objElm.contentDocument")
       return;
     }
@@ -146,28 +146,28 @@ export class KaartComponent implements OnInit {
 
     //Check input parameters
     if (country == null || undefined) {
-      this.ErrorActive= true; 
+      this.ErrorActive = true;
       console.log("data not load (AnimationMap): country")
       return;
     }
 
     if (DataFromJs == null || undefined) {
-      this.ErrorActive= true; 
+      this.ErrorActive = true;
       console.log("data not load (AnimationMap): DataFromJs")
       return;
     }
 
     if (HTLM == null || undefined) {
-      this.ErrorActive= true; 
+      this.ErrorActive = true;
       console.log("data not load (AnimationMap): HTLM")
       return;
     }
 
-    
+
     var ms = HTLM.getElementById(country);
 
     if (ms == null || undefined) {
-      this.ErrorActive= true; 
+      this.ErrorActive = true;
       console.log("error: ", country);
       return;
     }
@@ -177,7 +177,7 @@ export class KaartComponent implements OnInit {
     }
 
     var $this = this;
-   
+
     ms.onclick = function (e) {
       var color = '#34642d';
       //console.log($this.GvCountryClick)
@@ -186,11 +186,11 @@ export class KaartComponent implements OnInit {
       var style_value = '';
 
       //Prikboard
-      $this.PbNumbersVisit = String($this.getDataFromCountry(DataFromJs, country)); 
-      $this.PbLand= String($this.__CountriesService.convertCountryToTranslateCountry(country));
-      $this.OpenBrikboard= true;
+      $this.PbNumbersVisit = String($this.getDataFromCountry(DataFromJs, country));
+      $this.PbLand = String($this.__CountriesService.convertCountryToTranslateCountry(country));
+      $this.OpenBrikboard = true;
       $this.changeDetectorRef.detectChanges()
-      
+
       //color country 
       if ($this.GvCountryClick !== null || undefined) {
         let LcountryV = $this.GvCountryClick;
@@ -227,8 +227,8 @@ export class KaartComponent implements OnInit {
         msv.setAttribute('style', style_valueV);
 
       }
-   
-  
+
+
       //Parsing style attribute values
       var attrs = ms.getAttribute('style').split(' ').join('').split(';');
 
@@ -265,19 +265,19 @@ export class KaartComponent implements OnInit {
 
   ShowCountry(aAllCountry, DataJSON, HTML) {
     if (aAllCountry == null || undefined) {
-      this.ErrorActive= true; 
+      this.ErrorActive = true;
       console.log("data not load (ShowCountry): aAllCountry")
       return;
     }
 
     if (DataJSON == null || undefined) {
-      this.ErrorActive= true; 
+      this.ErrorActive = true;
       console.log("data not load (ShowCountry): DataJSON")
       return;
     }
 
     if (HTML == null || undefined) {
-      this.ErrorActive= true; 
+      this.ErrorActive = true;
       console.log("data not load (ShowCountry): HTML")
       return;
     }
@@ -327,7 +327,7 @@ export class KaartComponent implements OnInit {
     var ms = HTML.getElementById(country);
 
     if (ms == null || undefined) {
-      this.ErrorActive= true; 
+      this.ErrorActive = true;
       console.log("Error: " + country)
       return;
     }
@@ -357,40 +357,42 @@ export class KaartComponent implements OnInit {
   }
 
   getDataFromCountry(dataInJSON, DataClickCountry) {
-    
+
     if (dataInJSON == null || undefined) {
-      this.ErrorActive= true; 
+      this.ErrorActive = true;
       console.log("data not load (CreatDataPrikboardOnClick): dataInJSON")
       return;
     }
     if (DataClickCountry == null || undefined) {
-      this.ErrorActive= true; 
+      this.ErrorActive = true;
       console.log("data not load (CreatDataPrikboardOnClick): DataClickCountry")
       return;
     }
-    
 
-    const LenPrikboardList= this.aPrikboardList.length
-    this.aPrikboardList.splice(1, LenPrikboardList);
+    //resultaat wissen
+    const LenPrikboardList = this.aPrikboardList.length;
+    this.aPrikboardList.splice(0, LenPrikboardList);
 
+    //reset tellers
     var numberOfFound = 0;
     var lastID = 0;
-  
 
-    //Create new
+
+    //Create new prikboard item
     for (let i = 0; i < dataInJSON.length; i++) {
       if (dataInJSON[i].country === DataClickCountry) {
         //Creat new
         numberOfFound++;
 
-        let NewData= new cPrikboardItem(); 
-        NewData.name= String(dataInJSON[i].name); 
-        NewData.imgScr= String(dataInJSON[i].imgScr);
-        NewData.date= dataInJSON[i].date; 
+        //data copie
+        let NewData = new cPrikboardItem();
+        NewData.name = String(dataInJSON[i].name);
+        NewData.imgScr = String(dataInJSON[i].imgScr);
+        NewData.date = dataInJSON[i].date;
 
-      
+        //data toevoegen
         this.aPrikboardList.push(NewData)
-       
+
         lastID = i;
       }
     }
@@ -411,25 +413,25 @@ export class KaartComponent implements OnInit {
 
       this.updateTransformAnimationState();
     }
-   
+
     e.preventDefault();
   }
 
-  private calculateTranslationToZoomPoint(currentScale: number, newScale: number, currentTranslation: [number, number],  e: {clientX: number, clientY: number}, ): [number, number] {
-      // kudos to this awesome answer on stackoverflow:
-      // https://stackoverflow.com/a/27611642/1814576
+  private calculateTranslationToZoomPoint(currentScale: number, newScale: number, currentTranslation: [number, number], e: { clientX: number, clientY: number },): [number, number] {
+    // kudos to this awesome answer on stackoverflow:
+    // https://stackoverflow.com/a/27611642/1814576
     const [eventLayerX, eventLayerY] = this.projectToLayer(e);
 
     const xAtCurrentScale = (eventLayerX - currentTranslation[0]) / currentScale;
     const yAtCurrentScale = (eventLayerY - currentTranslation[1]) / currentScale;
 
     const xAtNewScale = xAtCurrentScale * newScale;
-    const yAtNewScale  = yAtCurrentScale * newScale;
+    const yAtNewScale = yAtCurrentScale * newScale;
 
     return [eventLayerX - xAtNewScale, eventLayerY - yAtNewScale];
   }
 
-  private projectToLayer(eventClientXY: {clientX: number, clientY: number}): [number, number] {
+  private projectToLayer(eventClientXY: { clientX: number, clientY: number }): [number, number] {
     const layerX = Math.round(eventClientXY.clientX - this.clientX);
     const layerY = Math.round(eventClientXY.clientY - this.clientY);
     return [layerX, layerY];
@@ -453,16 +455,11 @@ export class KaartComponent implements OnInit {
     }
   }
 
-  trackByVisitors(index: number, aPrikboardList: any): string {  
-    //console.log("trackByVisitors")
-    //console.log(index)
-    return aPrikboardList.name;  
 
-  }  
 
 
   closePBdata() {
-    this.OpenBrikboard= false; 
+    this.OpenBrikboard = false;
   }
 
   resetZoom() {
@@ -487,41 +484,41 @@ export class KaartComponent implements OnInit {
 
   moveUp() {
     console.log("move up")
-    let y=  this.translate[0]
+    let y = this.translate[0]
     console.log(y)
     this.translate = [
       this.translateOnPanStart[0],
-      this.translateOnPanStart[1]= this.translateOnPanStart[1] + 10
+      this.translateOnPanStart[1] = this.translateOnPanStart[1] + 10
     ];
     this.updateTransformAnimationState("0s");
   }
 
   moveDown() {
     console.log("move up")
-    let y=  this.translate[0]
+    let y = this.translate[0]
     console.log(y)
     this.translate = [
       this.translateOnPanStart[0],
-      this.translateOnPanStart[1]= this.translateOnPanStart[1] - 10
+      this.translateOnPanStart[1] = this.translateOnPanStart[1] - 10
     ];
     this.updateTransformAnimationState("0s");
   }
 
   moveLeft() {
     //console.log("move left")
-   
+
     this.translate = [
-      this.translateOnPanStart[0]=this.translateOnPanStart[0] -10,
+      this.translateOnPanStart[0] = this.translateOnPanStart[0] - 10,
       this.translateOnPanStart[1]
     ];
     this.updateTransformAnimationState("0s");
   }
 
-  
+
   moveRight() {
     //console.log("move right")
     this.translate = [
-      this.translateOnPanStart[0]=this.translateOnPanStart[0] +10,
+      this.translateOnPanStart[0] = this.translateOnPanStart[0] + 10,
       this.translateOnPanStart[1]
     ];
     this.updateTransformAnimationState("0s");
@@ -533,7 +530,7 @@ export class KaartComponent implements OnInit {
 
 
 
-  
+
 
 
 
