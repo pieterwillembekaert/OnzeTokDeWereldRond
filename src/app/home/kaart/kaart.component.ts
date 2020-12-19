@@ -456,8 +456,6 @@ export class KaartComponent implements OnInit {
   }
 
 
-
-
   closePBdata() {
     this.OpenBrikboard = false;
   }
