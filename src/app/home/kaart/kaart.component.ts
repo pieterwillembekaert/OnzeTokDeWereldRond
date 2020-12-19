@@ -101,7 +101,7 @@ export class KaartComponent implements OnInit {
   }
 
   Main(objElm): void {
-    console.log("main")
+    //console.log("main")
     let country = this.__CountriesService.getCountry();
     let dataVisitor = this.__VisitorsService.getData().members;
     this.ErrorActive = false;
@@ -467,23 +467,23 @@ export class KaartComponent implements OnInit {
   }
 
   zoomIn() {
-    console.log("zoom in")
+    //console.log("zoom in")
     this.scale = this.scale + 0.1;
     this.translate = [0, 0];
     this.updateTransformAnimationState();
   }
 
   zoomOut() {
-    console.log("zoom out")
+    //console.log("zoom out")
     this.scale = this.scale - 0.1;
     this.translate = [0, 0];
     this.updateTransformAnimationState();
   }
 
   moveUp() {
-    console.log("move up")
+    //console.log("move up")
     let y = this.translate[0]
-    console.log(y)
+    //console.log(y)
     this.translate = [
       this.translateOnPanStart[0],
       this.translateOnPanStart[1] = this.translateOnPanStart[1] + 10
@@ -492,9 +492,9 @@ export class KaartComponent implements OnInit {
   }
 
   moveDown() {
-    console.log("move up")
+    //console.log("move up")
     let y = this.translate[0]
-    console.log(y)
+    //console.log(y)
     this.translate = [
       this.translateOnPanStart[0],
       this.translateOnPanStart[1] = this.translateOnPanStart[1] - 10
