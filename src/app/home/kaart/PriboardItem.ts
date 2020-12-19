@@ -1,4 +1,13 @@
 export interface PrikboardItem {
-  Name: string;
-  ImageScr: string;
+  name: string;
+  imgScr: string;
+  date: Date; 
+}
+
+
+export class cPrikboardItem implements PrikboardItem {
+  name: string="";
+  imgScr: string="";
+  date: Date;
+  
 }

@@ -22,8 +22,9 @@
 
 <div class="grid-container-map">
 
-  <div class="grid-item-map"  >
-    <object [@transformAnimation]="transformAnimationState" #mySvg id='map' data='./assets/img/map/World_map.svg' class="map-svg" type='image/svg+xml'></object>
+  <div class="grid-item-map">
+    <object [@transformAnimation]="transformAnimationState" #mySvg id='map' data='./assets/img/map/World_map.svg'
+      class="map-svg" type='image/svg+xml'></object>
   </div>
 
 
@@ -36,16 +37,42 @@
 
     <div>Land: <span [innerHTML]="PbLand"></span><br>Bezoekers: <span [innerHTML]="PbNumbersVisit"></span>
     </div>
+    <br><br>
 
 
-   <div id="dataPostMap" class="grid-container-map-data-PB" *ngFor="let PB_Element of aPrikboardList; trackBy:trackByVisitors">
-      <div class="grid-container-map-data-Image-PB" *ngIf="PB_Element.Name">
-        <div class="grid-item-map-data-PB">
-          <div class="grid-item-map-data-Image-PB">
-            <div class="grid-item-map-data-Image-PB"><img class="grid-item-map-data-Image-Style-PB"
-                [src]= PB_Element.ImageScr alt="Foto van {{PB_Element.Name}}"></div>
-            <div class="grid-item-map-data-Text-PB"><span [innerHTML]="PB_Element.Name"></span></div>
-          </div>
+    <div class="container">
+      <div class="row">
+        <!-- post -->
+        <div class="col-12 col-sm-4" *ngFor="let PB_Element of aPrikboardList; trackBy:trackByVisitors">
+          <!-- Card -->
+          <mdb-card *ngIf="PB_Element.name">
+            <div class="view rgba-white-slight waves-light" mdbWavesEffect>
+              <!-- Card img -->
+              <mdb-card-img src="http://localhost:3000/{{PB_Element.imgScr}}" alt="Card image cap"></mdb-card-img>
+              <a>
+                <div class="mask"></div>
+              </a>
+            </div>
+            <!--Card content-->
+            <mdb-card-body>
+              <!--Title-->
+              <mdb-card-title>
+                <h4>{{PB_Element.name}}</h4>
+              </mdb-card-title>
+
+              <!--Text-->
+              <mdb-card-text>
+                DATUM: {{PB_Element.date | date:"dd/MM/yy"}}
+              </mdb-card-text>
+
+              <!--<a href="#" mdbBtn color="primary" mdbWavesEffect>Button</a>-->
+            </mdb-card-body>
+          </mdb-card>
+          <!-- Card -->
+          <br>
         </div>
+        <!-- einde -->
       </div>
     </div>
+  </div>
+</div>

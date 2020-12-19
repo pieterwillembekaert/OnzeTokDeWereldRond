@@ -5,7 +5,7 @@ import {Router, Resolve,RouterStateSnapshot,ActivatedRouteSnapshot} from '@angul
 import { VisitorsService } from '../../visitors.service';
 import { CountriesService } from '../../countries.service';
 
-import { PrikboardItem } from './PriboardItem';
+import { PrikboardItem, cPrikboardItem } from './PriboardItem';
 
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
@@ -50,10 +50,7 @@ export class KaartComponent implements OnInit {
   };
 
   aPrikboardList: Array<PrikboardItem>=[
-    {
-      'Name': '',
-      'ImageScr': ''
-    }
+    new cPrikboardItem
   ];
 
 
@@ -385,13 +382,14 @@ export class KaartComponent implements OnInit {
       if (dataInJSON[i].country === DataClickCountry) {
         //Creat new
         numberOfFound++;
+
+        let NewData= new cPrikboardItem(); 
+        NewData.name= String(dataInJSON[i].name); 
+        NewData.imgScr= String(dataInJSON[i].imgScr);
+        NewData.date= dataInJSON[i].date; 
+
       
-        this.aPrikboardList.push(
-          {
-          'Name': String(dataInJSON[i].name), 
-          'ImageScr': String(dataInJSON[i].imgScr)
-          }
-        )
+        this.aPrikboardList.push(NewData)
        
         lastID = i;
       }

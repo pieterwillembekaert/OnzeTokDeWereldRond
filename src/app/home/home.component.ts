@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
 import { FormControl } from '@angular/forms';
-import { CarouselModule, WavesModule } from 'angular-bootstrap-md'
+import { CarouselModule, WavesModule } from 'angular-bootstrap-md';
+
 
 import { VisitorsService } from '../visitors.service';
 import { CountriesService } from '../countries.service';
