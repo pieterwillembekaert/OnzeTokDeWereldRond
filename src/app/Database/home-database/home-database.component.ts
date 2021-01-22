@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, Resolve,RouterStateSnapshot,ActivatedRouteSnapshot} from '@angular/router';
+import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 
-import {NieuweDeelnemerDataService} from '../nieuwe-deelnemer-data.service';
+import { NieuweDeelnemerDataService } from '../nieuwe-deelnemer-data.service';
 import { GuardsService } from '../../guards.service';
 
 
@@ -11,9 +11,9 @@ import { GuardsService } from '../../guards.service';
   styleUrls: ['./home-database.component.css']
 })
 export class HomeDatabaseComponent implements OnInit {
-  AantalNieuweDeelnemers:Number=0; 
-  refreshDataIntervar; 
-  StartUp: boolean= false;
+  AantalNieuweDeelnemers: Number = 0;
+  refreshDataIntervar;
+  StartUp: boolean = false;
 
   constructor(
     private __NieuweDeelnemerDataService: NieuweDeelnemerDataService,
@@ -22,46 +22,46 @@ export class HomeDatabaseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-   
+
     this.__NieuweDeelnemerDataService.getDataFromHttp().then(
-      (response)=> {
-        this.AantalNieuweDeelnemers= response.members.length;
+      (response) => {
+        this.AantalNieuweDeelnemers = response.members.length;
         //console.log(response)
-        
+
       },
-      (error)=> {
+      (error) => {
         console.log("error: ", error)
       }
     )
   }
 
-  ngAfterViewInit(){
-    this.refreshData(); 
+  ngAfterViewInit() {
+    this.refreshData();
   }
 
-  openBezoekers(): void{
+  openBezoekers(): void {
     this.__Router.navigate(['/Database/EditVisitors']);
-    this.StartUp= true; 
+    this.StartUp = true;
   }
 
-  openInterviews(): void{
+  openInterviews(): void {
     this.__Router.navigate(['/Database/OverviewInterviews']);
-    this.StartUp= true; 
+    this.StartUp = true;
   }
 
-  openNieuweDeelnemers() : void{
+  openNieuweDeelnemers(): void {
     this.__Router.navigate(['/Database/NieuweDeelnemers']);
-    this.StartUp= true; 
+    this.StartUp = true;
   }
 
-  openUploadFolder() : void{
+  openUploadFolder(): void {
     this.__Router.navigate(['/Database/ManageUploadFolder']);
-    this.StartUp= true; 
+    this.StartUp = true;
   }
 
-  openBeheerders() : void{
+  openBeheerders(): void {
     this.__Router.navigate(['/Database/Beheerders']);
-    this.StartUp= true; 
+    this.StartUp = true;
   }
 
 
@@ -71,37 +71,37 @@ export class HomeDatabaseComponent implements OnInit {
     this.__Router.navigate(['/Login']);
   }
 
-  updateData(){
+  updateData() {
 
     //Get data
-    var $this = this;
+
     this.__NieuweDeelnemerDataService.getDataFromHttp().then(
-      function (response) {
-        $this.AantalNieuweDeelnemers= response.members.length;
+      (response) => {
+        this.AantalNieuweDeelnemers = response.members.length;
         //console.log(response)
-        
+
       },
-      function (error) {
+      (error) => {
         console.log("error: ", error)
       }
     )
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.stopRefreshData();
   }
 
-  
-  refreshData(){
-    var $this= this; 
-    this.refreshDataIntervar = setInterval(function(){ $this.updateData() }, 3000);
-    
+
+  refreshData() {
+    var $this = this;
+    this.refreshDataIntervar = setInterval(function () { $this.updateData() }, 3000);
+
   }
 
-  stopRefreshData(){
+  stopRefreshData() {
     clearInterval(this.refreshDataIntervar)
-   
+
   }
-  
+
 
 }

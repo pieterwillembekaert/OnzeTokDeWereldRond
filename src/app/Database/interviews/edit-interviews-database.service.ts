@@ -24,9 +24,6 @@ export class EditInterviewsDatabaseService {
   Url= new CLocationDatabase;
   UrlServer: string= this.Url.getUrl()+"saveToInterviews/";
 
-  //UrlServer: string= "http://localhost:3000/saveToInterviews/"
-  //UrlServer: string= "/saveToInterviews/"
-
 
   constructor(
     private http: HttpClient

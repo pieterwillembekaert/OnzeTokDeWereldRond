@@ -29,18 +29,18 @@ export class OverviewInterviewsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    var $this = this;
+    
     if(!this.__EditInterviewsDatabaseService.getEditInterviews()){
     this.__InterviewsService.getDataFromHttp().then(
-      function (response) {
-        $this.dataInterviews= response.members;
-        $this.__EditInterviewsDatabaseService.setEditInterviews(response.members);
-        $this.LoadData= true;
+       (response)=> {
+        this.dataInterviews= response.members;
+        this.__EditInterviewsDatabaseService.setEditInterviews(response.members);
+        this.LoadData= true;
         //console.log(response)
         
       },
-      function (error) {
-        $this.LoadData= false;
+      (error)=> {
+        this.LoadData= false;
         console.log("error: ", error)
       }
     )

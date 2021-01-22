@@ -31,27 +31,27 @@ export class NieuweDeelnemerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    var $this = this;
+    
     this.__NieuweDeelnemerDataService.getDataFromHttp().then(
-      function (response) {
-        $this.dataNewVisitors= response.members;
-        $this.__NieuweDeelnemerDataService.setNieuweDeelnemersData(response.members);
+      (response)=> {
+        this.dataNewVisitors= response.members;
+        this.__NieuweDeelnemerDataService.setNieuweDeelnemersData(response.members);
         //console.log(response)
         
       },
-      function (error) {
+      (error)=> {
         console.log("error: ", error)
       }
     )
 
     this.__VisitorsService.getDataFromHttp().then(
-      function (response) {
-        $this.dataVisitors= response.members;
-        $this.__EditVisitorsDataService.setEditVisitors(response.members);
+       (response)=> {
+        this.dataVisitors= response.members;
+        this.__EditVisitorsDataService.setEditVisitors(response.members);
         //console.log(response)
         
       },
-      function (error) {
+      (error)=> {
         console.log("error: ", error)
       }
     )
