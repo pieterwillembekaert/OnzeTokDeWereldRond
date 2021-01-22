@@ -6,7 +6,6 @@ export interface Bank {
 
 
 export interface Counrtys {
-  
 }
 
 export interface BankGroup {
