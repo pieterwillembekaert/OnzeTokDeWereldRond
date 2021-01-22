@@ -55,8 +55,6 @@ export class NieuweDeelnemerComponent implements OnInit {
         console.log("error: ", error)
       }
     )
-
-
   }
 
   accept(row: any) :void{

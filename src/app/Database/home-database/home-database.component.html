@@ -7,11 +7,12 @@
   <a class="btn " color="primary" role="button" (click)="openUploadFolder()">Uploadfolder</a>
   <a class="btn " color="primary" role="button" matBadge="{{AantalNieuweDeelnemers}}" matBadgePosition="after"
     matBadgeColor="accent" (click)="openNieuweDeelnemers()">Nieuwe deelnemers</a>
+  <a class="btn " color="primary" role="button" (click)="openBeheerders()">Beheerders</a>
 
   <a class="btn " color="primary" role="button" (click)="logout()">Uitloggen</a>
 </div>
 
-<div class="container" *ngIf="!StartUp" >
+<div class="container" *ngIf="!StartUp">
   <h1>Welkom terug!</h1>
   <p>
     Wat wenst u te bewerken? Druk op één van de bovenstaande knoppen.

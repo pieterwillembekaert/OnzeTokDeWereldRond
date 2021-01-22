@@ -51,7 +51,7 @@ import { HomeDatabaseComponent } from './home-database/home-database.component';
 import { DatabaseLoginComponent } from './database-login/database-login.component';
 import { NieuweDeelnemerComponent } from './visitors/nieuwe-deelnemer/nieuwe-deelnemer.component';
 import { ManageUploadFolderComponent } from './manage-upload-folder/manage-upload-folder.component';
-
+import { DatabaseBeheerdersComponent } from './DatabaseBeheerders/DatabaseBeheerders.component';
 import { MarkdownEditorModule } from "./TextEditors/markdown-editor/markdown-editor.module";
 import { RichTextEditorModule } from "./TextEditors/rich-text-editor/rich-text-editor.module";
 
@@ -105,6 +105,7 @@ import { RichTextEditorModule } from "./TextEditors/rich-text-editor/rich-text-e
     DatabaseLoginComponent,
     NieuweDeelnemerComponent,
     ManageUploadFolderComponent,
+    DatabaseBeheerdersComponent,
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },

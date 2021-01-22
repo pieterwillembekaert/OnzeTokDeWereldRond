@@ -22,14 +22,14 @@ export class HomeDatabaseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    var $this = this;
+   
     this.__NieuweDeelnemerDataService.getDataFromHttp().then(
-      function (response) {
-        $this.AantalNieuweDeelnemers= response.members.length;
+      (response)=> {
+        this.AantalNieuweDeelnemers= response.members.length;
         //console.log(response)
         
       },
-      function (error) {
+      (error)=> {
         console.log("error: ", error)
       }
     )
@@ -58,6 +58,12 @@ export class HomeDatabaseComponent implements OnInit {
     this.__Router.navigate(['/Database/ManageUploadFolder']);
     this.StartUp= true; 
   }
+
+  openBeheerders() : void{
+    this.__Router.navigate(['/Database/Beheerders']);
+    this.StartUp= true; 
+  }
+
 
   logout() {
     console.log("logout")

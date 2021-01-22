@@ -10,6 +10,7 @@ import { HomeDatabaseComponent } from './home-database/home-database.component';
 import { DatabaseLoginComponent } from './database-login/database-login.component';
 import { NieuweDeelnemerComponent } from './visitors/nieuwe-deelnemer/nieuwe-deelnemer.component';
 import { ManageUploadFolderComponent } from './manage-upload-folder/manage-upload-folder.component';
+import { DatabaseBeheerdersComponent } from './DatabaseBeheerders/DatabaseBeheerders.component';
 
 const DatabaseRoutes: Routes = [
   {
@@ -23,6 +24,7 @@ const DatabaseRoutes: Routes = [
           { path: 'NieuweDeelnemers', component: NieuweDeelnemerComponent },
           { path: 'DatabaseLogin', component: DatabaseLoginComponent },
           { path: 'ManageUploadFolder', component: ManageUploadFolderComponent },
+          { path: 'Beheerders', component: DatabaseBeheerdersComponent },
         ]
   }
   

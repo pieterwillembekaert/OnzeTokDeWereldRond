@@ -1,0 +1,80 @@
+<br>
+<br>
+<br>
+<div class="container">
+  <mdb-breadcrumb>
+    <mdb-breadcrumb-item class="blue-text">Home</mdb-breadcrumb-item>
+    <mdb-breadcrumb-item class="blue-text active">Beheerders</mdb-breadcrumb-item>
+  </mdb-breadcrumb>
+</div>
+<div class="container">
+  <h1>Beheerders</h1>
+  <p>
+    <a class="btn material-icons" color="primary" role="button"
+      matTooltip="Bewaar aanpassingen naar de bezoekers database" aria-label="" (click)="saveToServer()">save</a>
+    <a class="btn material-icons" color="primary" role="button" matTooltip="Download database" aria-label=""
+      (click)="download()">file_download</a>
+    <a class="btn material-icons" color="primary" role="button" matTooltip="Download database" aria-label=""
+      (click)="newBeheerder()">add</a>
+
+  </p>
+
+  <table mat-table [dataSource]="dataBeheerders" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="Bewerken">
+      <th mat-header-cell *matHeaderCellDef> Bewerken </th>
+      <td mat-cell *matCellDef="let element">
+        <a class="waves-effect waves-light material-icons" (click)="editBeheerder(element)">edit</a>
+        <a class="materialize-red-text waves-effect waves-light material-icons" (click)="delete(element)">delete</a>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="Naam">
+      <th mat-header-cell *matHeaderCellDef> Naam </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="WW">
+      <th mat-header-cell *matHeaderCellDef> WW</th>
+      <td mat-cell *matCellDef="let element"> {{element.WW}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <br><br>
+
+  <mat-card *ngIf='bOpenDataEditor' class="example-card mat-elevation-z8">
+    <mat-card-header>
+      <mat-card-title>Bewerk data beheerder</mat-card-title>
+
+    </mat-card-header>
+
+    <mat-card-content>
+      <div *ngIf="dataToChange">
+        <mat-form-field appearance="fill">
+          <mat-label>Naam</mat-label>
+          <input matInput placeholder="" value="{{dataToChange.name}}" [(ngModel)]="dataToChange.name">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="" value="{{dataToChange.email}}" [(ngModel)]="dataToChange.email">
+        </mat-form-field>
+
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="warn" (click)="closeEditor()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button mat-raised-button color="accent" (click)="save()">
+        <mat-icon>save</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
