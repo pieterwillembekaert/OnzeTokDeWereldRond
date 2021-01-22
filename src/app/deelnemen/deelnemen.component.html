@@ -212,7 +212,7 @@
           <mdb-card *ngIf="!bFoutInFormulier">
             <div class="view rgba-white-slight waves-light" mdbWavesEffect>
               <!-- Card img -->
-              <mdb-card-img *ngIf="afbeeldingDeelnemer.value.imgScr" src="{{afbeeldingDeelnemer.value.imgScr}}" alt="Afbeelding"></mdb-card-img>
+              <mdb-card-img  src="{{afbeeldingDeelnemer.value.imgScr}}" alt="Afbeelding"></mdb-card-img>
               <a>
                 <div class="mask"></div>
               </a>
@@ -230,8 +230,6 @@
                 AFSTAND: {{bezoekGegevensDeelnemer.value.distance}} km <br>
                 DATUM: {{bezoekGegevensDeelnemer.value.date | date:"dd/MM/yy"}}
               </mdb-card-text>
-
-              
             </mdb-card-body>
           </mdb-card>
         </div>

@@ -64,6 +64,7 @@ export class DeelnemenComponent implements OnInit {
   sFoutInFormulier: string = ";"
   done: boolean = false;
   bSucceedUploadImage: boolean = false;
+  testImage: string; 
 
   email = new FormControl('', [Validators.required, Validators.email]);
 
@@ -251,15 +252,18 @@ export class DeelnemenComponent implements OnInit {
   }
 
   reset(){
+    //Reset formulier
     this.bSucceedUploadImage = false;
     this.done= false; 
-    
   }
+
+ 
+
 
   uploadFiles(files: File): Subscription {
     this.richTextForm.value.imgScr = "/upload/" + files[0].name;
     this.afbeeldingDeelnemer.value.imgScr = "/upload/" + files[0].name;
-    this.afbeeldingDeelnemerScr = "/upload/" + files[0].name;
+  
     this.bSucceedUploadImage = false;
     const config = new HttpRequest('POST', this.postUrl, this.myFormData, {
       reportProgress: true
@@ -272,8 +276,7 @@ export class DeelnemenComponent implements OnInit {
 
         if (event instanceof HttpResponse) {
           this.bSucceedUploadImage = true;
-          //alert('upload complete, old school alert used')
-          //console.log(event)
+          
         }
       },
         error => {
