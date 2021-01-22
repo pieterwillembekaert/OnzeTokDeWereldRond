@@ -250,6 +250,12 @@ export class DeelnemenComponent implements OnInit {
       })
   }
 
+  reset(){
+    this.bSucceedUploadImage = false;
+    this.done= false; 
+    
+  }
+
   uploadFiles(files: File): Subscription {
     this.richTextForm.value.imgScr = "/upload/" + files[0].name;
     this.afbeeldingDeelnemer.value.imgScr = "/upload/" + files[0].name;

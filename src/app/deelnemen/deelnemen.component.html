@@ -212,7 +212,7 @@
           <mdb-card *ngIf="!bFoutInFormulier">
             <div class="view rgba-white-slight waves-light" mdbWavesEffect>
               <!-- Card img -->
-              <mdb-card-img src="{{afbeeldingDeelnemer.value.imgScr}}" alt="Card image cap"></mdb-card-img>
+              <mdb-card-img *ngIf="afbeeldingDeelnemer.value.imgScr" src="{{afbeeldingDeelnemer.value.imgScr}}" alt="Afbeelding"></mdb-card-img>
               <a>
                 <div class="mask"></div>
               </a>
@@ -231,20 +231,24 @@
                 DATUM: {{bezoekGegevensDeelnemer.value.date | date:"dd/MM/yy"}}
               </mdb-card-text>
 
-              <a class="btn blue" color="primary" role="button" *ngIf="!done" (click)="opsturen()">Deelnemen</a>
+              
             </mdb-card-body>
           </mdb-card>
         </div>
       </div>
       <!-- Card -->
       <br>
+      <p>
+        Zijn de bovenstaande gegevens correct? Klik dan op de knop Deelnemen. <br>
+        Pas de gegevens aan door op terug te klikken. 
+      </p>
       <br>
-      <br>
+      <a class="btn blue" color="primary" role="button" *ngIf="!done" (click)="opsturen()">Deelnemen</a>
       <br>
       <br>
       <div>
         <button mat-raised-button matStepperPrevious color="primary">Terug</button>
-        <button mat-raised-button (click)="stepper.reset()" color="primary">Reset</button>
+        <button mat-raised-button (click)="stepper.reset(); reset()" color="primary">Reset</button>
       </div>
     </div>
   </mat-step>
