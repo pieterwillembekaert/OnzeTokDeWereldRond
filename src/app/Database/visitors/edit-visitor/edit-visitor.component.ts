@@ -13,14 +13,13 @@ import {CLocationDatabase} from "../../../clocationDatabase";
 
 import { CountriesService } from './../../../countries.service';
 import {EditVisitorsDataService} from './../../edit-visitors-data.service';
-import { Bank, BANKS, Counrtys } from '../demo-data-visitor';
+
 
 import {FormBuilder,FormGroup,FormControl,Validators} from "@angular/forms";
 
 import {QuillModule} from 'ngx-quill'
 
-import { c_visitorsItem } from './../../DatabaseItem';
-import { visitorsItem } from './../../DatabaseItem';
+import { visitorsItem, c_visitorsItem } from './../../DatabaseItem';
 
 
 @Component({
@@ -61,7 +60,7 @@ export class EditVisitorComponent implements OnInit {
   public searching = false;
 
   /** list of banks filtered after simulating server side search */
-  public  filteredServerSideCounrtys: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
+  public  filteredServerSideCounrtys: ReplaySubject<String[]> = new ReplaySubject<String[]>(1);
 
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
@@ -92,14 +91,14 @@ export class EditVisitorComponent implements OnInit {
         }
 
         // simulate server fetching and filtering data
-        return this.countrys.filter(country => country.toLowerCase().indexOf(search) > -1);
+        return this.countrys.filter(country => country.toLowerCase().indexOf(search.toLowerCase()) > -1);
       }),
       delay(500),
       takeUntil(this._onDestroy)
     )
-    .subscribe(filteredBanks => {
+    .subscribe(filtered => {
       this.searching = false;
-      this.filteredServerSideCounrtys.next(filteredBanks);
+      this.filteredServerSideCounrtys.next(filtered);
     },
       error => {
         // no errors in our simulated example
