@@ -11,6 +11,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { InterviewsComponent } from './interviews/interviews.component';
 import { DeelnemenComponent } from './deelnemen/deelnemen.component';
 import { DatabaseLoginComponent } from './Database/database-login/database-login.component';
+import { GrafiekAfstandComponent } from './GrafiekAfstand/GrafiekAfstand.component';
+
 import { GuardsGuard } from './guards.guard';
 
 const appRoutes: Routes = [
@@ -35,6 +37,7 @@ const appRoutes: Routes = [
   { path: 'Interviews', component: InterviewsComponent },
   { path: 'Deelnemen', component: DeelnemenComponent },
   { path: 'Login', component: DatabaseLoginComponent },
+  { path: 'GrafiekAfstand', component: GrafiekAfstandComponent },
   { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
 ];
 

@@ -54,14 +54,17 @@ import { TekenOnzeTokComponent } from './teken-onze-tok/teken-onze-tok.component
 import { VolgOnsComponent } from './volg-ons/volg-ons.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
+import { ChartsModule } from 'ng2-charts';
+
 import { HomeRoutingModule } from './home/home-routing.module';
 import { DatabaseRoutingModule } from './Database/database-routing.module';
 import { InterviewsComponent } from './interviews/interviews.component';
 import { DeelnemenComponent } from './deelnemen/deelnemen.component';
+import { GrafiekAfstandComponent } from './GrafiekAfstand/GrafiekAfstand.component';
 
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     PrikbordComponent,
     OverOnsComponent,
@@ -70,10 +73,12 @@ import { DeelnemenComponent } from './deelnemen/deelnemen.component';
     PageNotFoundComponent,
     InterviewsComponent,
     DeelnemenComponent,
-  ],
+      GrafiekAfstandComponent
+   ],
   imports: [
     BrowserModule,
     MatProgressBarModule,
+    ChartsModule,
     MatStepperModule,
     MatNativeDateModule,
     BrowserAnimationsModule,
