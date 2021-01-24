@@ -1,13 +1,5 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<!--<img src="./assets/img/banners/wolk.png" alt="Italian Trulli">-->
+<!-- Top bar -->
 <mdb-navbar color="primary" SideClass="navbar navbar-expand-lg navbar-dark orange accent-3 ie-nav fixed-top" [containerInside]="false">
   <mdb-navbar-brand>
       <a class="logo navbar-brand" href=""><strong>Onze Tok de wereld rond</strong></a>
@@ -20,6 +12,9 @@
       <li class="nav-item waves-light" mdbWavesEffect>
           <a class="nav-link"  [routerLink]="['/Prikbord']" routerLinkActive="active" mat-button>Prikbord</a>
       </li>
+      <li class="nav-item waves-light" mdbWavesEffect>
+        <a class="nav-link"  [routerLink]="['/Grafiek']" routerLinkActive="active" mat-button>Grafiek</a>
+    </li>
       <li class="nav-item waves-light" mdbWavesEffect>
         <a class="nav-link"  [routerLink]="['/TekenOnzeTok']" routerLinkActive="active" mat-button>TekenOnzeTok</a>
       </li>
@@ -46,6 +41,8 @@
       </ul>
   </links>
 </mdb-navbar>
+
+
 <!-- Main -->
 <main>
   <div style="min-height:1500px;">

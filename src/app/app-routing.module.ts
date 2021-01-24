@@ -37,7 +37,7 @@ const appRoutes: Routes = [
   { path: 'Interviews', component: InterviewsComponent },
   { path: 'Deelnemen', component: DeelnemenComponent },
   { path: 'Login', component: DatabaseLoginComponent },
-  { path: 'GrafiekAfstand', component: GrafiekAfstandComponent },
+  { path: 'Grafiek', component: GrafiekAfstandComponent },
   { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
 ];
 

@@ -13,7 +13,7 @@ import { RouterOutlet } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'OnzeTokDeWereldRond';
+  title = 'Onze Tok De Wereld Rond';
 
   mobileQuery: MediaQueryList;
   fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
@@ -37,9 +37,6 @@ constructor(
 getAnimationData(outlet: RouterOutlet) {
   return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
 }
-
-
-
 
 
 ngOnDestroy():void{

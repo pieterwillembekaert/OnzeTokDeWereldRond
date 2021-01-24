@@ -1,75 +1,54 @@
 <!--Dashboard-->
 <mat-progress-bar *ngIf="!LoadData" mode="indeterminate"></mat-progress-bar>
 <div class="container" id="TotaleAfstand">
-    <br><br>
-    <h1>Dashboard</h1>
-    <div class="grid-container-home">
-      <div class="grid-item-home"></div>
-      <div class="grid-item-home">
-        <!--Dashboard km teller-->
-        <div class="grid-container-KM">
-          <div class="grid-item-KM">
-            <p id="km100000">{{data.z5}}</p>
-          </div>
-          <div class="grid-item-KM">
-            <p id="km10000">{{data.z4}}</p>
-          </div>
-          <div class="grid-item-KM">
-            <p id="km1000">{{data.z3}}</p>
-          </div>
-          <div class="grid-item-KM">
-            <p id="km100">{{data.z2}}</p>
-          </div>
-          <div class="grid-item-KM">
-            <p id="km10">{{data.z1}}</p>
-          </div>
-          <div class="grid-item-KM">
-            <p id="km1">{{data.z}}</p>
-          </div>
-          <div class="grid-item-KM">
-            <p>km</p>
-          </div>
+  <br><br>
+  <h1>Dashboard</h1>
+  <div class="grid-container-home">
+    <div class="grid-item-home"></div>
+    <div class="grid-item-home">
+      <!--Dashboard km teller-->
+      <div class="grid-container-KM">
+        <div class="grid-item-KM">
+          <p id="km100000">{{data.z5}}</p>
+        </div>
+        <div class="grid-item-KM">
+          <p id="km10000">{{data.z4}}</p>
+        </div>
+        <div class="grid-item-KM">
+          <p id="km1000">{{data.z3}}</p>
+        </div>
+        <div class="grid-item-KM">
+          <p id="km100">{{data.z2}}</p>
+        </div>
+        <div class="grid-item-KM">
+          <p id="km10">{{data.z1}}</p>
+        </div>
+        <div class="grid-item-KM">
+          <p id="km1">{{data.z}}</p>
+        </div>
+        <div class="grid-item-KM">
+          <p>km</p>
         </div>
       </div>
-  
-      <div class="grid-item-home"></div>
     </div>
 
-    <p>De tok legt jaarlijk heel wat kilometers af. Op de kilometerteler is te zien hoeveel kilometer de tok totaal
-        aflegde.</p>
-    
-      <p>Wenst u de afstand te zien van een ander jaar? Maak een keuze:</p>
-    
-      <div class="row">
-        <mat-form-field appearance="fill">
-          <mat-label>Kies een jaartal</mat-label>
-          <mat-select [(value)]="selectedYear">
-            <mat-option value="alles">Alles</mat-option>
-            <mat-option value="1976">1976</mat-option>
-            <mat-option value="2009">2009</mat-option>
-            <mat-option value="2010">2010</mat-option>
-            <mat-option value="2011">2011</mat-option>
-            <mat-option value="2012">2012</mat-option>
-            <mat-option value="2013">2013</mat-option>
-            <mat-option value="2014">2014</mat-option>
-            <mat-option value="2015">2015</mat-option>
-            <mat-option value="2016">2016</mat-option>
-            <mat-option value="2015">2015</mat-option>
-            <mat-option value="2016">2016</mat-option>
-            <mat-option value="2017">2017</mat-option>
-            <mat-option value="2018">2018</mat-option>
-            <mat-option value="2019">2019</mat-option>
-            <mat-option value="2020">2020</mat-option>
-            <mat-option value="2021">2021</mat-option>
-            <mat-option value="2021">2022</mat-option>
-            <mat-option value="2023">2023</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <button (click)="changeData()" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
-          <mat-icon>done</mat-icon>
-        </button>
-       
-      </div>
-    </div>
+    <div class="grid-item-home"></div>
+  </div>
 
-    <router-outlet></router-outlet>
+  <p>De tok legt jaarlijk heel wat kilometers af. Op de kilometerteler is te zien hoeveel kilometer de tok totaal
+    aflegde.</p>
+
+  <p>Wenst u de afstand te zien van een ander jaar? Maak een keuze:</p>
+
+  <div class="row" *ngIf="bShowSelection">
+    <mat-form-field appearance="fill">
+      <mat-label>Kies een jaartal</mat-label>
+      <select matNativeControl (change)="selectYear($event)">
+        <option *ngFor="let option of SelectYear" [value]="option">{{option}}</option>
+      </select>
+    </mat-form-field>
+
+  </div>
+</div>
+
+<router-outlet></router-outlet>

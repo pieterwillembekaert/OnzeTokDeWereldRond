@@ -29,10 +29,12 @@ export class TotalDistService {
   }
 
   async getDataFromHttp(urlYear) {
+    
     if(urlYear=="alles"){
       urlYear= 0; 
     }
-    const data = <any>await this.getDataAsyn(urlYear);
+    
+    const data = <any>await this.getDataAsyn(String(urlYear));
     //debug
     //console.log(data)
     return data

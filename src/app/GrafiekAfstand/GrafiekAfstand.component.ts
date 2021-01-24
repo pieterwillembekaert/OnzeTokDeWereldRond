@@ -134,7 +134,6 @@ export class GrafiekAfstandComponent implements OnInit {
 
   updateChart() {
 
-
     //clear old data
     let EmteyData: number[] = [0];
     let EmteyDataString: string[] = ["0"];
