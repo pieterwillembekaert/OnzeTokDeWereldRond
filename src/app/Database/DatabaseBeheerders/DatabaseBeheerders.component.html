@@ -35,7 +35,7 @@
 
     <ng-container matColumnDef="WW">
       <th mat-header-cell *matHeaderCellDef> WW</th>
-      <td mat-cell *matCellDef="let element"> {{element.WW}} </td>
+      <td mat-cell *matCellDef="let element"> </td>
     </ng-container>
 
     <ng-container matColumnDef="Email">
@@ -66,6 +66,38 @@
           <input matInput placeholder="" value="{{dataToChange.email}}" [(ngModel)]="dataToChange.email">
         </mat-form-field>
 
+        <br>
+        <button *ngIf="!bEditorPW" mat-raised-button color="accent" (click)="editorPW()">
+          <mat-icon>add</mat-icon>
+        </button>
+
+        <button *ngIf="bEditorPW"  mat-raised-button color="warn" (click)="closeEditorPW()">
+          <mat-icon>close</mat-icon>
+        </button>
+
+        <br>
+        <div *ngIf="bEditorPW">
+
+        <h1>Nieuw wachtwoord</h1>
+        <mat-form-field appearance="fill">
+          <mat-label>Nieuw wachtwoord</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" value="{{newPassword}}" [(ngModel)]="newPassword">
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Herhaal wachtwoord</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" value="{{newPasswordRepeat}}"
+            [(ngModel)]="newPasswordRepeat">
+        </mat-form-field>
+        <br>
+        <h5 *ngIf="bnewPasswordNotEq">  wachtwoord komen niet overeen</h5>
+        <button mat-raised-button color="accent" (click)="sendNewPW()">
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+        
+
+
       </div>
     </mat-card-content>
     <mat-card-actions>
@@ -75,6 +107,10 @@
       <button mat-raised-button color="accent" (click)="save()">
         <mat-icon>save</mat-icon>
       </button>
+
+    
+
+    
     </mat-card-actions>
   </mat-card>
 </div>

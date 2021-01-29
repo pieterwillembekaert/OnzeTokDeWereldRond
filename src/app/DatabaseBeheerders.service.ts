@@ -13,6 +13,7 @@ export class DatabaseBeheerdersService {
   Url = new CLocationDatabase;
   UrlServer: string = this.Url.getUrl() + "api/databaseBeheerders/";
   UrlServerPostData: string = this.Url.getUrl() + "api/updateBeheerders/";
+  UrlServerPostPassword: string = this.Url.getUrl() + "api/newUserPassword/";
 
 
 
@@ -58,6 +59,28 @@ export class DatabaseBeheerdersService {
           if (error.status == 200) {
             //console.log("Ok", error.status);
             resole(error.status);
+          } else {
+            //console.log("Error", error);
+            reject(error);
+          }
+        });
+       
+    })
+  }
+
+  saveNewPassword(dataToSave) {
+    
+    return new Promise((resole, reject) => {
+      this.http.post<any>(this.UrlServerPostPassword, dataToSave).subscribe(
+        data => {
+          console.log("POST Request is successful ", data);
+          resole(data.status);
+        },
+        error => {
+          if (error.status == 200) {
+            //console.log("Ok", error);
+            //console.log("Ok", error.error.text);
+            resole(error.error.text);
           } else {
             //console.log("Error", error);
             reject(error);

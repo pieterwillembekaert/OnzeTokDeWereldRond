@@ -47,7 +47,7 @@ export class DatabaseLoginComponent implements OnInit {
     this.message = 'Bezig met inloggen...';
 
   
-    var convertPw= this.__CaesarCipherService.caesarCipher(this.loginForm.value.password, 20)
+    var convertPw= this.__CaesarCipherService.caesarCipher(this.loginForm.value.password, 20);
     var logInFromPage = new cUserDatabase();
     logInFromPage.name = this.loginForm.value.name;
     logInFromPage.password = convertPw;
