@@ -14,7 +14,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 import {MatSliderModule} from '@angular/material/slider';
-
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import {FlexLayoutModule } from '@angular/flex-layout';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
@@ -124,6 +124,7 @@ import { GrafiekAfstandComponent } from './GrafiekAfstand/GrafiekAfstand.compone
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+    {provide: MAT_DATE_LOCALE, useValue: 'nl-BE'},
   ],
   bootstrap: [AppComponent]
 })

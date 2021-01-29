@@ -2,14 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import {
-  CanActivate, Router,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  CanActivateChild,
-  NavigationExtras,
-  CanLoad, Route
-} from '@angular/router';
+import {CanActivate, Router,ActivatedRouteSnapshot,RouterStateSnapshot,CanActivateChild,NavigationExtras,CanLoad, Route} from '@angular/router';
 
 import { GuardsService } from './guards.service';
 
