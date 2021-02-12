@@ -17,7 +17,7 @@ export class EditVisitorsComponent implements OnInit {
   dataVisitors; 
   dataVisitor: visitorsItem; 
   LoadData: boolean; 
-  displayedColumns: string[] = ['bewerken', 'id', 'Naam', 'Land','Afstand', 'Datum', 'Afbeelding'];
+  displayedColumns: string[] = ['bewerken', 'id', 'Naam', 'Bond' ,'Land','Afstand', 'Datum', 'Afbeelding'];
   @ViewChild(MatTable) table: MatTable<any>;
 
   NieuweDeelnemersTonen: boolean; 
@@ -30,16 +30,15 @@ export class EditVisitorsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    var $this = this;
+    
     if(!this.__EditVisitorsDataService.getEditVisitors()){
     this.__VisitorsService.getDataFromHttp().then(
-      function (response) {
-        $this.dataVisitors= response.members;
-        $this.__EditVisitorsDataService.setEditVisitors(response.members);
+      (response)=> {
+        this.dataVisitors= response.members;
+        this.__EditVisitorsDataService.setEditVisitors(response.members);
         //console.log(response)
-        
       },
-      function (error) {
+      (error)=> {
         console.log("error: ", error)
       }
     )

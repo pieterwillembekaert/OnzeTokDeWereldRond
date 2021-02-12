@@ -11,8 +11,10 @@
 
 <div class="container">
   <p>
-    <a class="btn blue material-icons" color="primary" role="button" matTooltip="Terug naar overzicht" aria-label="" (click)="backToOverview()">arrow_back</a>
-    <a class="btn blue material-icons" color="primary" role="button" matTooltip="Bewaar aanpassingen" aria-label="" (click)="backToOverview()"(click)="saveInterviews()">save</a>
+    <a class="btn blue material-icons" color="primary" role="button" matTooltip="Terug naar overzicht" aria-label=""
+      (click)="backToOverview()">arrow_back</a>
+    <a class="btn blue material-icons" color="primary" role="button" matTooltip="Bewaar aanpassingen" aria-label=""
+      (click)="backToOverview()" (click)="saveInterviews()">save</a>
   </p>
   <h2 class="example-h2">Bewerk het interview</h2>
   <form [formGroup]="richTextForm">
@@ -26,14 +28,30 @@
     </div>
     <!--Kies een land-->
     <mat-form-field>
+      <mat-label>Kies een land</mat-label>
       <mat-select [formControl]="CountrysServerSideCtrl" placeholder="{{Country}}">
         <!-- place ngx-mat-select-search inside mat-option to allow opening without initial selection -->
         <mat-option>
-          <ngx-mat-select-search [formControl]="CountrysServerSideFilteringCtrl" [searching]="searching">
-          </ngx-mat-select-search>
+          <ngx-mat-select-search [formControl]="CountrysServerSideFilteringCtrl" [searching]="searchingCountrys"
+            placeholderLabel="Land zoeken..." noEntriesFoundLabel="'Geen land gevonden'"></ngx-mat-select-search>
         </mat-option>
         <mat-option *ngFor="let country of filteredServerSideCounrtys | async" [value]="country">
           {{country}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!--Kies een bond-->
+    <mat-form-field>
+      <mat-label>Kies een bond</mat-label>
+      <mat-select [formControl]="BondenServerSideCtrl" placeholder="{{Bond}}">
+        <!--place ngx-mat-select-search inside mat-option to allow opening without initial selection-->
+        <mat-option>
+          <ngx-mat-select-search [formControl]="BondenServerSideFilteringCtrl" [searching]="searchingBonden"
+            placeholderLabel="Bond zoeken..." noEntriesFoundLabel="'Geen bond gevonden'"></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let bonden of filteredServerSideBonden | async" [value]="bonden">
+          {{bonden.code}} {{bonden.bond}}
         </mat-option>
       </mat-select>
     </mat-form-field>

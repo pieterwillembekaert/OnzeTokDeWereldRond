@@ -12,13 +12,16 @@ import { Subscription } from 'rxjs'
 import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
 import { ErrorStateMatcher } from '@angular/material/core';
 import { QuillModule } from 'ngx-quill';
-import { CLocationDatabase } from "../clocationDatabase";
 
+
+/*Service */
 import { CountriesService } from './../countries.service';
 import { NieuweDeelnemerOpsturenService } from './nieuwe-deelnemer-opsturen.service';
+import { BondenService } from '../Bonden.service';
 
-
-import { c_nieuweDeelnemerItem, nieuweDeelnemerItem } from './../Database/DatabaseItem';
+/*interface and class */
+import { CLocationDatabase } from "../clocationDatabase";
+import { c_nieuweDeelnemerItem, nieuweDeelnemerItem, iBond, cBond } from './../Database/DatabaseItem';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -34,10 +37,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./deelnemen.component.css']
 })
 export class DeelnemenComponent implements OnInit {
-  markdownForm: FormGroup;
+  //markdownForm: FormGroup;
   richTextForm: FormGroup;
-  //OpenVisitorViewEditText;
-  //SaveVisitorViewEditText;
+
   SaveNewVisitorEditText = new c_nieuweDeelnemerItem;
 
   //upload post
@@ -52,11 +54,13 @@ export class DeelnemenComponent implements OnInit {
 
   //picker;
   Country: String;
+  Bond: String;
+
   afbeeldingDeelnemerScr: String = "";
 
   basisGevensDeelnemer: FormGroup;
   bezoekGegevensDeelnemer: FormGroup;
-  //landDeelnemer: FormGroup;
+;
   afbeeldingDeelnemer: FormGroup;
   doneDeelnemer: FormGroup;
   isEditable = true;
@@ -65,6 +69,8 @@ export class DeelnemenComponent implements OnInit {
   done: boolean = false;
   bSucceedUploadImage: boolean = false;
   testImage: string; 
+
+  endResultBond: iBond= new cBond(); 
 
   email = new FormControl('', [Validators.required, Validators.email]);
 
@@ -83,28 +89,32 @@ export class DeelnemenComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
 
-  /** list of countrys */
-  protected countrys: any;
-
-  /** control for the selected bank for server side filtering */
-  public CountrysServerSideCtrl: FormControl = new FormControl();
-
-  /** control for filter for server side. */
-  public CountrysServerSideFilteringCtrl: FormControl = new FormControl();
-
-  /** indicate search operation is in progress */
-  public searching = false;
-
-  /** list of banks filtered after simulating server side search */
-  public filteredServerSideCounrtys: ReplaySubject<String[]> = new ReplaySubject<String[]>(1);
-
-  /** Subject that emits when the component has been destroyed. */
-  protected _onDestroy = new Subject<void>();
+   /** list of countrys */
+   protected countrys: any;
+   protected bonden: any;
+ 
+   /** control for the selected bank for server side filtering */
+   public CountrysServerSideCtrl: FormControl = new FormControl();
+   public BondenServerSideCtrl: FormControl = new FormControl();
+ 
+   /** control for filter for server side. */
+   public CountrysServerSideFilteringCtrl: FormControl = new FormControl();
+   public BondenServerSideFilteringCtrl: FormControl = new FormControl();
+ 
+   /** indicate search operation is in progress */
+   public searchingCountrys = false;
+   public searchingBonden = false;
+ 
+   /** list of data filtered after simulating server side search */
+   public filteredServerSideCounrtys: ReplaySubject<String[]> = new ReplaySubject<String[]>(1);
+   public filteredServerSideBonden: ReplaySubject<String[]> = new ReplaySubject<String[]>(1);
+ 
+   /** Subject that emits when the component has been destroyed. */
+   protected _onDestroy = new Subject<void>();
 
   constructor(
     private _fb: FormBuilder,
-    private __route: ActivatedRoute,
-    private __Router: Router,
+    private __BondenService: BondenService,
     private __CountriesService: CountriesService,
     public __HttpClient: HttpClient,
     public __NieuweDeelnemerOpsturenService: NieuweDeelnemerOpsturenService,
@@ -130,12 +140,13 @@ export class DeelnemenComponent implements OnInit {
 
 
     this.countrys = this.__CountriesService.getCountryAllTranslation();
+    this.bonden= this.__BondenService.getBonden();
 
     // listen for search field value changes
     this.CountrysServerSideFilteringCtrl.valueChanges
       .pipe(
         filter(search => !!search),
-        tap(() => this.searching = true),
+        tap(() => this.searchingCountrys = true),
         takeUntil(this._onDestroy),
         debounceTime(200),
         map(search => {
@@ -148,23 +159,56 @@ export class DeelnemenComponent implements OnInit {
         takeUntil(this._onDestroy)
       )
       .subscribe(filtered => {
-        this.searching = false;
+        this.searchingCountrys = false;
         this.filteredServerSideCounrtys.next(filtered);
       },
         error => {
           // no errors in our simulated example
-          this.searching = false;
+          this.searchingCountrys = false;
           // handle error...
         });
 
-    this.markdownForm = this._fb.group({
-      name: ["", Validators.required],
-      imgScr: ["", Validators.required],
-      email: ["", Validators.required],
-      date: [new Date()],
-      distance: [0, Validators.required],
-      opmerking: ["", Validators.required],
-    });
+         /*Searche bond */
+    //listen for search field value changes
+    this.BondenServerSideFilteringCtrl.valueChanges
+    .pipe(
+      filter(search => !!search),
+      tap(() => this.searchingBonden = true),
+      takeUntil(this._onDestroy),
+      debounceTime(200),
+      map(search => {
+        if (!this.bonden) {
+          return [];
+        }
+
+        // simulate server fetching and filtering data
+        return this.bonden.filter(
+          (bond: any) => {
+            //number in string? 
+            var regex = /\d+/g;
+            var matches = search.match(regex);  // creates array from matches
+
+            if (!matches) {
+              return bond.bond.toLowerCase().indexOf(search.toLowerCase()) > -1
+            } else {
+
+              let toStringBondCode = String(bond.code);
+              return toStringBondCode.toLowerCase().indexOf(search.toLowerCase()) > -1
+
+            }
+          });
+      }),
+      delay(500),
+      takeUntil(this._onDestroy)
+    )
+    .subscribe(filtered => {
+      this.searchingBonden = false;
+      this.filteredServerSideBonden.next(filtered);
+    },
+      error => {
+        // no errors in our simulated example
+        this.searchingBonden = false;
+      });
 
     this.richTextForm = this._fb.group({
       name: ["", Validators.required],
@@ -180,11 +224,19 @@ export class DeelnemenComponent implements OnInit {
     this.bFoutInFormulier = false;
     this.done = false;
     this.sFoutInFormulier = "";
+
     //check data
     if (!this.basisGevensDeelnemer.value.name || "") {
       this.bFoutInFormulier = true;
       this.sFoutInFormulier = "Vul uw naam in! ";
       console.log("Vul uw naam in!");
+      return;
+    }
+
+    if (!this.BondenServerSideCtrl.value || "") {
+      this.bFoutInFormulier = true;
+      this.sFoutInFormulier = this.sFoutInFormulier + "Kies uw bond! ";
+      console.log("Kies uw bond!");
       return;
     }
 
@@ -221,6 +273,7 @@ export class DeelnemenComponent implements OnInit {
     //Basis gegevens
     this.SaveNewVisitorEditText.name = this.basisGevensDeelnemer.value.name;
     this.SaveNewVisitorEditText.email = this.basisGevensDeelnemer.value.email;
+    this.SaveNewVisitorEditText.bond = this.BondenServerSideCtrl.value;
 
     //Land
     this.SaveNewVisitorEditText.countryTanslation = this.CountrysServerSideCtrl.value;
@@ -257,9 +310,14 @@ export class DeelnemenComponent implements OnInit {
     this.done= false; 
   }
 
+  updateBond(){
+    console.log("bond");
+    console.log(this.BondenServerSideCtrl.value)
+    this.endResultBond= this.BondenServerSideCtrl.value;
+
+  }
+
  
-
-
   uploadFiles(files: File): Subscription {
     this.richTextForm.value.imgScr = "/upload/" + files[0].name;
     this.afbeeldingDeelnemer.value.imgScr = "/upload/" + files[0].name;

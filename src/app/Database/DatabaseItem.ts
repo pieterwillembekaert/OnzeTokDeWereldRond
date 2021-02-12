@@ -1,6 +1,19 @@
+/*Bonden */
+export interface iBond {
+  code: number; 
+  bond:string;  
+}
+
+export class cBond implements iBond {
+  code: number= 0; 
+  bond:string= "KSA";  
+}
+
+/*interviews */
 export interface interviewItem {
   id: number,
   name: string,
+  bond: iBond, 
   country: string,
   countryTanslation: string,
   date: Date,
@@ -16,6 +29,7 @@ export interface interviewItem {
 export class c_interviewItem implements interviewItem {
   id: number=0;
   name: string="";
+  bond: iBond= new cBond();
   country: string="";
   countryTanslation: string="";
   date: Date;
@@ -28,9 +42,12 @@ export class c_interviewItem implements interviewItem {
   text: string="";
 }
 
+
+/*visitors */
 export interface visitorsItem {
   id: number,
   name: string,
+  bond: iBond, 
   country: string,
   countryTanslation: string,
   date: Date,
@@ -43,6 +60,7 @@ export interface visitorsItem {
 export class c_visitorsItem implements visitorsItem {
   id: number=0;
   name: string="";
+  bond: iBond= new cBond();
   country: string="";
   countryTanslation: string="";
   date: Date;
@@ -52,9 +70,11 @@ export class c_visitorsItem implements visitorsItem {
   year: string="";
 }
 
+/*Nieuwe deelnemers */
 export interface nieuweDeelnemerItem {
   id: number,
   name: string,
+  bond: iBond, 
   email: string,
   opmerking: string,
   country: string,
@@ -69,6 +89,7 @@ export interface nieuweDeelnemerItem {
 export class c_nieuweDeelnemerItem implements nieuweDeelnemerItem {
   id: number=0;
   name: string="";
+  bond: iBond= new cBond();
   email: string;
   opmerking: string; 
   country: string="";

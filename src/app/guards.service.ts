@@ -17,14 +17,14 @@ export class GuardsService {
   Url= new CLocationDatabase;
   UrlServerLogin: string= this.Url.getUrl()+"api/users/login";  
 
-  isLoggedIn : boolean = false;
+  //isLoggedIn : boolean = false;
+  isLoggedIn : boolean = true;
   UserAdim={
     name: 'KSA',
     password: 'nzg'
   }
 
 
-  
 
   constructor(
     private http: HttpClient,

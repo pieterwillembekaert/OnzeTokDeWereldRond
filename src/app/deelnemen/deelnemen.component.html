@@ -54,10 +54,24 @@
           <input matInput placeholder="tok@ksa.be" formControlName="email" required>
           <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
+        <br><br>
+        <!--Kies een bond-->
+        <mat-form-field>
+          <mat-label>Kies een bond</mat-label>
+          <mat-select [formControl]="BondenServerSideCtrl" placeholder="{{Bond}}">
+            <!--place ngx-mat-select-search inside mat-option to allow opening without initial selection-->
+            <mat-option>
+              <ngx-mat-select-search [formControl]="BondenServerSideFilteringCtrl" [searching]="searchingBonden"
+                placeholderLabel="Bond zoeken..." noEntriesFoundLabel="'Geen bond gevonden'"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let bonden of filteredServerSideBonden | async" [value]="bonden">
+              {{bonden.code}} {{bonden.bond}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
         <br>
         <br>
-
-        <button mat-raised-button matStepperNext color="primary">Volgende</button>
+        <button mat-raised-button matStepperNext color="primary" (click)="updateBond()">Volgende</button>
       </div>
     </form>
   </mat-step>
@@ -69,13 +83,16 @@
         <p>
           Kies het land uit de lijst die u bezocht hebt.
         </p>
+
+        <!--Kies een land-->
         <mat-form-field>
           <mat-label>Kies een land</mat-label>
           <mat-select [formControl]="CountrysServerSideCtrl" placeholder="{{Country}}">
             <!-- place ngx-mat-select-search inside mat-option to allow opening without initial selection -->
-            <ngx-mat-select-search [formControl]="CountrysServerSideFilteringCtrl" [searching]="searching"
-              placeholderLabel="Land zoeken..." noEntriesFoundLabel="'Geen land gevonden'"></ngx-mat-select-search>
-            <mat-option></mat-option>
+            <mat-option>
+              <ngx-mat-select-search [formControl]="CountrysServerSideFilteringCtrl" [searching]="searchingCountrys"
+                placeholderLabel="Land zoeken..." noEntriesFoundLabel="'Geen land gevonden'"></ngx-mat-select-search>
+            </mat-option>
             <mat-option *ngFor="let country of filteredServerSideCounrtys | async" [value]="country">
               {{country}}
             </mat-option>
@@ -212,7 +229,7 @@
           <mdb-card *ngIf="!bFoutInFormulier">
             <div class="view rgba-white-slight waves-light" mdbWavesEffect>
               <!-- Card img -->
-              <mdb-card-img  src="{{afbeeldingDeelnemer.value.imgScr}}" alt="Afbeelding"></mdb-card-img>
+              <mdb-card-img src="{{afbeeldingDeelnemer.value.imgScr}}" alt="Afbeelding"></mdb-card-img>
               <a>
                 <div class="mask"></div>
               </a>
@@ -221,7 +238,8 @@
             <mdb-card-body>
               <!--Title-->
               <mdb-card-title>
-                <h4>{{basisGevensDeelnemer.value.name}}</h4>
+                <h3>{{basisGevensDeelnemer.value.name}}</h3>
+                <h4>van: {{endResultBond.bond | json}}</h4>
               </mdb-card-title>
 
               <!--Text-->
@@ -238,7 +256,7 @@
       <br>
       <p>
         Zijn de bovenstaande gegevens correct? Klik dan op de knop Deelnemen. <br>
-        Pas de gegevens aan door op terug te klikken. 
+        Pas de gegevens aan door op terug te klikken.
       </p>
       <br>
       <a class="btn blue" color="primary" role="button" *ngIf="!done" (click)="opsturen()">Deelnemen</a>

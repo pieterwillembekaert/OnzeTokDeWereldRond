@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
+/*Components*/
 import { EditInterviewComponent } from './interviews/edit-interview/edit-interview.component';
 import { OverviewInterviewsComponent } from './interviews/overview-interviews/overview-interviews.component';
 import { EditVisitorsComponent } from './visitors/edit-visitors/edit-visitors.component';
@@ -27,8 +28,6 @@ const DatabaseRoutes: Routes = [
           { path: 'Beheerders', component: DatabaseBeheerdersComponent },
         ]
   }
-  
-  
 ];
 
 @NgModule({

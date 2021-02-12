@@ -40,9 +40,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
+/*Routes*/
 import { DatabaseRoutingModule } from '../Database/database-routing.module';
 
-
+/*Components*/
 import { EditInterviewComponent } from './interviews/edit-interview/edit-interview.component';
 import { OverviewInterviewsComponent } from './interviews/overview-interviews/overview-interviews.component';
 import { EditVisitorsComponent } from './visitors/edit-visitors/edit-visitors.component';
@@ -54,6 +55,8 @@ import { ManageUploadFolderComponent } from './manage-upload-folder/manage-uploa
 import { DatabaseBeheerdersComponent } from './DatabaseBeheerders/DatabaseBeheerders.component';
 import { MarkdownEditorModule } from "./TextEditors/markdown-editor/markdown-editor.module";
 import { RichTextEditorModule } from "./TextEditors/rich-text-editor/rich-text-editor.module";
+
+/*Services */
 
 
 @NgModule({

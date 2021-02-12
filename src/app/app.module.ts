@@ -48,16 +48,18 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { WavesModule, ButtonsModule, IconsModule } from 'angular-bootstrap-md';
 import { MatProgressBarModule} from '@angular/material/progress-bar'; 
 
+import { ChartsModule } from 'ng2-charts';
+
+/*Modules*/
+import { HomeRoutingModule } from './home/home-routing.module';
+import { DatabaseRoutingModule } from './Database/database-routing.module';
+
+/*Components*/
 import { PrikbordComponent } from './prikbord/prikbord.component';
 import { OverOnsComponent } from './over-ons/over-ons.component';
 import { TekenOnzeTokComponent } from './teken-onze-tok/teken-onze-tok.component';
 import { VolgOnsComponent } from './volg-ons/volg-ons.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-
-import { ChartsModule } from 'ng2-charts';
-
-import { HomeRoutingModule } from './home/home-routing.module';
-import { DatabaseRoutingModule } from './Database/database-routing.module';
 import { InterviewsComponent } from './interviews/interviews.component';
 import { DeelnemenComponent } from './deelnemen/deelnemen.component';
 import { GrafiekAfstandComponent } from './GrafiekAfstand/GrafiekAfstand.component';
@@ -73,7 +75,7 @@ import { GrafiekAfstandComponent } from './GrafiekAfstand/GrafiekAfstand.compone
     PageNotFoundComponent,
     InterviewsComponent,
     DeelnemenComponent,
-      GrafiekAfstandComponent
+    GrafiekAfstandComponent, 
    ],
   imports: [
     BrowserModule,

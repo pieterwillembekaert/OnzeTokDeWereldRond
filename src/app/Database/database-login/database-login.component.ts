@@ -17,6 +17,7 @@ export class DatabaseLoginComponent implements OnInit {
 
   message: string;
   hide = true;
+  loginInvalid: boolean;
 
   loginForm: FormGroup;
 
@@ -110,4 +111,6 @@ export class DatabaseLoginComponent implements OnInit {
     this.__GuardsService.logout();
     this.setMessage();
   }
+
+  async onSubmit() {}
 }

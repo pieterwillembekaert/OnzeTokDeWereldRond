@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 
+/*Components*/
 import { PrikbordComponent } from './prikbord/prikbord.component';
 import { OverOnsComponent } from './over-ons/over-ons.component';
 import { TekenOnzeTokComponent } from './teken-onze-tok/teken-onze-tok.component';
@@ -13,6 +14,7 @@ import { DeelnemenComponent } from './deelnemen/deelnemen.component';
 import { DatabaseLoginComponent } from './Database/database-login/database-login.component';
 import { GrafiekAfstandComponent } from './GrafiekAfstand/GrafiekAfstand.component';
 
+/*Guards*/
 import { GuardsGuard } from './guards.guard';
 
 const appRoutes: Routes = [
