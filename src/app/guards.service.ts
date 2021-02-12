@@ -14,17 +14,11 @@ import {iUserDatabase, cUserDatabase} from "./UserDatabase";
 })
 export class GuardsService {
 
+  //server
   Url= new CLocationDatabase;
   UrlServerLogin: string= this.Url.getUrl()+"api/users/login";  
 
-  //isLoggedIn : boolean = false;
-  isLoggedIn : boolean = true;
-  UserAdim={
-    name: 'KSA',
-    password: 'nzg'
-  }
-
-
+  isLoggedIn : boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -68,7 +62,6 @@ export class GuardsService {
 
   loginUserCheck(result: boolean): Observable<boolean> {
 
-
     if(result){
       return of(true).pipe(
         delay(1000),
@@ -81,8 +74,6 @@ export class GuardsService {
       );
 
     }
-    
-    
   }
 
   logout(): void {
