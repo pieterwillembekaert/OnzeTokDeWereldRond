@@ -38,6 +38,7 @@ export class EditVisitorComponent implements OnInit {
   //upload post
   Url = new CLocationDatabase;
   postUrl = this.Url.getUrl() + 'upload';
+  bSucceedUploadImage: boolean = false;
 
   uploadPercent;
   files;
@@ -78,6 +79,7 @@ export class EditVisitorComponent implements OnInit {
     private _fb: FormBuilder,
     private __route: ActivatedRoute,
     private __Router: Router,
+    
     private __CountriesService: CountriesService,
     private __EditVisitorsDataService: EditVisitorsDataService,
     public __HttpClient: HttpClient,
@@ -88,8 +90,7 @@ export class EditVisitorComponent implements OnInit {
   ngOnInit(): void {
     this.countrys = this.__CountriesService.getCountryAllTranslation();
     this.bonden = this.__BondenService.getBonden();
-    //this.bonden = this.countrys
-    console.log(this.bonden)
+   
 
     // listen for search field value changes
     this.CountrysServerSideFilteringCtrl.valueChanges
@@ -179,6 +180,10 @@ export class EditVisitorComponent implements OnInit {
     });
 
     this.Country = this.OpenVisitorViewEditText.countryTanslation;
+    if(this.OpenVisitorViewEditText.imgScr){
+      this.imagePath= this.OpenVisitorViewEditText.imgScr;
+    }
+   
     this.richTextForm = this._fb.group({
       name: [this.OpenVisitorViewEditText.name, Validators.required],
       imgScr: [this.OpenVisitorViewEditText.imgScr, Validators.required],
@@ -194,12 +199,15 @@ export class EditVisitorComponent implements OnInit {
   }
   saveVisitor(): void {
 
-    console.log(this.richTextForm.value.imgScr)
-
+    
     if (this.CountrysServerSideCtrl.value) {
       this.OpenVisitorViewEditText.countryTanslation = this.CountrysServerSideCtrl.value;
       let country = this.__CountriesService.convertTranslateCountryToCountry(this.OpenVisitorViewEditText.countryTanslation);
       this.OpenVisitorViewEditText.country = String(country);
+    }
+
+    if (this.BondenServerSideCtrl.value) {
+      this.OpenVisitorViewEditText.bond = this.BondenServerSideCtrl.value;
     }
 
     if (!this.richTextForm.value.imgScr) {
@@ -213,11 +221,15 @@ export class EditVisitorComponent implements OnInit {
     this.OpenVisitorViewEditText.name = this.richTextForm.value.name;
     this.OpenVisitorViewEditText.date = this.richTextForm.value.date;
     this.OpenVisitorViewEditText.distance = this.richTextForm.value.distance;
-    this.OpenVisitorViewEditText.bond = this.BondenServerSideCtrl.value;
+    
   }
 
   backToOverview(): void {
-    this.__Router.navigate(['/Database/EditVisitors']);
+
+    var r = confirm("Opgelet! Vergeet niet eerst op te slaan! Wil je terug gaan naar het overzicht?");
+    if (r == true) {
+      this.__Router.navigate(['/Database/EditVisitors']);
+    } 
   }
 
   onFileComplete(data: any) {
@@ -242,9 +254,16 @@ export class EditVisitorComponent implements OnInit {
           console.log('upload complete')
         }
       },
-        error => {
-          console.log('!failure beyond compare cause:' + error.toString())
-        })
+      error => {
+        console.log(error)
+        if (error.status == 200) {
+          this.bSucceedUploadImage = true;
+          alert('Gelukt');
+        } else {
+          this.bSucceedUploadImage = false;
+          alert('Upload foto mislukt');
+        }
+      })
   }
 
 

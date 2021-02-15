@@ -59,11 +59,11 @@ export interface visitorsItem {
 
 export class c_visitorsItem implements visitorsItem {
   id: number=0;
-  name: string="";
+  name: string="Nieuwe deelnemer";
   bond: iBond= new cBond();
   country: string="";
   countryTanslation: string="";
-  date: Date;
+  date: Date= new Date();
   dateConvert: string="";
   distance: number=0; 
   imgScr: string="";

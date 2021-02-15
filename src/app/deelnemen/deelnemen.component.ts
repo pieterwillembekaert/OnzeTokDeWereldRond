@@ -321,8 +321,8 @@ export class DeelnemenComponent implements OnInit {
   uploadFiles(files: File): Subscription {
     this.richTextForm.value.imgScr = "/upload/" + files[0].name;
     this.afbeeldingDeelnemer.value.imgScr = "/upload/" + files[0].name;
-  
     this.bSucceedUploadImage = false;
+    
     const config = new HttpRequest('POST', this.postUrl, this.myFormData, {
       reportProgress: true
     })
@@ -334,7 +334,6 @@ export class DeelnemenComponent implements OnInit {
 
         if (event instanceof HttpResponse) {
           this.bSucceedUploadImage = true;
-          
         }
       },
         error => {

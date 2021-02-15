@@ -1,9 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef,ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 
-import {VisitorsService} from './../../../visitors.service';
-import {EditVisitorsDataService} from '../../edit-visitors-data.service';
-import {Router, Resolve,RouterStateSnapshot,ActivatedRouteSnapshot} from '@angular/router';
+import { VisitorsService } from './../../../visitors.service';
+import { EditVisitorsDataService } from '../../edit-visitors-data.service';
+import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { c_visitorsItem } from './../../DatabaseItem';
 import { visitorsItem } from './../../DatabaseItem';
 
@@ -14,57 +14,61 @@ import { visitorsItem } from './../../DatabaseItem';
 })
 export class EditVisitorsComponent implements OnInit {
 
-  dataVisitors; 
-  dataVisitor: visitorsItem; 
-  LoadData: boolean; 
-  displayedColumns: string[] = ['bewerken', 'id', 'Naam', 'Bond' ,'Land','Afstand', 'Datum', 'Afbeelding'];
+  dataVisitors;
+  dataVisitor: visitorsItem;
+  LoadData: boolean;
+  displayedColumns: string[] = ['Bewerken', 'id', 'Naam', 'Bond', 'Land', 'Afstand', 'Datum', 'Afbeelding'];
   @ViewChild(MatTable) table: MatTable<any>;
 
-  NieuweDeelnemersTonen: boolean; 
+  NieuweDeelnemersTonen: boolean;
 
   constructor(
-    private __VisitorsService : VisitorsService,
+    private __VisitorsService: VisitorsService,
     private __EditVisitorsDataService: EditVisitorsDataService,
     private __changeDetectorRef: ChangeDetectorRef,
     private __Router: Router,
   ) { }
 
   ngOnInit(): void {
-    
-    if(!this.__EditVisitorsDataService.getEditVisitors()){
-    this.__VisitorsService.getDataFromHttp().then(
-      (response)=> {
-        this.dataVisitors= response.members;
-        this.__EditVisitorsDataService.setEditVisitors(response.members);
-        //console.log(response)
-      },
-      (error)=> {
-        console.log("error: ", error)
-      }
-    )
-  }else{
-    this.dataVisitors= this.__EditVisitorsDataService.getEditVisitors();
 
-  }
+    if (!this.__EditVisitorsDataService.getEditVisitors()) {
+      this.__VisitorsService.getDataFromHttp().then(
+        (response) => {
+          this.dataVisitors = response.members;
+          this.__EditVisitorsDataService.setEditVisitors(response.members);
+          //console.log(response)
+        },
+        (error) => {
+          console.log("error: ", error)
+        }
+      )
+    } else {
+      this.dataVisitors = this.__EditVisitorsDataService.getEditVisitors();
+
+    }
   }
 
-  newVisitor():void{
-    var newData= new c_visitorsItem(); 
-    
+  newVisitor(): void {
+    var newData = new c_visitorsItem();
+
     //nieuwe index
-    newData.id= this.dataVisitors.length; 
+    newData.id = this.dataVisitors.length;
     //add data
-    this.dataVisitors.push(newData); 
+    this.dataVisitors.push(newData);
     this.__EditVisitorsDataService.setEditVisitors(this.dataVisitors);
+
     this.table.renderRows();
+
+    this.edit(newData);
+
   }
 
 
-  saveVisitors():void{
+  saveVisitors(): void {
     this.__EditVisitorsDataService.saveDataToServer();
   }
 
-  downloadVisitors():void{
+  downloadVisitors(): void {
     console.log("download interviews")
   }
 
@@ -74,6 +78,12 @@ export class EditVisitorsComponent implements OnInit {
     if (index > -1) {
       this.dataVisitors.splice(index, 1);
     }
+
+    //nieuwe id
+    for (let i = 0; i < this.dataVisitors.length; i++) {
+      this.dataVisitors[i].id = i
+    }
+
     this.__EditVisitorsDataService.setEditVisitors(this.dataVisitors)
     this.table.renderRows();
   }
@@ -84,21 +94,28 @@ export class EditVisitorsComponent implements OnInit {
     this.__Router.navigate(['/Database/EditVisitor']);
   }
 
-  sort():void{
+  sort(): void {
     for (let i = 0; i < this.dataVisitors.length; i++) {
-      this.dataVisitors[i].date= new Date(this.dataVisitors[i].date);
-      
-    } 
-    this.dataVisitors = this.dataVisitors.slice().sort((a:any, b:any) => b.date - a.date)
+      this.dataVisitors[i].date = new Date(this.dataVisitors[i].date);
+    }
+
+
+    this.dataVisitors = this.dataVisitors.slice().sort((a: any, b: any) => b.date - a.date)
     this.__EditVisitorsDataService.setEditVisitors(this.dataVisitors);
+
+    //nieuwe id
+    for (let i = 0; i < this.dataVisitors.length; i++) {
+      this.dataVisitors[i].id = i
+    }
+
     this.table.renderRows();
   }
 
-  toggleNieuweDeelnemers() :void{
-    if(this.NieuweDeelnemersTonen){
-      this.NieuweDeelnemersTonen= false;
-    }else{
-      this.NieuweDeelnemersTonen= true;
+  toggleNieuweDeelnemers(): void {
+    if (this.NieuweDeelnemersTonen) {
+      this.NieuweDeelnemersTonen = false;
+    } else {
+      this.NieuweDeelnemersTonen = true;
 
     }
   }
