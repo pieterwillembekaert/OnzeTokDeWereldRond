@@ -27,8 +27,6 @@
       class="map-svg" type='image/svg+xml'></object>
   </div>
 
-
-
   <div *ngIf="OpenBrikboard" class="grid-item-map-data background-Prikbord">
     <button class="btn material-icons" (click)="zoomIn()">zoom_in</button>
     <button class="btn material-icons" (click)="zoomOut()">zoom_out</button>
@@ -38,7 +36,6 @@
     <div>Land: <span [innerHTML]="PbLand"></span><br>Bezoekers: <span [innerHTML]="PbNumbersVisit"></span>
     </div>
     <br><br>
-
 
     <div class="container">
       <div class="row">
@@ -57,7 +54,8 @@
             <mdb-card-body>
               <!--Title-->
               <mdb-card-title>
-                <h4>{{PB_Element.name}}</h4>
+                <h3>{{PB_Element.name}}</h3>
+                <h4 *ngIf="PB_Element.bond.code !== 0">van: {{PB_Element.bond.bond}}</h4>
               </mdb-card-title>
 
               <!--Text-->
