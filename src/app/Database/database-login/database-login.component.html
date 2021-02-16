@@ -1,27 +1,28 @@
-<br>
-<br>
-<br>
 
-<mat-card>
-  <mat-card-content>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <h2>Log In</h2>
-      <mat-error *ngIf="loginInvalid">De gebruikersnaam en het wachtwoord werden niet herkend</mat-error>
+  <br>
+  <br>
+  <br>
+  <mat-card>
+    <mat-card-content >
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <h2>Log In</h2>
+        <mat-error *ngIf="loginInvalid">De gebruikersnaam en het wachtwoord werden niet herkend</mat-error>
 
-      <mat-form-field class="full-width-input">
-        <input matInput placeholder="Naam" formControlName="name" required>
-        <mat-error>Vul een geldig gebruikersnaam in!</mat-error>
-      </mat-form-field>
-      <mat-form-field class="full-width-input">
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="Naam" formControlName="name" required>
+          <mat-error>Vul een geldig gebruikersnaam in!</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width-input">
 
-        <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password">
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-        <mat-error>Vul een geldig wachtwoord in!</mat-error>
-      </mat-form-field>
-      <button mat-raised-button color="primary" (click)="login()">Login</button>
-    </form>
-  </mat-card-content>
-</mat-card>
+          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error>Vul een geldig wachtwoord in!</mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="login()">Login</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+

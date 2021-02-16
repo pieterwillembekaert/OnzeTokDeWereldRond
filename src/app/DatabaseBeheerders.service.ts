@@ -16,7 +16,6 @@ export class DatabaseBeheerdersService {
   UrlServerPostPassword: string = this.Url.getUrl() + "api/newUserPassword/";
 
 
-
   constructor(
     private http: HttpClient,
   ) { }
