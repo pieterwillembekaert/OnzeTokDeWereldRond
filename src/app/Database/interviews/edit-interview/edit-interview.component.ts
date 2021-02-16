@@ -23,9 +23,6 @@ import { interviewItem } from '../../DatabaseItem';
 import { c_interviewItem } from '../../DatabaseItem';
 
 
-
-
-
 @Component({
   selector: 'app-edit-interview',
   templateUrl: './edit-interview.component.html',
@@ -40,6 +37,8 @@ export class EditInterviewComponent implements OnInit {
   //upload post
   Url = new CLocationDatabase;
   postUrl = this.Url.getUrl() + 'upload';
+  imagePath: string = "/upload/default.jpg";
+  bSucceedUploadImage: boolean = false;
 
   uploadPercent;
   files;
@@ -87,8 +86,8 @@ export class EditInterviewComponent implements OnInit {
 
   ngOnInit() {
     this.countrys = this.__CountriesService.getCountryAllTranslation();
-    this.bonden= this.__BondenService.getBonden();
-    
+    this.bonden = this.__BondenService.getBonden();
+
     // listen for search field value changes
     this.CountrysServerSideFilteringCtrl.valueChanges
       .pipe(
@@ -117,49 +116,49 @@ export class EditInterviewComponent implements OnInit {
           // handle error...
         });
     /*Searche bond */
-        /*Searche bond */
+    
     //listen for search field value changes
     this.BondenServerSideFilteringCtrl.valueChanges
-    .pipe(
-      filter(search => !!search),
-      tap(() => this.searchingBonden = true),
-      takeUntil(this._onDestroy),
-      debounceTime(200),
-      map(search => {
-        if (!this.bonden) {
-          return [];
-        }
+      .pipe(
+        filter(search => !!search),
+        tap(() => this.searchingBonden = true),
+        takeUntil(this._onDestroy),
+        debounceTime(200),
+        map(search => {
+          if (!this.bonden) {
+            return [];
+          }
 
-        // simulate server fetching and filtering data
-        return this.bonden.filter(
-          (bond: any) => {
-            //number in string? 
-            var regex = /\d+/g;
-            var matches = search.match(regex);  // creates array from matches
+          // simulate server fetching and filtering data
+          return this.bonden.filter(
+            (bond: any) => {
+              //number in string? 
+              var regex = /\d+/g;
+              var matches = search.match(regex);  // creates array from matches
 
-            
-            if (!matches) {
-              return bond.bond.toLowerCase().indexOf(search.toLowerCase()) > -1
-            } else {
 
-              let toStringBondCode = String(bond.code);
-              return toStringBondCode.toLowerCase().indexOf(search.toLowerCase()) > -1
+              if (!matches) {
+                return bond.bond.toLowerCase().indexOf(search.toLowerCase()) > -1
+              } else {
 
-            }
-          });
-      }),
-      delay(500),
-      takeUntil(this._onDestroy)
-    )
-    .subscribe(filtered => {
-      this.searchingBonden = false;
-      this.filteredServerSideBonden.next(filtered);
-    },
-      error => {
-        // no errors in our simulated example
+                let toStringBondCode = String(bond.code);
+                return toStringBondCode.toLowerCase().indexOf(search.toLowerCase()) > -1
+
+              }
+            });
+        }),
+        delay(500),
+        takeUntil(this._onDestroy)
+      )
+      .subscribe(filtered => {
         this.searchingBonden = false;
-        // handle error...
-      });
+        this.filteredServerSideBonden.next(filtered);
+      },
+        error => {
+          // no errors in our simulated example
+          this.searchingBonden = false;
+          // handle error...
+        });
 
     /**/
     this.OpenInterViewEditText = this.__EditInterviewsDatabaseService.getOpenInterViewEditText();
@@ -197,12 +196,16 @@ export class EditInterviewComponent implements OnInit {
 
 
   saveInterviews(): void {
-    console.log(this.richTextForm)
+
 
     if (this.CountrysServerSideCtrl.value) {
       this.OpenInterViewEditText.countryTanslation = this.CountrysServerSideCtrl.value;
       let country = this.__CountriesService.convertTranslateCountryToCountry(this.OpenInterViewEditText.countryTanslation);
       this.OpenInterViewEditText.country = String(country);
+    }
+
+    if (this.BondenServerSideCtrl.value) {
+      this.OpenInterViewEditText.bond = this.BondenServerSideCtrl.value;
     }
 
     this.OpenInterViewEditText.date = this.richTextForm.value.date;
@@ -213,14 +216,24 @@ export class EditInterviewComponent implements OnInit {
     this.OpenInterViewEditText.title = this.richTextForm.value.title;
     this.OpenInterViewEditText.subTitle = this.richTextForm.value.subtitle;
     this.OpenInterViewEditText.text = this.richTextForm.value.description;
-    this.OpenInterViewEditText.bond = this.BondenServerSideCtrl.value;
+
 
     this.__EditInterviewsDatabaseService.setOpenInterViewEditText(this.OpenInterViewEditText)
     this.__EditInterviewsDatabaseService.saveData(this.OpenInterViewEditText);
   }
 
   backToOverview(): void {
-    this.__Router.navigate(['/Database/OverviewInterviews']);
+    var r = confirm("Opgelet! Vergeet niet eerst op te slaan! Wil je terug gaan naar het overzicht?");
+    if (r == true) {
+      var rr = confirm("Wenst u de gegevens permanent op te slaan naar de server?");
+      if (rr == true) {
+        this.__EditInterviewsDatabaseService.saveDataToServer();
+        alert("Opslaan gelukt! ");
+        this.__Router.navigate(['/Database/OverviewInterviews']);
+      } else {
+        this.__Router.navigate(['/Database/OverviewInterviews']);
+      }
+    }
   }
 
   onFileComplete(data: any) {
@@ -229,6 +242,7 @@ export class EditInterviewComponent implements OnInit {
 
   uploadFiles(files: File): Subscription {
     this.richTextForm.value.imgScr = "/upload/" + files[0].name;
+    this.imagePath = "/upload/" + files[0].name;
 
     const config = new HttpRequest('POST', this.postUrl, this.myFormData, {
       reportProgress: true
@@ -245,11 +259,16 @@ export class EditInterviewComponent implements OnInit {
         }
       },
         error => {
-          alert('!failure beyond compare cause:' + error.toString())
+          console.log(error)
+          if (error.status == 200) {
+            this.bSucceedUploadImage = true;
+            alert('Gelukt');
+          } else {
+            this.bSucceedUploadImage = false;
+            alert('Upload foto mislukt');
+          }
         })
   }
-
-
 
   get descriptionRawControl() {
     return this.markdownForm.controls.description as FormControl;

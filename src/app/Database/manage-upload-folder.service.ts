@@ -3,7 +3,7 @@ import {HttpClient,HttpClientModule,HttpRequest,HttpResponse,HttpEvent} from "@a
 import {Subscription} from 'rxjs'
 import {HttpHeaders} from '@angular/common/http';
 
-import {CLocationDatabase} from "../../clocationDatabase";
+import {CLocationDatabase} from "../clocationDatabase";
 
 
 @Injectable({

@@ -9,6 +9,7 @@ export class BondenService {
 
     bonden = [
         { code: 0, bond: "KSA" },
+        { code: 6000, bond: "KSA NOORDZEEGOUW" },
         { code: 6002, bond: "KSA AARSELE" },
         { code: 6029, bond: "KSA ADELAARS KORTRIJK" },
         { code: 6015, bond: "KSA ARBEID ADELT GULLEGEM" },

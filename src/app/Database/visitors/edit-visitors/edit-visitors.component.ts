@@ -17,6 +17,7 @@ export class EditVisitorsComponent implements OnInit {
   dataVisitors;
   dataVisitor: visitorsItem;
   LoadData: boolean;
+  goToEditPage: boolean = false;
   displayedColumns: string[] = ['Bewerken', 'id', 'Naam', 'Bond', 'Land', 'Afstand', 'Datum', 'Afbeelding'];
   @ViewChild(MatTable) table: MatTable<any>;
 
@@ -72,6 +73,16 @@ export class EditVisitorsComponent implements OnInit {
     console.log("download interviews")
   }
 
+  ngOnDestroy() {
+    if (!this.goToEditPage) {
+      var r = confirm("Opgelet! Wijzigen gaan verloren zonder opslaan! Druk op ok om de aanpassingen op te slaan!");
+      if (r == true) {
+        this.saveVisitors();
+        alert("Opslaan gelukt!")
+      }
+    }
+  }
+
 
   delete(row: any): void {
     const index = this.dataVisitors.indexOf(row, 0);
@@ -89,8 +100,9 @@ export class EditVisitorsComponent implements OnInit {
   }
 
   edit(row: any): void {
-    console.log(row);
-    this.__EditVisitorsDataService.setOpenVisitorEdit(row)
+    //console.log(row);
+    this.__EditVisitorsDataService.setOpenVisitorEdit(row);
+    this.goToEditPage = true;
     this.__Router.navigate(['/Database/EditVisitor']);
   }
 
@@ -98,7 +110,6 @@ export class EditVisitorsComponent implements OnInit {
     for (let i = 0; i < this.dataVisitors.length; i++) {
       this.dataVisitors[i].date = new Date(this.dataVisitors[i].date);
     }
-
 
     this.dataVisitors = this.dataVisitors.slice().sort((a: any, b: any) => b.date - a.date)
     this.__EditVisitorsDataService.setEditVisitors(this.dataVisitors);
@@ -116,7 +127,6 @@ export class EditVisitorsComponent implements OnInit {
       this.NieuweDeelnemersTonen = false;
     } else {
       this.NieuweDeelnemersTonen = true;
-
     }
   }
 

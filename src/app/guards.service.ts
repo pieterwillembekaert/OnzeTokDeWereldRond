@@ -18,7 +18,7 @@ export class GuardsService {
   Url= new CLocationDatabase;
   UrlServerLogin: string= this.Url.getUrl()+"api/users/login";  
 
-  isLoggedIn : boolean = false;
+  isLoggedIn : boolean = true;
 
   constructor(
     private http: HttpClient,

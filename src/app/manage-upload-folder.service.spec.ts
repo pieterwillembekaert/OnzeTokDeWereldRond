@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ManageUploadFolderService } from './Database/manage-upload-folder/manage-upload-folder.service';
+import { ManageUploadFolderService } from './Database/manage-upload-folder.service';
 
 describe('ManageUploadFolderService', () => {
   let service: ManageUploadFolderService;

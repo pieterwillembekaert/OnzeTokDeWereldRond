@@ -36,13 +36,13 @@
     <mat-form-field>
       <mat-label>Kies een bond</mat-label>
       <mat-select [formControl]="BondenServerSideCtrl" placeholder="{{Bond}}">
-         <!--place ngx-mat-select-search inside mat-option to allow opening without initial selection-->
+        <!--place ngx-mat-select-search inside mat-option to allow opening without initial selection-->
         <mat-option>
           <ngx-mat-select-search [formControl]="BondenServerSideFilteringCtrl" [searching]="searchingBonden"
             placeholderLabel="Bond zoeken..." noEntriesFoundLabel="'Geen bond gevonden'"></ngx-mat-select-search>
         </mat-option>
         <mat-option *ngFor="let bonden of filteredServerSideBonden | async" [value]="bonden">
-          {{bonden.code}}  {{bonden.bond}}
+          {{bonden.code}} {{bonden.bond}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -74,7 +74,14 @@
     </mat-form-field>
   </form>
 
+  <p>
+    Afstand in vogelvlucht bepalen kan via deze <a href="https://nl.distance.to/France/Gullegem,Wevelgem,BEL"
+      target="_blank ">website</a>.
+  </p>
+  <br>
+
   <!--Upload file-->
+  <h2>Load een foto op of zoek een afbeelding op de server: </h2>
   <input ngf type="file" accept="*" [(files)]="files" capturePaste="1" />
   <button *ngIf="files" (click)="uploadFiles(files)">send files</button>
 
@@ -85,10 +92,55 @@
   <div *ngIf="uploadPercent">
     Upload Progress: {{ uploadPercent }}%
   </div>
+  <br>
+
+  <!--camera_roll-->
+
+  <p>Zoek foto op de server:</p>
+
+  <button mat-icon-button *ngIf="!bOpenSelectImage"  (click)="openSelectImage()" aria-label="Example icon button with a menu icon">
+    <mat-icon>camera_roll</mat-icon>
+  </button>
+
+  <button mat-icon-button color="warn" *ngIf="bOpenSelectImage" (click)="closeSelectImage()" aria-label="Example icon button with a menu icon">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <div class="container" *ngIf="bOpenSelectImage">
+
+    <table mat-table [dataSource]="folderContent" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="Bewerken">
+        <th mat-header-cell *matHeaderCellDef> Bewerken </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button color="warn" (click)="selectImage(element)"
+            aria-label="Example icon button with a menu icon">
+            <mat-icon>login</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="Bestand">
+        <th mat-header-cell *matHeaderCellDef> Bestand </th>
+        <td mat-cell *matCellDef="let element">{{element}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Afbeelding">
+        <th mat-header-cell *matHeaderCellDef> Afbeelding </th>
+        <td mat-cell *matCellDef="let element"><img src="/upload/{{element}}" alt="Foto van {{element}}" width="100px">
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedImageColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedImageColumns;"></tr>
+    </table>
+  </div>
 
   <br>
   <br>
   <br>
+  <h2>Voorbeeld: </h2>
   <!--Voorbeeld-->
   <div class="row">
     <!-- post -->

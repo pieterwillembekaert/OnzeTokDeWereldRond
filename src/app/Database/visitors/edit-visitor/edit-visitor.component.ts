@@ -12,11 +12,14 @@ import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
 
 
+//https://stackblitz.com/edit/ngx-mat-select-search?file=src%2Fapp%2Fexamples%2F01-single-selection-example%2Fsingle-selection-example.component.ts
+
 
 /*Service */
 import { CountriesService } from './../../../countries.service';
 import { BondenService } from '../../../Bonden.service';
 import { EditVisitorsDataService } from './../../edit-visitors-data.service';
+import { ManageUploadFolderService } from './../../manage-upload-folder.service';
 
 /*interface and class */
 import { CLocationDatabase } from "../../../clocationDatabase";
@@ -33,7 +36,8 @@ export class EditVisitorComponent implements OnInit {
   markdownForm: FormGroup;
   richTextForm: FormGroup;
   OpenVisitorViewEditText: visitorsItem;
-  SaveVisitorViewEditText: visitorsItem;
+  checkIfDataChangesVisitorViewEditText: visitorsItem;
+  bBackToHome: boolean = false;
 
   //upload post
   Url = new CLocationDatabase;
@@ -47,11 +51,17 @@ export class EditVisitorComponent implements OnInit {
   httpEvent: HttpEvent<{}>
   imagePath: string = "/upload/default.jpg";
 
+  //select image
+  folderContent: string[] = []; 
+  LoadData: boolean;
+  displayedImageColumns: string[] = ['Bewerken', 'Bestand', 'Afbeelding'];
+  bOpenSelectImage: boolean = false;
+
   picker;
   Country: String;
   Bond: String;
 
-  /** list of countrys */
+  /** list of .. */
   protected countrys: any;
   protected bonden: any;
 
@@ -79,7 +89,7 @@ export class EditVisitorComponent implements OnInit {
     private _fb: FormBuilder,
     private __route: ActivatedRoute,
     private __Router: Router,
-    
+    private __ManageUploadFolderService: ManageUploadFolderService,
     private __CountriesService: CountriesService,
     private __EditVisitorsDataService: EditVisitorsDataService,
     public __HttpClient: HttpClient,
@@ -90,7 +100,9 @@ export class EditVisitorComponent implements OnInit {
   ngOnInit(): void {
     this.countrys = this.__CountriesService.getCountryAllTranslation();
     this.bonden = this.__BondenService.getBonden();
-   
+
+    // set initial selection
+
 
     // listen for search field value changes
     this.CountrysServerSideFilteringCtrl.valueChanges
@@ -141,7 +153,6 @@ export class EditVisitorComponent implements OnInit {
               var regex = /\d+/g;
               var matches = search.match(regex);  // creates array from matches
 
-              
               if (!matches) {
                 return bond.bond.toLowerCase().indexOf(search.toLowerCase()) > -1
               } else {
@@ -167,39 +178,44 @@ export class EditVisitorComponent implements OnInit {
 
     /*Open data from the server*/
     this.OpenVisitorViewEditText = this.__EditVisitorsDataService.getOpenVisitorEdit();
+    this.checkIfDataChangesVisitorViewEditText = this.__EditVisitorsDataService.getOpenVisitorEdit();
     if (!this.OpenVisitorViewEditText) {
       //Terug wanneer de data niet beschikbaar is. 
       this.__Router.navigate(['/Database/EditVisitors']);
-
     }
-    this.markdownForm = this._fb.group({
-      name: ["", Validators.required],
-      imgScr: ["", Validators.required],
-      date: [new Date()],
-      distance: [0, Validators.required],
-    });
+
 
     this.Country = this.OpenVisitorViewEditText.countryTanslation;
-    if(this.OpenVisitorViewEditText.imgScr){
-      this.imagePath= this.OpenVisitorViewEditText.imgScr;
+    if (this.OpenVisitorViewEditText.imgScr) {
+      this.imagePath = this.OpenVisitorViewEditText.imgScr;
     }
-   
+
     this.richTextForm = this._fb.group({
       name: [this.OpenVisitorViewEditText.name, Validators.required],
       imgScr: [this.OpenVisitorViewEditText.imgScr, Validators.required],
       date: [this.OpenVisitorViewEditText.date, Validators.required],
       distance: [this.OpenVisitorViewEditText.distance, Validators.required],
     });
-    
+
   }
 
   ngOnDestroy(): void {
+    if (!this.bBackToHome) {
+      var r = confirm("Opgelet! Vergeet niet eerst op te slaan! ");
+      if (r == true) {
+        this.saveVisitor();
+        this.__EditVisitorsDataService.saveDataToServer();
+        alert("Opslaan gelukt! ");
+
+      }
+    }
+
     this._onDestroy.next();
     this._onDestroy.complete();
   }
+
   saveVisitor(): void {
 
-    
     if (this.CountrysServerSideCtrl.value) {
       this.OpenVisitorViewEditText.countryTanslation = this.CountrysServerSideCtrl.value;
       let country = this.__CountriesService.convertTranslateCountryToCountry(this.OpenVisitorViewEditText.countryTanslation);
@@ -221,21 +237,59 @@ export class EditVisitorComponent implements OnInit {
     this.OpenVisitorViewEditText.name = this.richTextForm.value.name;
     this.OpenVisitorViewEditText.date = this.richTextForm.value.date;
     this.OpenVisitorViewEditText.distance = this.richTextForm.value.distance;
-    
+
   }
 
   backToOverview(): void {
 
     var r = confirm("Opgelet! Vergeet niet eerst op te slaan! Wil je terug gaan naar het overzicht?");
     if (r == true) {
-      this.__Router.navigate(['/Database/EditVisitors']);
-    } 
+      this.bBackToHome= true;
+      var rr = confirm("Wenst u de gegevens permanent op te slaan naar de server?");
+      if (rr == true) {
+        this.bBackToHome= true; 
+        this.__EditVisitorsDataService.saveDataToServer();
+        alert("Opslaan gelukt! ");
+        this.__Router.navigate(['/Database/EditVisitors']);
+      } else {
+        this.__Router.navigate(['/Database/EditVisitors']);
+
+      }
+    }
   }
 
   onFileComplete(data: any) {
-    console.log(data); // We just print out data bubbled up from event emitter.
+    console.log(data);
   }
 
+  openSelectImage() {
+    this.bOpenSelectImage = true;
+
+    this.__ManageUploadFolderService.getDataFromHttp().then(
+      (response) => {
+        console.log(response)
+        this.folderContent = response;
+        //console.log(response)
+
+      },
+      (error) => {
+        console.log("error: ", error)
+      }
+    )
+
+  }
+
+  closeSelectImage() {
+    this.bOpenSelectImage = false;
+
+  }
+
+
+  selectImage(row) {
+    console.log(row)
+    this.richTextForm.value.imgScr = "/upload/" + row;
+    this.imagePath = "/upload/" + row;
+  }
   uploadFiles(files: File): Subscription {
     this.richTextForm.value.imgScr = "/upload/" + files[0].name;
     this.imagePath = "/upload/" + files[0].name;
@@ -254,17 +308,16 @@ export class EditVisitorComponent implements OnInit {
           console.log('upload complete')
         }
       },
-      error => {
-        console.log(error)
-        if (error.status == 200) {
-          this.bSucceedUploadImage = true;
-          alert('Gelukt');
-        } else {
-          this.bSucceedUploadImage = false;
-          alert('Upload foto mislukt');
-        }
-      })
+        error => {
+          console.log(error)
+          if (error.status == 200) {
+            this.bSucceedUploadImage = true;
+            alert('Gelukt');
+          } else {
+            this.bSucceedUploadImage = false;
+            alert('Upload foto mislukt');
+          }
+        })
   }
-
 
 }

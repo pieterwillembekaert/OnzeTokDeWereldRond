@@ -41,6 +41,9 @@ getAnimationData(outlet: RouterOutlet) {
 
 ngOnDestroy():void{
   this.mobileQuery.removeListener(this._mobileQueryListener);
+
 }
+
+
 
 }
