@@ -61,12 +61,19 @@ export class EditVisitorsComponent implements OnInit {
     this.table.renderRows();
 
     this.edit(newData);
-
   }
 
 
   saveVisitors(): void {
-    this.__EditVisitorsDataService.saveDataToServer();
+    this.__EditVisitorsDataService.saveDataToServer().then(
+      msg => {
+        console.log("done", msg);
+        alert("Opslaan gelukt");
+      },
+      error => {
+        console.log("error", error);
+        alert("Mislukt! :-/");
+      })
   }
 
   downloadVisitors(): void {
@@ -78,7 +85,6 @@ export class EditVisitorsComponent implements OnInit {
       var r = confirm("Opgelet! Wijzigen gaan verloren zonder opslaan! Druk op ok om de aanpassingen op te slaan!");
       if (r == true) {
         this.saveVisitors();
-        alert("Opslaan gelukt!")
       }
     }
   }

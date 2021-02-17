@@ -1,10 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef,ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 
-import {VisitorsService} from './../../../visitors.service';
-import {EditVisitorsDataService} from '../../edit-visitors-data.service';
-import {NieuweDeelnemerDataService} from '../../nieuwe-deelnemer-data.service';
-import {Router, Resolve,RouterStateSnapshot,ActivatedRouteSnapshot} from '@angular/router';
+import { VisitorsService } from './../../../visitors.service';
+import { EditVisitorsDataService } from '../../edit-visitors-data.service';
+import { NieuweDeelnemerDataService } from '../../nieuwe-deelnemer-data.service';
+import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { c_visitorsItem } from './../../DatabaseItem';
 import { visitorsItem } from './../../DatabaseItem';
 
@@ -15,15 +15,15 @@ import { visitorsItem } from './../../DatabaseItem';
 })
 export class NieuweDeelnemerComponent implements OnInit {
 
-  dataNewVisitors; 
-  dataVisitors; 
-  dataVisitor: visitorsItem; 
-  LoadData: boolean; 
-  displayedColumns: string[] = ['Bewerken', 'Naam', 'Land','Afstand', 'Datum', 'Afbeelding',"Email","Opmerking"];
+  dataNewVisitors;
+  dataVisitors;
+  dataVisitor: visitorsItem;
+  LoadData: boolean;
+  displayedColumns: string[] = ['Bewerken', 'Naam', 'Land', 'Afstand', 'Datum', 'Afbeelding', "Email", "Opmerking"];
   @ViewChild(MatTable) table: MatTable<any>;
 
   constructor(
-    private __VisitorsService : VisitorsService,
+    private __VisitorsService: VisitorsService,
     private __EditVisitorsDataService: EditVisitorsDataService,
     private __NieuweDeelnemerDataService: NieuweDeelnemerDataService,
     private __changeDetectorRef: ChangeDetectorRef,
@@ -31,55 +31,63 @@ export class NieuweDeelnemerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
+
     this.__NieuweDeelnemerDataService.getDataFromHttp().then(
-      (response)=> {
-        this.dataNewVisitors= response.members;
+      (response) => {
+        this.dataNewVisitors = response.members;
         this.__NieuweDeelnemerDataService.setNieuweDeelnemersData(response.members);
         //console.log(response)
-        
+
       },
-      (error)=> {
+      (error) => {
         console.log("error: ", error)
       }
     )
 
     this.__VisitorsService.getDataFromHttp().then(
-       (response)=> {
-        this.dataVisitors= response.members;
+      (response) => {
+        this.dataVisitors = response.members;
         this.__EditVisitorsDataService.setEditVisitors(response.members);
         //console.log(response)
-        
+
       },
-      (error)=> {
+      (error) => {
         console.log("error: ", error)
       }
     )
   }
 
-  accept(row: any) :void{
+  accept(row: any): void {
     //Add To data visitors
-    this.dataVisitors.push(row); 
+    this.dataVisitors.push(row);
     this.__EditVisitorsDataService.setEditVisitors(this.dataVisitors);
 
     //delet row 
     this.delete(row);
-     
+
   }
 
-  saveNieuweDeelnemers():void{
+  saveNieuweDeelnemers(): void {
     //console.log("save Nieuwe Deelnemers")
     //console.log(this.dataNewVisitors); 
     this.__NieuweDeelnemerDataService.setNieuweDeelnemersData(this.dataNewVisitors)
     this.__NieuweDeelnemerDataService.saveDataToServer();
   }
 
-  saveVisitors():void{
-    //console.log("save visitor")
-    this.__EditVisitorsDataService.saveDataToServer();
+  saveVisitors(): void {
+    console.log("save visitor")
+    this.__EditVisitorsDataService.saveDataToServer().then(
+      msg => {
+        console.log("done", msg);
+        alert("Opslaan gelukt!");
+      },
+      error => {
+        console.log("error", error);
+        alert("Mislukt! :-/");
+      })
   }
 
-  downloadVisitors():void{
+  downloadVisitors(): void {
     console.log("download interviews")
   }
 
@@ -89,21 +97,17 @@ export class NieuweDeelnemerComponent implements OnInit {
     if (index > -1) {
       this.dataNewVisitors.splice(index, 1);
     }
-    this.__NieuweDeelnemerDataService.setNieuweDeelnemersData(this.dataNewVisitors); 
+    this.__NieuweDeelnemerDataService.setNieuweDeelnemersData(this.dataNewVisitors);
     this.table.renderRows();
   }
 
 
-  sort():void{
+  sort(): void {
     for (let i = 0; i < this.dataNewVisitors.length; i++) {
-      this.dataNewVisitors[i].date= new Date(this.dataNewVisitors[i].date);
-      
-    } 
-    this.dataNewVisitors = this.dataNewVisitors.slice().sort((a:any, b:any) => b.date - a.date)
-    this.__NieuweDeelnemerDataService.setNieuweDeelnemersData(this.dataNewVisitors); 
+      this.dataNewVisitors[i].date = new Date(this.dataNewVisitors[i].date);
+    }
+    this.dataNewVisitors = this.dataNewVisitors.slice().sort((a: any, b: any) => b.date - a.date)
+    this.__NieuweDeelnemerDataService.setNieuweDeelnemersData(this.dataNewVisitors);
     this.table.renderRows();
   }
-
-
-
 }

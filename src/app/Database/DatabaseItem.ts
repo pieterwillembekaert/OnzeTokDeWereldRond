@@ -61,13 +61,13 @@ export class c_visitorsItem implements visitorsItem {
   id: number=0;
   name: string="Nieuwe deelnemer";
   bond: iBond= new cBond();
-  country: string="";
-  countryTanslation: string="";
+  country: string="belgium";
+  countryTanslation: string="België";
   date: Date= new Date();
   dateConvert: string="";
   distance: number=0; 
-  imgScr: string="";
-  year: string="";
+  imgScr: string="/upload/default.jpg";
+  year: string="2021";
 }
 
 /*Nieuwe deelnemers */

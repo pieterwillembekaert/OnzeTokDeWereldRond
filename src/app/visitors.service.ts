@@ -20,10 +20,8 @@ export class VisitorsService {
     return new Promise(resolve => {
       this.http.get(this.UrlServer)
       .subscribe(data => {
-        //console.log(data);
         this.Visitors=data;
         resolve(data);
-        //return data; 
       });
     });
   }

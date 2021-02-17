@@ -62,15 +62,23 @@ export class EditVisitorsDataService {
   }
 
 
-  saveDataToServer() {
-    //console.log("Save data to server")
-
-    this.http.post<String>(this.UrlServer,this.editVisitors).subscribe({
-      error: error => {
-        console.log('There was an error!', error);
-      },
-      complete: () => console.log('Observer got a complete notification'),
-
+  saveDataToServer()  {
+    console.log("Save data to server")
+    return new Promise((resole, reject) => {
+      this.http.post<any>(this.UrlServer, this.editVisitors).subscribe(
+        data => {
+          console.log("POST Request is successful ", data);
+          resole(data.status);
+        },
+        error => {
+          if (error.status == 200) {
+            console.log("Ok", error.status);
+            resole(error.status);
+          } else {
+            console.log("Error", error);
+            reject(error);
+          }
+        });
     })
   }
 

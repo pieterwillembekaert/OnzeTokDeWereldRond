@@ -52,7 +52,7 @@ export class EditVisitorComponent implements OnInit {
   imagePath: string = "/upload/default.jpg";
 
   //select image
-  folderContent: string[] = []; 
+  folderContent: string[] = [];
   LoadData: boolean;
   displayedImageColumns: string[] = ['Bewerken', 'Bestand', 'Afbeelding'];
   bOpenSelectImage: boolean = false;
@@ -194,7 +194,7 @@ export class EditVisitorComponent implements OnInit {
       name: [this.OpenVisitorViewEditText.name, Validators.required],
       imgScr: [this.OpenVisitorViewEditText.imgScr, Validators.required],
       date: [this.OpenVisitorViewEditText.date, Validators.required],
-      distance: [this.OpenVisitorViewEditText.distance, Validators.required],
+      distance: [Number(this.OpenVisitorViewEditText.distance), Validators.required],
     });
 
   }
@@ -236,25 +236,19 @@ export class EditVisitorComponent implements OnInit {
     this.OpenVisitorViewEditText.year = String(year);
     this.OpenVisitorViewEditText.name = this.richTextForm.value.name;
     this.OpenVisitorViewEditText.date = this.richTextForm.value.date;
-    this.OpenVisitorViewEditText.distance = this.richTextForm.value.distance;
+    this.OpenVisitorViewEditText.distance = Number(this.richTextForm.value.distance);
 
   }
 
   backToOverview(): void {
 
-    var r = confirm("Opgelet! Vergeet niet eerst op te slaan! Wil je terug gaan naar het overzicht?");
-    if (r == true) {
-      this.bBackToHome= true;
-      var rr = confirm("Wenst u de gegevens permanent op te slaan naar de server?");
-      if (rr == true) {
-        this.bBackToHome= true; 
-        this.__EditVisitorsDataService.saveDataToServer();
-        alert("Opslaan gelukt! ");
-        this.__Router.navigate(['/Database/EditVisitors']);
-      } else {
-        this.__Router.navigate(['/Database/EditVisitors']);
+    var rr = confirm("Opgelet! Vergeet niet eerst op te slaan! Wenst u de gegevens permanent op te slaan naar de server?");
+    if (rr == true) {
+      this.bBackToHome = true;
+      this.__EditVisitorsDataService.saveDataToServer();
+      alert("Opslaan gelukt! ");
+      this.__Router.navigate(['/Database/EditVisitors']);
 
-      }
     }
   }
 
@@ -270,7 +264,6 @@ export class EditVisitorComponent implements OnInit {
         console.log(response)
         this.folderContent = response;
         //console.log(response)
-
       },
       (error) => {
         console.log("error: ", error)
@@ -284,12 +277,12 @@ export class EditVisitorComponent implements OnInit {
 
   }
 
-
   selectImage(row) {
     console.log(row)
     this.richTextForm.value.imgScr = "/upload/" + row;
     this.imagePath = "/upload/" + row;
   }
+
   uploadFiles(files: File): Subscription {
     this.richTextForm.value.imgScr = "/upload/" + files[0].name;
     this.imagePath = "/upload/" + files[0].name;

@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
   LoadData: boolean;
 
   SelectYear = ["alles"];
-  bShowSelection: boolean= false;
+  bShowSelection: boolean = false;
   selectedYear = this.__GeneralService.getFullYear();
 
   constructor(
@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
         //console.log(response)
 
         this.dataVisitors = response;
-        this.searchYearInDataFromDb(); 
+        this.searchYearInDataFromDb();
       },
       error => {
         console.log("error: ", error)
@@ -81,24 +81,24 @@ export class DashboardComponent implements OnInit {
     lijstMetJaartallenUniq = uniq(lijstMetJaartallen);
 
     for (let i = 0; i < lijstMetJaartallenUniq.length; i++) {
-      this.SelectYear[i + 1] = lijstMetJaartallenUniq[i]; 
+      this.SelectYear[i + 1] = lijstMetJaartallenUniq[i];
     }
 
-    this.bShowSelection= true; 
+    this.bShowSelection = true;
   }
 
   changeData(): void {
     this.LoadData = false;
-    
+
     //Get data
     this.__TotalDistService.getDataFromHttp(this.selectedYear).then(
-      (response)=> {
+      (response) => {
         this.data = response;
         this.LoadData = true;
         //console.log(response)
 
       },
-      (error)=> {
+      (error) => {
         this.LoadData = false;
         console.log("error: ", error)
       }
@@ -108,9 +108,9 @@ export class DashboardComponent implements OnInit {
 
 
   selectYear(event: Event) {
-    
+
     this.selectedYear = Number((event.target as HTMLSelectElement).value);
-    this.changeData(); 
+    this.changeData();
   }
 
 }
