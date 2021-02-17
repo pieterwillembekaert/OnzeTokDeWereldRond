@@ -8,6 +8,8 @@ import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@a
 import { c_visitorsItem } from './../../DatabaseItem';
 import { visitorsItem } from './../../DatabaseItem';
 
+import {NotificationService}from './../../../Notification.service';
+
 @Component({
   selector: 'app-nieuwe-deelnemer',
   templateUrl: './nieuwe-deelnemer.component.html',
@@ -28,6 +30,7 @@ export class NieuweDeelnemerComponent implements OnInit {
     private __NieuweDeelnemerDataService: NieuweDeelnemerDataService,
     private __changeDetectorRef: ChangeDetectorRef,
     private __Router: Router,
+    private __NotificationService: NotificationService,
   ) { }
 
   ngOnInit(): void {

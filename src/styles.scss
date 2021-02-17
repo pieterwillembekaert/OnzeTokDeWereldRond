@@ -1,6 +1,8 @@
 @import '~quill/dist/quill.core.css';
 @import '~quill/dist/quill.snow.css';
 
+@import "~angular-notifier/styles";
+
 
 /* You can add global styles to this file, and also import other style files */
 /*@import '@angular/material/prebuilt-themes/deeppurple-amber.css';*/
@@ -57,15 +59,9 @@ html {
   src: url(/assets/fonts/MinionPro-Regular.otf);
 }
 
-
-
-
 .background-Prikbord {
   background-image: url("/assets/img/Prikbord.png"); 
 }
-
-
-
 
 
 /* Top left text */

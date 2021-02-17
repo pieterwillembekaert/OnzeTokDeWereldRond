@@ -11,16 +11,16 @@ import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms"
 import { QuillModule } from 'ngx-quill'
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
-/*Service */
+/*Service*/
 import { CountriesService } from './../../../countries.service';
 import { EditInterviewsDatabaseService } from '../edit-interviews-database.service';
 import { BondenService } from '../../../Bonden.service';
+import {NotificationService}from './../../../Notification.service'
 
 /*interface and class */
 import { Bank, BANKS, Counrtys } from '../demo-data';
 import { CLocationDatabase } from "../../../clocationDatabase";
-import { interviewItem } from '../../DatabaseItem';
-import { c_interviewItem } from '../../DatabaseItem';
+import { interviewItem, c_interviewItem  } from '../../DatabaseItem';
 
 
 @Component({
@@ -81,6 +81,7 @@ export class EditInterviewComponent implements OnInit {
     private __EditInterviewsDatabaseService: EditInterviewsDatabaseService,
     private __BondenService: BondenService,
     public __HttpClient: HttpClient,
+    private __NotificationService: NotificationService,
   ) { }
 
 

@@ -20,6 +20,7 @@ import { CountriesService } from './../../../countries.service';
 import { BondenService } from '../../../Bonden.service';
 import { EditVisitorsDataService } from './../../edit-visitors-data.service';
 import { ManageUploadFolderService } from './../../manage-upload-folder.service';
+import {NotificationService}from './../../../Notification.service'
 
 /*interface and class */
 import { CLocationDatabase } from "../../../clocationDatabase";
@@ -95,6 +96,7 @@ export class EditVisitorComponent implements OnInit {
     public __HttpClient: HttpClient,
     private __BondenService: BondenService,
     private __changeDetectorRef: ChangeDetectorRef,
+    private __NotificationService: NotificationService,
   ) { }
 
   ngOnInit(): void {
@@ -216,6 +218,8 @@ export class EditVisitorComponent implements OnInit {
 
   saveVisitor(): void {
 
+    this.__NotificationService.showNotification( 'success', 'Opgeslaan!')
+
     if (this.CountrysServerSideCtrl.value) {
       this.OpenVisitorViewEditText.countryTanslation = this.CountrysServerSideCtrl.value;
       let country = this.__CountriesService.convertTranslateCountryToCountry(this.OpenVisitorViewEditText.countryTanslation);
@@ -242,13 +246,12 @@ export class EditVisitorComponent implements OnInit {
 
   backToOverview(): void {
 
-    var rr = confirm("Opgelet! Vergeet niet eerst op te slaan! Wenst u de gegevens permanent op te slaan naar de server?");
-    if (rr == true) {
+    var r = confirm("Opgelet! Vergeet niet eerst op te slaan! Wenst u de gegevens permanent op te slaan naar de server?");
+    if (r == true) {
       this.bBackToHome = true;
       this.__EditVisitorsDataService.saveDataToServer();
-      alert("Opslaan gelukt! ");
-      this.__Router.navigate(['/Database/EditVisitors']);
-
+      this.__NotificationService.showNotification( 'success', 'Opgeslaan!')
+      this.__Router.navigate(['/Database/EditVisitors'])
     }
   }
 
@@ -305,10 +308,10 @@ export class EditVisitorComponent implements OnInit {
           console.log(error)
           if (error.status == 200) {
             this.bSucceedUploadImage = true;
-            alert('Gelukt');
+            this.__NotificationService.showNotification( 'success', 'Gelukt!')
           } else {
             this.bSucceedUploadImage = false;
-            alert('Upload foto mislukt');
+            this.__NotificationService.showNotification( 'error', 'Mislukt!')
           }
         })
   }

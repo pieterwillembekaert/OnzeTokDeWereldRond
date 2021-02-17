@@ -49,7 +49,7 @@ import { WavesModule, ButtonsModule, IconsModule } from 'angular-bootstrap-md';
 import { MatProgressBarModule} from '@angular/material/progress-bar'; 
 
 import { ChartsModule } from 'ng2-charts';
-
+import { NotifierModule, NotifierOptions } from 'angular-notifier';
 /*Modules*/
 import { HomeRoutingModule } from './home/home-routing.module';
 import { DatabaseRoutingModule } from './Database/database-routing.module';
@@ -63,6 +63,50 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { InterviewsComponent } from './interviews/interviews.component';
 import { DeelnemenComponent } from './deelnemen/deelnemen.component';
 import { GrafiekAfstandComponent } from './GrafiekAfstand/GrafiekAfstand.component';
+
+/**
+ * Custom angular notifier options
+ */
+const customNotifierOptions: NotifierOptions = {
+  position: {
+		horizontal: {
+			position: 'right',
+			distance: 12
+		},
+		vertical: {
+			position: 'top',
+			distance: 12,
+			gap: 10
+		}
+	},
+  theme: 'material',
+  behaviour: {
+    autoHide: 2000,
+    onClick: 'hide',
+    onMouseover: 'pauseAutoHide',
+    showDismissButton: true,
+    stacking: 4
+  },
+  animations: {
+    enabled: true,
+    show: {
+      preset: 'slide',
+      speed: 300,
+      easing: 'ease'
+    },
+    hide: {
+      preset: 'fade',
+      speed: 300,
+      easing: 'ease',
+      offset: 50
+    },
+    shift: {
+      speed: 300,
+      easing: 'ease'
+    },
+    overlap: 150
+  }
+};
 
 
 @NgModule({
@@ -81,6 +125,7 @@ import { GrafiekAfstandComponent } from './GrafiekAfstand/GrafiekAfstand.compone
     BrowserModule,
     MatProgressBarModule,
     ChartsModule,
+    NotifierModule.withConfig(customNotifierOptions),
     MatStepperModule,
     MatNativeDateModule,
     BrowserAnimationsModule,

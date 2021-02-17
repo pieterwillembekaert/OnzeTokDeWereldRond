@@ -4,6 +4,8 @@ import { MatTable } from '@angular/material/table';
 import { VisitorsService } from './../../../visitors.service';
 import { EditVisitorsDataService } from '../../edit-visitors-data.service';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import {NotificationService}from './../../../Notification.service'
+
 import { c_visitorsItem } from './../../DatabaseItem';
 import { visitorsItem } from './../../DatabaseItem';
 
@@ -28,6 +30,7 @@ export class EditVisitorsComponent implements OnInit {
     private __EditVisitorsDataService: EditVisitorsDataService,
     private __changeDetectorRef: ChangeDetectorRef,
     private __Router: Router,
+    private __NotificationService: NotificationService,
   ) { }
 
   ngOnInit(): void {
@@ -68,11 +71,11 @@ export class EditVisitorsComponent implements OnInit {
     this.__EditVisitorsDataService.saveDataToServer().then(
       msg => {
         console.log("done", msg);
-        alert("Opslaan gelukt");
+        this.__NotificationService.showNotification( 'success', 'Opgeslaan!')
       },
       error => {
         console.log("error", error);
-        alert("Mislukt! :-/");
+        this.__NotificationService.showNotification( 'error', 'Mislukt :-/')
       })
   }
 
@@ -85,6 +88,7 @@ export class EditVisitorsComponent implements OnInit {
       var r = confirm("Opgelet! Wijzigen gaan verloren zonder opslaan! Druk op ok om de aanpassingen op te slaan!");
       if (r == true) {
         this.saveVisitors();
+        this.__NotificationService.showNotification( 'success', 'Opgeslaan!')
       }
     }
   }
@@ -100,6 +104,8 @@ export class EditVisitorsComponent implements OnInit {
     for (let i = 0; i < this.dataVisitors.length; i++) {
       this.dataVisitors[i].id = i
     }
+
+    this.__NotificationService.showNotification( 'warning', 'Deelnemer gewist!')
 
     this.__EditVisitorsDataService.setEditVisitors(this.dataVisitors)
     this.table.renderRows();
@@ -125,6 +131,8 @@ export class EditVisitorsComponent implements OnInit {
       this.dataVisitors[i].id = i
     }
 
+    this.__NotificationService.showNotification( 'info', 'Deelnemer gesorteerd!')
+
     this.table.renderRows();
   }
 
@@ -135,5 +143,7 @@ export class EditVisitorsComponent implements OnInit {
       this.NieuweDeelnemersTonen = true;
     }
   }
+
+
 
 }

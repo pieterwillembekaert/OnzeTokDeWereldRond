@@ -5,8 +5,13 @@ import { InterviewsService } from '../../.././interviews.service';
 import { EditInterviewsDatabaseService } from '../edit-interviews-database.service';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 
-import { interviewItem } from '../../DatabaseItem';
-import { c_interviewItem } from '../../DatabaseItem';
+
+/*Service*/
+import {NotificationService}from './../../../Notification.service'
+
+/*interface and class */
+import { c_interviewItem, interviewItem } from '../../DatabaseItem';
+
 
 @Component({
   selector: 'app-overview-interviews',
@@ -26,7 +31,7 @@ export class OverviewInterviewsComponent implements OnInit {
     private __EditInterviewsDatabaseService: EditInterviewsDatabaseService,
     private __changeDetectorRef: ChangeDetectorRef,
     private __Router: Router,
-
+    private __NotificationService: NotificationService,
   ) { }
 
   ngOnInit(): void {
