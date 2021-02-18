@@ -25,7 +25,7 @@ export class GrafiekAfstandComponent implements OnInit {
   /*Settings chart */
   public lineChartData: ChartDataSets[] = [{
     data: [12],
-    label: 'Bezoekers per jaar',
+    label: 'Afstand per jaar',
 
   }];
 
