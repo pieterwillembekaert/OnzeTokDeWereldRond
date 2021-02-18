@@ -58,7 +58,6 @@ export class OverviewInterviewsComponent implements OnInit {
       )
     } else {
       this.dataInterviews = this.__EditInterviewsDatabaseService.getEditInterviews();
-
     }
 
   }
@@ -98,11 +97,11 @@ export class OverviewInterviewsComponent implements OnInit {
         console.log("done", msg);
         this.bDataHaseChange= false;
         this.colorSave= 'black'
-        this.__NotificationService.showNotification( 'success', 'Opgeslaan!')
+        this.__NotificationService.showNotification('success', 'Opgeslaan!');
       },
       error => {
         console.log("error", error);
-        this.__NotificationService.showNotification( 'error', 'Mislukt :-/')
+        this.__NotificationService.showNotification('error', 'Mislukt :-/');
       })
   }
 
@@ -128,7 +127,7 @@ export class OverviewInterviewsComponent implements OnInit {
       this.dataInterviews[i].id = i
     }
 
-    this.__NotificationService.showNotification( 'warning', 'Deelnemer gewist!'),
+    this.__NotificationService.showNotification('warning', 'Deelnemer gewist!');
 
     this.__EditInterviewsDatabaseService.setEditInterviews(this.dataInterviews)
     this.table.renderRows();
@@ -151,7 +150,7 @@ export class OverviewInterviewsComponent implements OnInit {
       this.dataInterviews[i].id = i
     }
 
-    this.__NotificationService.showNotification( 'info', 'Deelnemer gesorteerd!'); 
+    this.__NotificationService.showNotification('info', 'Deelnemer gesorteerd!'); 
 
     this.bDataHaseChange= true;
     this.colorSave= 'warn'

@@ -28,21 +28,19 @@ export class ManageUploadFolderService {
         //console.log(data);
         this.contentFolder=data;
         resolve(data);
-        //return data; 
       });
     });
   }
 
   async getDataFromHttp() {
     const data = <any>await this.getDataAsyn();
-    //debug
-    //console.log(data)
+  
     return data
   }
 
   deletFile(file: String) {
-    let url= this.UrlServerContenctDeletServer+ file
-    console.log(url)
+    let url= this.UrlServerContenctDeletServer+ file;
+    
     this.http.get(url)
       .subscribe(data => {
 

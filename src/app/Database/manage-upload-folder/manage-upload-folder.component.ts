@@ -2,7 +2,11 @@ import { Component, OnInit, ChangeDetectorRef,ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import {Router, Resolve,RouterStateSnapshot,ActivatedRouteSnapshot} from '@angular/router';
 
+/*Service */
 import{ ManageUploadFolderService } from '../manage-upload-folder.service';
+import {NotificationService}from './../../Notification.service';
+
+/*interface and class */
 
 @Component({
   selector: 'app-manage-upload-folder',
@@ -22,11 +26,11 @@ export class ManageUploadFolderComponent implements OnInit {
   constructor(
     private __ManageUploadFolderService : ManageUploadFolderService,
     private __Router: Router,
+    private __NotificationService: NotificationService,
   ) { }
 
   ngOnInit(): void {
     this.getFolderContent();
-   
   }
 
   getFolderContent(): void {
@@ -36,20 +40,24 @@ export class ManageUploadFolderComponent implements OnInit {
         console.log(response)
         this.folderContent= response;
         //console.log(response)
-        
       },
       (error)=> {
-        console.log("error: ", error)
+        console.log("error: ", error);
+        this.__NotificationService.showNotification('error', 'Afbeeldingen niet gevonden');
       }
     )
 
  }
   delete(row: any): void {
     let removeFile= String(row);
-    console.log(removeFile)
+    
     this.__ManageUploadFolderService.deletFile(removeFile);
+
     this.getFolderContent();
+
     this.table.renderRows();
+
+    this.__NotificationService.showNotification('warning', 'Afbeelding gewist!');
   }
 
 }
