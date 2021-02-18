@@ -2,12 +2,16 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Component, OnInit, ViewChild, HostListener, Directive, ChangeDetectorRef } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+
+
+/*Service */
 import { VisitorsService } from '../../visitors.service';
 import { CountriesService } from '../../countries.service';
 
-import { PrikboardItem, cPrikboardItem } from './PriboardItem';
 
-import { trigger, state, style, transition, animate } from '@angular/animations';
+/*interface and class */
+import { PrikboardItem, cPrikboardItem } from './PriboardItem';
 
 function clamp(n: number, min: number, max: number) {
   return Math.min(max, Math.max(min, n));
@@ -389,9 +393,12 @@ export class KaartComponent implements OnInit {
         NewData.name = String(dataInJSON[i].name);
         NewData.imgScr = String(dataInJSON[i].imgScr);
         NewData.date = dataInJSON[i].date;
+        NewData.bond = dataInJSON[i].bond;
 
         //data toevoegen
         this.aPrikboardList.push(NewData)
+
+        console.log( this.aPrikboardList)
 
         lastID = i;
       }

@@ -45,7 +45,7 @@
           <mdb-card *ngIf="PB_Element.name">
             <div class="view rgba-white-slight waves-light" mdbWavesEffect>
               <!-- Card img -->
-              <mdb-card-img src="{{PB_Element.imgScr}}" alt="Card image cap"></mdb-card-img>
+             <!-- <mdb-card-img src="{{PB_Element.imgScr}}" alt="Card image cap"></mdb-card-img>-->
               <a>
                 <div class="mask"></div>
               </a>
@@ -53,19 +53,17 @@
             <!--Card content-->
             <mdb-card-body>
               <!--Title-->
-              <mdb-card-title>
+              <mdb-card-title style="color: black;">
                 <h3>{{PB_Element.name}}</h3>
-                <!--<h4 *ngIf="PB_Element.bond.code !== 0">van: {{PB_Element.bond.bond}}</h4>-->
+                <h4 *ngIf="PB_Element.bond.code !== 0" >van: {{PB_Element.bond.bond}}</h4>
               </mdb-card-title>
 
               <!--Text-->
               <mdb-card-text>
                 <p style="color: black;">
-                  NAAM: {{PB_Element.name}} <br>
                   DATUM: {{PB_Element.date | date:"dd/MM/yy"}}
                 </p>
               </mdb-card-text>
-
               <!--<a href="#" mdbBtn color="primary" mdbWavesEffect>Button</a>-->
             </mdb-card-body>
           </mdb-card>

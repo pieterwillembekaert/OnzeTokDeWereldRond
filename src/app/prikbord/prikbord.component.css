@@ -54,34 +54,3 @@
 }
 
 
-
-/*@media screen and (min-width: 280px)  {
-    .grid-container-map {
-        grid-template-columns: auto; 
-        
-    } 
-
-    .grid-container-map-data-PB {
-        grid-template-columns: auto;
-        grid-template-rows: auto;
-        max-width: 150px;
-    }
-
-    .grid-container-Prikbord {
-        grid-template-columns: auto;
-    }
-
-    .grid-item-Prikbord{
-        max-width: 400px;
-    }
-
-    .grid-item-PB-Image{
-        max-width: 180px; 
-
-    }
-
-    .grid-item-PB-Image-Style{
-        max-width: 175px;
-    }
-    
-} */
