@@ -11,20 +11,25 @@
 
 <div class="container">
   <p>
-    <a class="btn blue material-icons" color="primary" role="button" matTooltip="Terug naar overzicht" aria-label=""
-      (click)="backToOverview()">arrow_back</a>
-    <a class="btn blue material-icons" color="primary" role="button" matTooltip="Bewaar aanpassingen" aria-label=""
-      (click)="backToOverview()" (click)="saveInterviews()">save</a>
+    <button mat-icon-button matTooltip="Terug naar overzicht" (click)="backToOverview()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <button mat-icon-button matTooltip="Bewaar aanpassingen" color={{colorSave}} (click)="saveInterviews()">
+      <mat-icon>save</mat-icon>
+    </button>
   </p>
-  <h2 class="example-h2">Bewerk het interview</h2>
+  <h2 class="">Bewerk het interview</h2>
   <form [formGroup]="richTextForm">
     <div class="form-group">
       <label for="Title">Titel</label>
-      <input formControlName="title" class="form-control" id="Title" aria-describedby="Title">
+      <input formControlName="title" class="form-control" id="Title" aria-describedby="Title"
+        (change)="formDataHaseChange($event)">
     </div>
     <div class="form-group">
       <label for="Subtitle">Subtitel</label>
-      <input formControlName="subtitle" class="form-control" id="Subtitle" aria-describedby="Subtitle">
+      <input formControlName="subtitle" class="form-control" id="Subtitle" aria-describedby="Subtitle"
+        (change)="formDataHaseChange($event)">
     </div>
     <!--Kies een land-->
     <mat-form-field>
@@ -59,17 +64,19 @@
     <!--Afstand van huis-->
     <mat-form-field appearance="fill">
       <mat-label>Afstand</mat-label>
-      <input matInput formControlName="distance">
+      <input matInput type="number" formControlName="distance" (change)="formDataHaseChange($event)">
     </mat-form-field>
+
     <!--name-->
     <mat-form-field appearance="fill">
       <mat-label>Naam</mat-label>
-      <input matInput formControlName="name">
+      <input matInput formControlName="name" (change)="formDataHaseChange($event)">
     </mat-form-field>
 
     <!--Datum -->
     <mat-form-field>
-      <input matInput [matDatepicker]="picker" placeholder="datum" formControlName="date">
+      <input matInput [matDatepicker]="picker" (dateChange)="formDataHaseChange($event)" placeholder="datum"
+        formControlName="date">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -77,23 +84,72 @@
     <!--imgScr-->
     <mat-form-field appearance="fill">
       <mat-label>imgScr</mat-label>
-      <input matInput formControlName="imgScr">
+      <input matInput formControlName="imgScr" (change)="formDataHaseChange($event)">
     </mat-form-field>
 
     <!--Upload file-->
+    <h2>Laad een foto op of zoek een op de server: </h2>
     <input ngf type="file" accept="*" [(files)]="files" capturePaste="1" />
     <button *ngIf="files" (click)="uploadFiles(files)">send files</button>
 
     <ngfFormData [files]="files" [(FormData)]="myFormData" postName="file"></ngfFormData>
+
     <ngfUploadStatus [(percent)]="uploadPercent" [httpEvent]="httpEvent"></ngfUploadStatus>
 
     <div *ngIf="uploadPercent">
-      <h2 class="example-h2">Upload Progress: {{ uploadPercent }}%</h2>
-      <mat-progress-bar mode="determinate" value="{{ uploadPercent}}"></mat-progress-bar>
+      Upload Progress: {{ uploadPercent }}%
+    </div>
+    <br>
+
+    <!--camera_roll-->
+
+    <h2>Zoek foto op de server:</h2>
+
+    <button mat-icon-button *ngIf="!bOpenSelectImage" (click)="openSelectImage()"
+      aria-label="Example icon button with a menu icon">
+      <mat-icon>camera_roll</mat-icon>
+    </button>
+
+    <button mat-icon-button color="warn" *ngIf="bOpenSelectImage" (click)="closeSelectImage()"
+      aria-label="Example icon button with a menu icon">
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <div class="container" *ngIf="bOpenSelectImage">
+
+      <table mat-table [dataSource]="folderContent" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="Bewerken">
+          <th mat-header-cell *matHeaderCellDef> Bewerken </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="warn" (click)="selectImage(element)"
+              aria-label="Example icon button with a menu icon">
+              <mat-icon>login</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="Bestand">
+          <th mat-header-cell *matHeaderCellDef> Bestand </th>
+          <td mat-cell *matCellDef="let element">{{element}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Afbeelding">
+          <th mat-header-cell *matHeaderCellDef> Afbeelding </th>
+          <td mat-cell *matCellDef="let element"><img src="/upload/{{element}}" alt="Foto van {{element}}"
+              width="100px">
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedImageColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedImageColumns;"></tr>
+      </table>
     </div>
 
+    <h2>Artiekel</h2>
+
     <div class="form-group">
-      <label>Artiekel</label>
       <rich-text-editor [control]="descriptionRichControl"></rich-text-editor>
     </div>
   </form>

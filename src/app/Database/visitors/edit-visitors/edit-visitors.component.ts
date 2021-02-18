@@ -39,7 +39,7 @@ export class EditVisitorsComponent implements OnInit {
   ngOnInit(): void {
 
     this.bDataHaseChange= this.__EditVisitorsDataService.getDataHaseChangdWithoutSave(); 
-    if(this.bDataHaseChange) this.colorSave= 'warn'
+    if(this.bDataHaseChange) this.colorSave= 'warn';
 
     if (!this.__EditVisitorsDataService.getEditVisitors()) {
       this.__VisitorsService.getDataFromHttp().then(
@@ -53,6 +53,15 @@ export class EditVisitorsComponent implements OnInit {
       )
     } else {
       this.dataVisitors = this.__EditVisitorsDataService.getEditVisitors();
+    }
+  }
+
+  ngOnDestroy() {
+    if (!this.goToEditPage && this.bDataHaseChange) {
+      var r = confirm("Opgelet! Wijzigen gaan verloren zonder opslaan! Druk op ok om de aanpassingen op te slaan!");
+      if (r == true) {
+        this.saveVisitors();
+      }
     }
   }
 
@@ -93,15 +102,12 @@ export class EditVisitorsComponent implements OnInit {
     console.log("download interviews")
   }
 
-  ngOnDestroy() {
-    if (!this.goToEditPage && this.bDataHaseChange) {
-      var r = confirm("Opgelet! Wijzigen gaan verloren zonder opslaan! Druk op ok om de aanpassingen op te slaan!");
-      if (r == true) {
-        this.saveVisitors();
-      }
-    }
+  edit(row: any): void {
+    //console.log(row);
+    this.__EditVisitorsDataService.setOpenVisitorEdit(row);
+    this.goToEditPage = true;
+    this.__Router.navigate(['/Database/EditVisitor']);
   }
-
 
   delete(row: any): void {
     const index = this.dataVisitors.indexOf(row, 0);
@@ -114,7 +120,7 @@ export class EditVisitorsComponent implements OnInit {
       this.dataVisitors[i].id = i
     }
 
-    this.__NotificationService.showNotification( 'warning', 'Deelnemer gewist!')
+    this.__NotificationService.showNotification( 'warning', 'Deelnemer gewist!');
 
     this.__EditVisitorsDataService.setEditVisitors(this.dataVisitors); 
     this.table.renderRows();
@@ -123,12 +129,7 @@ export class EditVisitorsComponent implements OnInit {
     this.colorSave= 'warn'
   }
 
-  edit(row: any): void {
-    //console.log(row);
-    this.__EditVisitorsDataService.setOpenVisitorEdit(row);
-    this.goToEditPage = true;
-    this.__Router.navigate(['/Database/EditVisitor']);
-  }
+
 
   sort(): void {
     for (let i = 0; i < this.dataVisitors.length; i++) {

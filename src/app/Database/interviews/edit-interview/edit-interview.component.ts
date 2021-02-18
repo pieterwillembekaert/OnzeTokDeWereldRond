@@ -15,12 +15,13 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { CountriesService } from './../../../countries.service';
 import { EditInterviewsDatabaseService } from '../edit-interviews-database.service';
 import { BondenService } from '../../../Bonden.service';
-import {NotificationService}from './../../../Notification.service'
+import { NotificationService } from './../../../Notification.service';
+import { ManageUploadFolderService } from './../../manage-upload-folder.service';
 
 /*interface and class */
 import { Bank, BANKS, Counrtys } from '../demo-data';
 import { CLocationDatabase } from "../../../clocationDatabase";
-import { interviewItem, c_interviewItem  } from '../../DatabaseItem';
+import { interviewItem, c_interviewItem } from '../../DatabaseItem';
 
 
 @Component({
@@ -33,12 +34,19 @@ export class EditInterviewComponent implements OnInit {
   richTextForm: FormGroup;
   OpenInterViewEditText: interviewItem;
   SaveInterViewEditText: interviewItem;
+  bBackToHome: boolean = false;
 
   //upload post
   Url = new CLocationDatabase;
   postUrl = this.Url.getUrl() + 'upload';
   imagePath: string = "/upload/default.jpg";
   bSucceedUploadImage: boolean = false;
+
+  //select image
+  folderContent: string[] = [];
+  LoadData: boolean;
+  displayedImageColumns: string[] = ['Bewerken', 'Bestand', 'Afbeelding'];
+  bOpenSelectImage: boolean = false;
 
   uploadPercent;
   files;
@@ -49,6 +57,9 @@ export class EditInterviewComponent implements OnInit {
   picker;
   Country: String;
   Bond: String;
+
+  bDataHaseChange: boolean = false;
+  colorSave: string = "black"
 
   /** list of countrys */
   protected countrys: any;
@@ -75,8 +86,8 @@ export class EditInterviewComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    private __route: ActivatedRoute,
     private __Router: Router,
+    private __ManageUploadFolderService: ManageUploadFolderService,
     private __CountriesService: CountriesService,
     private __EditInterviewsDatabaseService: EditInterviewsDatabaseService,
     private __BondenService: BondenService,
@@ -101,6 +112,10 @@ export class EditInterviewComponent implements OnInit {
             return [];
           }
 
+          //data hase change
+          this.bDataHaseChange = true;
+          this.colorSave = "warn";
+
           // simulate server fetching and filtering data
           return this.countrys.filter(country => country.toLowerCase().indexOf(search.toLowerCase()) > -1);
         }),
@@ -117,7 +132,7 @@ export class EditInterviewComponent implements OnInit {
           // handle error...
         });
     /*Searche bond */
-    
+
     //listen for search field value changes
     this.BondenServerSideFilteringCtrl.valueChanges
       .pipe(
@@ -133,6 +148,10 @@ export class EditInterviewComponent implements OnInit {
           // simulate server fetching and filtering data
           return this.bonden.filter(
             (bond: any) => {
+              //data hase change
+              this.bDataHaseChange = true;
+              this.colorSave = "warn";
+
               //number in string? 
               var regex = /\d+/g;
               var matches = search.match(regex);  // creates array from matches
@@ -191,6 +210,14 @@ export class EditInterviewComponent implements OnInit {
 
 
   ngOnDestroy(): void {
+    if (!this.bBackToHome) {
+      var r = confirm("Opgelet! Vergeet niet eerst op te slaan! ");
+      if (r == true) {
+        this.saveInterviews();
+
+      }
+    }
+
     this._onDestroy.next();
     this._onDestroy.complete();
   }
@@ -198,6 +225,8 @@ export class EditInterviewComponent implements OnInit {
 
   saveInterviews(): void {
 
+    this.bDataHaseChange = false;
+    this.colorSave = "black"
 
     if (this.CountrysServerSideCtrl.value) {
       this.OpenInterViewEditText.countryTanslation = this.CountrysServerSideCtrl.value;
@@ -224,21 +253,62 @@ export class EditInterviewComponent implements OnInit {
   }
 
   backToOverview(): void {
-    var r = confirm("Opgelet! Vergeet niet eerst op te slaan! Wil je terug gaan naar het overzicht?");
-    if (r == true) {
-      var rr = confirm("Wenst u de gegevens permanent op te slaan naar de server?");
-      if (rr == true) {
-        this.__EditInterviewsDatabaseService.saveDataToServer();
-        alert("Opslaan gelukt! ");
+    this.bBackToHome = true;
+
+    if (this.bDataHaseChange) {
+      var r = confirm("Wenst u de aanpassing op te slaan? Druk op ok om de gegevens op te slaan.");
+      if (r == true) {
+        this.saveInterviews();
+        this.__EditInterviewsDatabaseService.setDataHaseChangdWithoutSave(true);
+
         this.__Router.navigate(['/Database/OverviewInterviews']);
       } else {
         this.__Router.navigate(['/Database/OverviewInterviews']);
       }
+
+    } else {
+      console.log("back")
+      this.__Router.navigate(['/Database/OverviewInterviews']);
     }
+
   }
 
   onFileComplete(data: any) {
     console.log(data); // We just print out data bubbled up from event emitter.
+  }
+
+  openSelectImage() {
+    this.bOpenSelectImage = true;
+
+    this.__ManageUploadFolderService.getDataFromHttp().then(
+      (response) => {
+        console.log(response)
+        this.folderContent = response;
+        //console.log(response)
+      },
+      (error) => {
+        console.log("error: ", error)
+      }
+    )
+
+  }
+
+  closeSelectImage() {
+    this.bOpenSelectImage = false;
+
+  }
+
+  selectImage(row) {
+    console.log(row)
+    this.richTextForm.value.imgScr = "/upload/" + row;
+    this.imagePath = "/upload/" + row;
+  }
+
+  formDataHaseChange(event: Event) {
+    console.log("data change")
+    this.bDataHaseChange = true;
+    this.colorSave = "warn"
+
   }
 
   uploadFiles(files: File): Subscription {
@@ -263,10 +333,10 @@ export class EditInterviewComponent implements OnInit {
           console.log(error)
           if (error.status == 200) {
             this.bSucceedUploadImage = true;
-            alert('Gelukt');
+            this.__NotificationService.showNotification('success', 'Gelukt!');
           } else {
             this.bSucceedUploadImage = false;
-            alert('Upload foto mislukt');
+            this.__NotificationService.showNotification('error', 'Mislukt!');
           }
         })
   }

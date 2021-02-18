@@ -26,6 +26,9 @@ export class OverviewInterviewsComponent implements OnInit {
 
   @ViewChild(MatTable) table: MatTable<any>;
 
+  bDataHaseChange: boolean= false;
+  colorSave: string= "black"
+
   constructor(
     private __InterviewsService: InterviewsService,
     private __EditInterviewsDatabaseService: EditInterviewsDatabaseService,
@@ -35,6 +38,9 @@ export class OverviewInterviewsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.bDataHaseChange= this.__EditInterviewsDatabaseService.getDataHaseChangdWithoutSave(); 
+    if(this.bDataHaseChange) this.colorSave= 'warn'
 
     if (!this.__EditInterviewsDatabaseService.getEditInterviews()) {
       this.__InterviewsService.getDataFromHttp().then(
@@ -58,11 +64,10 @@ export class OverviewInterviewsComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (!this.goToEditPage) {
+    if (!this.goToEditPage && this.bDataHaseChange) {
       var r = confirm("Opgelet! Wijzigen gaan verloren zonder opslaan! Druk op ok om de aanpassingen op te slaan!");
       if (r == true) {
         this.saveInterviews();
-        alert("Opslaan gelukt!")
       }
     }
   }
@@ -80,11 +85,25 @@ export class OverviewInterviewsComponent implements OnInit {
     this.table.renderRows();
 
     this.edit(newData);
+
+    this.__EditInterviewsDatabaseService.setDataHaseChangdWithoutSave(true); 
   }
 
 
   saveInterviews(): void {
-    this.__EditInterviewsDatabaseService.saveDataToServer();
+    this.sort(); 
+
+    this.__EditInterviewsDatabaseService.saveDataToServer().then(
+      msg => {
+        console.log("done", msg);
+        this.bDataHaseChange= false;
+        this.colorSave= 'black'
+        this.__NotificationService.showNotification( 'success', 'Opgeslaan!')
+      },
+      error => {
+        console.log("error", error);
+        this.__NotificationService.showNotification( 'error', 'Mislukt :-/')
+      })
   }
 
   downloadInterviews(): void {
@@ -109,8 +128,14 @@ export class OverviewInterviewsComponent implements OnInit {
       this.dataInterviews[i].id = i
     }
 
+    this.__NotificationService.showNotification( 'warning', 'Deelnemer gewist!'),
+
     this.__EditInterviewsDatabaseService.setEditInterviews(this.dataInterviews)
     this.table.renderRows();
+
+    
+    this.bDataHaseChange= true;
+    this.colorSave= 'warn'
   }
 
   sort(): void {
@@ -125,6 +150,11 @@ export class OverviewInterviewsComponent implements OnInit {
     for (let i = 0; i < this.dataInterviews.length; i++) {
       this.dataInterviews[i].id = i
     }
+
+    this.__NotificationService.showNotification( 'info', 'Deelnemer gesorteerd!'); 
+
+    this.bDataHaseChange= true;
+    this.colorSave= 'warn'
 
     this.table.renderRows();
   }

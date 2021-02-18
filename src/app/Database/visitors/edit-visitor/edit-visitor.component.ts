@@ -37,7 +37,7 @@ export class EditVisitorComponent implements OnInit {
   markdownForm: FormGroup;
   richTextForm: FormGroup;
   OpenVisitorViewEditText: visitorsItem;
-  checkIfDataChangesVisitorViewEditText: visitorsItem;
+  
   bBackToHome: boolean = false;
 
   //upload post
@@ -124,7 +124,7 @@ export class EditVisitorComponent implements OnInit {
 
           //data hase change
           this.bDataHaseChange=true; 
-          this.colorSave= "warn"
+          this.colorSave= "warn";
 
           // simulate server fetching and filtering data
           return this.countrys.filter(country => country.toLowerCase().indexOf(search.toLowerCase()) > -1);
@@ -161,7 +161,8 @@ export class EditVisitorComponent implements OnInit {
             (bond: any) => {
               //data hase change
               this.bDataHaseChange=true; 
-              this.colorSave= "warn"
+              this.colorSave= "warn";
+
               //number in string? 
               var regex = /\d+/g;
               var matches = search.match(regex);  // creates array from matches
@@ -191,7 +192,7 @@ export class EditVisitorComponent implements OnInit {
 
     /*Open data from the server*/
     this.OpenVisitorViewEditText = this.__EditVisitorsDataService.getOpenVisitorEdit();
-    this.checkIfDataChangesVisitorViewEditText = this.__EditVisitorsDataService.getOpenVisitorEdit();
+   
     if (!this.OpenVisitorViewEditText) {
       //Terug wanneer de data niet beschikbaar is. 
       this.__Router.navigate(['/Database/EditVisitors']);
@@ -311,7 +312,7 @@ export class EditVisitorComponent implements OnInit {
     this.imagePath = "/upload/" + row;
   }
 
-  selectYear(event: Event) {
+  formDataHaseChange(event: Event) {
     this.bDataHaseChange=true; 
     this.colorSave= "warn"
     

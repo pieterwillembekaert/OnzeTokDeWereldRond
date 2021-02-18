@@ -30,16 +30,16 @@ export class c_interviewItem implements interviewItem {
   id: number=0;
   name: string="";
   bond: iBond= new cBond();
-  country: string="";
-  countryTanslation: string="";
-  date: Date;
-  dateConvert: string="";
+  country: string="belgium";
+  countryTanslation: string="België";
+  date: Date= new Date();
+  dateConvert: string="2021";
   distance: number=0; 
-  imgScr: string="";
+  imgScr: string="/upload/default.jpg";
   year: string="";
-  title: string="";
+  title: string="Nieuw interview";
   subTitle: string="";
-  text: string="";
+  text: string="Type het interview hier...";
 }
 
 
