@@ -10,10 +10,15 @@
 </div>
 <div class="container">
   <p>
-    <a class="btn material-icons" color="primary" role="button" matTooltip="Terug naar het overzicht"
-      aria-label="Button that displays a tooltip when focused or hovered over" (click)="backToOverview()">arrow_back</a>
-    <a class="btn material-icons" color="primary" role="button" matTooltip="Bewaar aanpassing"
-      aria-label="Button that displays a tooltip when focused or hovered over" (click)="saveVisitor()">save</a>
+    <button mat-icon-button matTooltip="Terug naar het overzicht"
+      aria-label="Example icon button with a vertical three dot icon" (click)="backToOverview()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <button mat-icon-button color="{{colorSave}}" matTooltip="Bewaar aanpassing"
+      aria-label="Example icon button with a vertical three dot icon" (click)="saveVisitor()">
+      <mat-icon>save</mat-icon>
+    </button>
   </p>
   <h1>Bewerk bezoeker</h1>
   <form [formGroup]="richTextForm">
@@ -50,25 +55,26 @@
     <!--name-->
     <mat-form-field appearance="fill">
       <mat-label>Naam</mat-label>
-      <input matInput formControlName="name">
+      <input matInput formControlName="name" (change)="selectYear($event)">
     </mat-form-field>
 
     <!--imgScr-->
     <mat-form-field appearance="fill">
       <mat-label>imgScr</mat-label>
-      <input matInput formControlName="imgScr" [(ngModel)]="imagePath">
+      <input matInput formControlName="imgScr" [(ngModel)]="imagePath" (change)="selectYear($event)">
     </mat-form-field>
 
 
     <!--Afstand van huis-->
     <mat-form-field appearance="fill">
       <mat-label>Afstand</mat-label>
-      <input matInput type="number" formControlName="distance">
+      <input matInput type="number" formControlName="distance" (change)="selectYear($event)">
     </mat-form-field>
 
     <!--Datum -->
     <mat-form-field>
-      <input matInput [matDatepicker]="picker" placeholder="datum" formControlName="date">
+      <input matInput [matDatepicker]="picker" (dateChange)="selectYear($event)" placeholder="datum"
+        formControlName="date">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -98,11 +104,13 @@
 
   <p>Zoek foto op de server:</p>
 
-  <button mat-icon-button *ngIf="!bOpenSelectImage"  (click)="openSelectImage()" aria-label="Example icon button with a menu icon">
+  <button mat-icon-button *ngIf="!bOpenSelectImage" (click)="openSelectImage()"
+    aria-label="Example icon button with a menu icon">
     <mat-icon>camera_roll</mat-icon>
   </button>
 
-  <button mat-icon-button color="warn" *ngIf="bOpenSelectImage" (click)="closeSelectImage()" aria-label="Example icon button with a menu icon">
+  <button mat-icon-button color="warn" *ngIf="bOpenSelectImage" (click)="closeSelectImage()"
+    aria-label="Example icon button with a menu icon">
     <mat-icon>close</mat-icon>
   </button>
 

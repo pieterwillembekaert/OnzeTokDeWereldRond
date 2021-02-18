@@ -11,14 +11,24 @@
 <br>
 <div class="container">
   <p>
-    <a class="btn  material-icons" color="primary" role="button" matTooltip="Bewaar aanpassingen" aria-label=""
-      (click)="saveVisitors()">save</a>
-    <a class="btn material-icons" color="primary" role="button" matTooltip="Download database" aria-label=""
-      (click)="downloadVisitors()">file_download</a>
-    <a class="btn material-icons" color="primary" role="button" matTooltip="Nieuwe bezoeker toevoegen" aria-label=""
-      (click)="newVisitor()">add</a>
-    <a class="btn material-icons" color="primary" role="button" matTooltip="Sorteer op datum" aria-label=""
-      (click)="sort()">sort</a>
+
+    <button mat-icon-button color="{{colorSave}}" matTooltip="Bewaar aanpassing"
+      aria-label="Example icon button with a vertical three dot icon" (click)="saveVisitors()">
+      <mat-icon>save</mat-icon>
+    </button>
+
+    <!-- <button mat-icon-button color="{{colorSave}}" matTooltip="Download database"
+      aria-label="Example icon button with a vertical three dot icon" (click)="downloadVisitors()">
+      <mat-icon>save</mat-icon>
+    </button> -->
+
+    <button mat-icon-button matTooltip="Nieuwe bezoeker toevoegen" (click)="newVisitor()">
+      <mat-icon>add</mat-icon>
+    </button>
+
+    <button mat-icon-button matTooltip="Sorteer op datum" (click)="sort()">
+      <mat-icon>sort</mat-icon>
+    </button>
   </p>
 
 
@@ -69,7 +79,8 @@
     </ng-container>
     <ng-container matColumnDef="Afbeelding">
       <th mat-header-cell *matHeaderCellDef> Afbeelding </th>
-      <td mat-cell *matCellDef="let element"><img [src]= element.imgScr alt="Foto van {{element.imgScr}}" width="100px"></td>
+      <td mat-cell *matCellDef="let element"><img [src]=element.imgScr alt="Foto van {{element.imgScr}}" width="100px">
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

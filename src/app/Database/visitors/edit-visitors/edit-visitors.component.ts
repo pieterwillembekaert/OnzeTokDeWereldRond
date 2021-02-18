@@ -25,6 +25,9 @@ export class EditVisitorsComponent implements OnInit {
 
   NieuweDeelnemersTonen: boolean;
 
+  bDataHaseChange: boolean= false;
+  colorSave: string= "black"
+
   constructor(
     private __VisitorsService: VisitorsService,
     private __EditVisitorsDataService: EditVisitorsDataService,
@@ -35,12 +38,14 @@ export class EditVisitorsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.bDataHaseChange= this.__EditVisitorsDataService.getDataHaseChangdWithoutSave(); 
+    if(this.bDataHaseChange) this.colorSave= 'warn'
+
     if (!this.__EditVisitorsDataService.getEditVisitors()) {
       this.__VisitorsService.getDataFromHttp().then(
         (response) => {
           this.dataVisitors = response.members;
           this.__EditVisitorsDataService.setEditVisitors(response.members);
-          //console.log(response)
         },
         (error) => {
           console.log("error: ", error)
@@ -48,7 +53,6 @@ export class EditVisitorsComponent implements OnInit {
       )
     } else {
       this.dataVisitors = this.__EditVisitorsDataService.getEditVisitors();
-
     }
   }
 
@@ -64,13 +68,19 @@ export class EditVisitorsComponent implements OnInit {
     this.table.renderRows();
 
     this.edit(newData);
+
+    this.__EditVisitorsDataService.setDataHaseChangdWithoutSave(true); 
   }
 
 
   saveVisitors(): void {
+    this.sort(); 
+
     this.__EditVisitorsDataService.saveDataToServer().then(
       msg => {
         console.log("done", msg);
+        this.bDataHaseChange= false;
+        this.colorSave= 'black'
         this.__NotificationService.showNotification( 'success', 'Opgeslaan!')
       },
       error => {
@@ -84,11 +94,10 @@ export class EditVisitorsComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (!this.goToEditPage) {
+    if (!this.goToEditPage && this.bDataHaseChange) {
       var r = confirm("Opgelet! Wijzigen gaan verloren zonder opslaan! Druk op ok om de aanpassingen op te slaan!");
       if (r == true) {
         this.saveVisitors();
-        this.__NotificationService.showNotification( 'success', 'Opgeslaan!')
       }
     }
   }
@@ -107,8 +116,11 @@ export class EditVisitorsComponent implements OnInit {
 
     this.__NotificationService.showNotification( 'warning', 'Deelnemer gewist!')
 
-    this.__EditVisitorsDataService.setEditVisitors(this.dataVisitors)
+    this.__EditVisitorsDataService.setEditVisitors(this.dataVisitors); 
     this.table.renderRows();
+
+    this.bDataHaseChange= true;
+    this.colorSave= 'warn'
   }
 
   edit(row: any): void {
@@ -131,7 +143,10 @@ export class EditVisitorsComponent implements OnInit {
       this.dataVisitors[i].id = i
     }
 
-    this.__NotificationService.showNotification( 'info', 'Deelnemer gesorteerd!')
+    this.__NotificationService.showNotification( 'info', 'Deelnemer gesorteerd!'); 
+
+    this.bDataHaseChange= true;
+    this.colorSave= 'warn'
 
     this.table.renderRows();
   }
@@ -143,7 +158,5 @@ export class EditVisitorsComponent implements OnInit {
       this.NieuweDeelnemersTonen = true;
     }
   }
-
-
 
 }

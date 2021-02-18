@@ -57,10 +57,14 @@ export class EditVisitorComponent implements OnInit {
   LoadData: boolean;
   displayedImageColumns: string[] = ['Bewerken', 'Bestand', 'Afbeelding'];
   bOpenSelectImage: boolean = false;
+  
 
   picker;
   Country: String;
   Bond: String;
+
+  bDataHaseChange: boolean= false;
+  colorSave: string= "black"
 
   /** list of .. */
   protected countrys: any;
@@ -118,6 +122,10 @@ export class EditVisitorComponent implements OnInit {
             return [];
           }
 
+          //data hase change
+          this.bDataHaseChange=true; 
+          this.colorSave= "warn"
+
           // simulate server fetching and filtering data
           return this.countrys.filter(country => country.toLowerCase().indexOf(search.toLowerCase()) > -1);
         }),
@@ -151,6 +159,9 @@ export class EditVisitorComponent implements OnInit {
           // simulate server fetching and filtering data
           return this.bonden.filter(
             (bond: any) => {
+              //data hase change
+              this.bDataHaseChange=true; 
+              this.colorSave= "warn"
               //number in string? 
               var regex = /\d+/g;
               var matches = search.match(regex);  // creates array from matches
@@ -206,9 +217,7 @@ export class EditVisitorComponent implements OnInit {
       var r = confirm("Opgelet! Vergeet niet eerst op te slaan! ");
       if (r == true) {
         this.saveVisitor();
-        this.__EditVisitorsDataService.saveDataToServer();
-        alert("Opslaan gelukt! ");
-
+        
       }
     }
 
@@ -218,6 +227,11 @@ export class EditVisitorComponent implements OnInit {
 
   saveVisitor(): void {
 
+    this.bDataHaseChange=false; 
+    this.colorSave= "black"
+
+    this.__EditVisitorsDataService.setDataHaseChangdWithoutSave(true);
+  
     this.__NotificationService.showNotification( 'success', 'Opgeslaan!')
 
     if (this.CountrysServerSideCtrl.value) {
@@ -246,13 +260,24 @@ export class EditVisitorComponent implements OnInit {
 
   backToOverview(): void {
 
-    var r = confirm("Opgelet! Vergeet niet eerst op te slaan! Wenst u de gegevens permanent op te slaan naar de server?");
-    if (r == true) {
-      this.bBackToHome = true;
-      this.__EditVisitorsDataService.saveDataToServer();
-      this.__NotificationService.showNotification( 'success', 'Opgeslaan!')
+    this.bBackToHome = true;
+    
+    if(this.bDataHaseChange){
+      var r = confirm("Wenst u de aanpassing op te slaan? Druk op ok om de gegevens op te slaan.");
+      if (r == true) {
+        this.saveVisitor(); 
+        this.__EditVisitorsDataService.setDataHaseChangdWithoutSave(true);
+       
+        this.__Router.navigate(['/Database/EditVisitors'])
+      }else{
+        this.__Router.navigate(['/Database/EditVisitors'])
+      }
+
+    }else{
+      console.log("back")
       this.__Router.navigate(['/Database/EditVisitors'])
     }
+
   }
 
   onFileComplete(data: any) {
@@ -284,6 +309,12 @@ export class EditVisitorComponent implements OnInit {
     console.log(row)
     this.richTextForm.value.imgScr = "/upload/" + row;
     this.imagePath = "/upload/" + row;
+  }
+
+  selectYear(event: Event) {
+    this.bDataHaseChange=true; 
+    this.colorSave= "warn"
+    
   }
 
   uploadFiles(files: File): Subscription {

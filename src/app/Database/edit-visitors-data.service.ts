@@ -23,6 +23,8 @@ export class EditVisitorsDataService {
   editVisitors
   OpenVisitorEdit: visitorsItem;
 
+  bDataHaseChangdWithoutSave: boolean= false; 
+
   Url = new CLocationDatabase;
   UrlServer: string = this.Url.getUrl() + "saveToDB/";
 
@@ -52,6 +54,14 @@ export class EditVisitorsDataService {
     this.OpenVisitorEdit = newData;
   }
 
+  getDataHaseChangdWithoutSave(): boolean {
+    return this.bDataHaseChangdWithoutSave;
+  }
+
+  setDataHaseChangdWithoutSave(newData: boolean) {
+    this.bDataHaseChangdWithoutSave = newData;
+  }
+
   saveData(SaveData: visitorsItem) {
     for (let i = 0; i < this.editVisitors.length; i++) {
       if (SaveData.id == this.editVisitors.id) {
@@ -68,11 +78,13 @@ export class EditVisitorsDataService {
       this.http.post<any>(this.UrlServer, this.editVisitors).subscribe(
         data => {
           console.log("POST Request is successful ", data);
+          this.bDataHaseChangdWithoutSave= false; 
           resole(data.status);
         },
         error => {
           if (error.status == 200) {
             console.log("Ok", error.status);
+            this.bDataHaseChangdWithoutSave= false; 
             resole(error.status);
           } else {
             console.log("Error", error);
