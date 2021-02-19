@@ -26,7 +26,7 @@ export class EditVisitorsComponent implements OnInit {
   NieuweDeelnemersTonen: boolean;
 
   bDataHaseChange: boolean= false;
-  colorSave: string= "black"
+  colorSave: string= "black";
 
   constructor(
     private __VisitorsService: VisitorsService,
@@ -89,7 +89,7 @@ export class EditVisitorsComponent implements OnInit {
       msg => {
         console.log("done", msg);
         this.bDataHaseChange= false;
-        this.colorSave= 'black'
+        this.colorSave= 'black';
         this.__NotificationService.showNotification( 'success', 'Opgeslaan!')
       },
       error => {

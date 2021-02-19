@@ -24,6 +24,9 @@ export class NieuweDeelnemerComponent implements OnInit {
   displayedColumns: string[] = ['Bewerken', 'Naam', 'Land', 'Afstand', 'Datum', 'Afbeelding', "Email", "Opmerking"];
   @ViewChild(MatTable) table: MatTable<any>;
 
+  bDataHaseChange: boolean= false;
+  colorSave: string= "black";
+
   constructor(
     private __VisitorsService: VisitorsService,
     private __EditVisitorsDataService: EditVisitorsDataService,
@@ -44,6 +47,7 @@ export class NieuweDeelnemerComponent implements OnInit {
       },
       (error) => {
         console.log("error: ", error)
+        this.__NotificationService.showNotification( 'error', 'Kan data niet ophalen :-/')
       }
     )
 
@@ -56,6 +60,7 @@ export class NieuweDeelnemerComponent implements OnInit {
       },
       (error) => {
         console.log("error: ", error)
+        this.__NotificationService.showNotification( 'error', 'Kan data niet ophalen :-/')
       }
     )
   }
@@ -64,6 +69,7 @@ export class NieuweDeelnemerComponent implements OnInit {
     //Add To data visitors
     this.dataVisitors.push(row);
     this.__EditVisitorsDataService.setEditVisitors(this.dataVisitors);
+    this.__NotificationService.showNotification( 'success', 'Deelnemer toegevoegd');
 
     //delet row 
     this.delete(row);
@@ -74,7 +80,16 @@ export class NieuweDeelnemerComponent implements OnInit {
     //console.log("save Nieuwe Deelnemers")
     //console.log(this.dataNewVisitors); 
     this.__NieuweDeelnemerDataService.setNieuweDeelnemersData(this.dataNewVisitors)
-    this.__NieuweDeelnemerDataService.saveDataToServer();
+    this.__NieuweDeelnemerDataService.saveDataToServer().then(
+      msg => {
+        console.log("done", msg);
+        this.saveVisitors();
+
+      },
+      error => {
+        console.log("error", error);
+        this.__NotificationService.showNotification( 'error', 'Mislukt :-/')
+      })
   }
 
   saveVisitors(): void {
@@ -82,11 +97,15 @@ export class NieuweDeelnemerComponent implements OnInit {
     this.__EditVisitorsDataService.saveDataToServer().then(
       msg => {
         console.log("done", msg);
-        alert("Opslaan gelukt!");
+        this.__NotificationService.showNotification( 'success', ' Opslaan gelukt!');
+
+        this.bDataHaseChange= false;
+        this.colorSave= 'black';
+
       },
       error => {
         console.log("error", error);
-        alert("Mislukt! :-/");
+        this.__NotificationService.showNotification( 'error', 'Mislukt :-/')
       })
   }
 
@@ -101,6 +120,12 @@ export class NieuweDeelnemerComponent implements OnInit {
       this.dataNewVisitors.splice(index, 1);
     }
     this.__NieuweDeelnemerDataService.setNieuweDeelnemersData(this.dataNewVisitors);
+
+    this.__NotificationService.showNotification( 'warning', 'Deelnemer gewist');
+
+    this.bDataHaseChange= true;
+    this.colorSave= 'warn';
+
     this.table.renderRows();
   }
 
@@ -109,8 +134,15 @@ export class NieuweDeelnemerComponent implements OnInit {
     for (let i = 0; i < this.dataNewVisitors.length; i++) {
       this.dataNewVisitors[i].date = new Date(this.dataNewVisitors[i].date);
     }
-    this.dataNewVisitors = this.dataNewVisitors.slice().sort((a: any, b: any) => b.date - a.date)
+    this.dataNewVisitors = this.dataNewVisitors.slice().sort((a: any, b: any) => b.date - a.date);
+
     this.__NieuweDeelnemerDataService.setNieuweDeelnemersData(this.dataNewVisitors);
+
+    this.__NotificationService.showNotification( 'info', 'Deelnemer gesorteerd');
+
+    this.bDataHaseChange= true;
+    this.colorSave= 'warn';
+
     this.table.renderRows();
   }
 }

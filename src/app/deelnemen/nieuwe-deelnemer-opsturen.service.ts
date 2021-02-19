@@ -11,9 +11,8 @@ import { CLocationDatabase } from "../clocationDatabase";
 export class NieuweDeelnemerOpsturenService {
 
   Url = new CLocationDatabase;
-  UrlServer: string = this.Url.getUrl() + "saveToNieweDeelnemers/";
-  //UrlServer: string= "http://localhost:3000/saveToNieweDeelnemers/"
-  //UrlServer: string= "/saveToNieweDeelnemers/"
+  UrlServer: string = this.Url.getUrl() + "api/saveToNieweDeelnemers/";
+  
 
   constructor(
     private http: HttpClient

@@ -10,14 +10,18 @@
 <div class="container">
   <h1>Nieuwe deelnemers</h1>
   <p>
-    <a class="btn material-icons" color="primary" role="button"
-      matTooltip="Bewaar aanpassingen naar nieuwe deelnemers" aria-label="" (click)="saveNieuweDeelnemers()">save</a>
-    <a class="btn material-icons" color="primary" role="button"
-      matTooltip="Bewaar aanpassingen naar de bezoekers database" aria-label="" (click)="saveVisitors()">save</a>
-    <a class="btn material-icons" color="primary" role="button" matTooltip="Download database" aria-label=""
-      (click)="downloadVisitors()">file_download</a>
-    <a class="btn material-icons" color="primary" role="button" matTooltip="Sorteer op datum" aria-label=""
-      (click)="sort()">sort</a>
+
+    <button mat-icon-button color="{{colorSave}}" matTooltip="Bewaar aanpassing" (click)="saveNieuweDeelnemers()">
+      <mat-icon>save</mat-icon>
+    </button>
+
+    <button mat-icon-button matTooltip="Download database" (click)="downloadVisitors()">
+      <mat-icon>file_download</mat-icon>
+    </button>
+
+    <button mat-icon-button matTooltip="Sorteer op datum" (click)="sort()">
+      <mat-icon>sort</mat-icon>
+    </button>
   </p>
 
 
@@ -26,8 +30,15 @@
     <ng-container matColumnDef="Bewerken">
       <th mat-header-cell *matHeaderCellDef> Bewerken </th>
       <td mat-cell *matCellDef="let element">
-        <a class="waves-effect waves-light material-icons" (click)="accept(element)">check</a>
-        <a class="materialize-red-text waves-effect waves-light material-icons" (click)="delete(element)">delete</a>
+
+        <button mat-icon-button matTooltip="Accepteer nieuwe deelnemer" (click)="accept(element)">
+          <mat-icon>check</mat-icon>
+        </button>
+
+        <button mat-icon-button color="warn" matTooltip="Wis nieuwe deelnemer" (click)="delete(element)"
+          aria-label="Example icon button with a menu icon">
+          <mat-icon>delete</mat-icon>
+        </button>
       </td>
     </ng-container>
     <ng-container matColumnDef="Naam">
@@ -59,7 +70,8 @@
     </ng-container>
     <ng-container matColumnDef="Afbeelding">
       <th mat-header-cell *matHeaderCellDef> Afbeelding </th>
-      <td mat-cell *matCellDef="let element"><img [src]= element.imgScr alt="Foto van {{element.imgScr}}" width="100px"></td>
+      <td mat-cell *matCellDef="let element"><img [src]=element.imgScr alt="Foto van {{element.imgScr}}" width="100px">
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

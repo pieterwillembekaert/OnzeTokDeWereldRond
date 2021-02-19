@@ -18,6 +18,8 @@ import { QuillModule } from 'ngx-quill';
 import { CountriesService } from './../countries.service';
 import { NieuweDeelnemerOpsturenService } from './nieuwe-deelnemer-opsturen.service';
 import { BondenService } from '../Bonden.service';
+import {NotificationService}from '../Notification.service';
+
 
 /*interface and class */
 import { CLocationDatabase } from "../clocationDatabase";
@@ -119,6 +121,7 @@ export class DeelnemenComponent implements OnInit {
     public __HttpClient: HttpClient,
     public __NieuweDeelnemerOpsturenService: NieuweDeelnemerOpsturenService,
     private _formBuilder: FormBuilder,
+    private __NotificationService: NotificationService,
   ) { }
 
   ngOnInit(): void {
@@ -229,6 +232,7 @@ export class DeelnemenComponent implements OnInit {
     if (!this.basisGevensDeelnemer.value.name || "") {
       this.bFoutInFormulier = true;
       this.sFoutInFormulier = "Vul uw naam in! ";
+      this.__NotificationService.showNotification( 'error', 'Vul uw naam in!')
       console.log("Vul uw naam in!");
       return;
     }
@@ -236,6 +240,7 @@ export class DeelnemenComponent implements OnInit {
     if (!this.BondenServerSideCtrl.value || "") {
       this.bFoutInFormulier = true;
       this.sFoutInFormulier = this.sFoutInFormulier + "Kies uw bond! ";
+      this.__NotificationService.showNotification( 'error', 'Kies uw bond!')
       console.log("Kies uw bond!");
       return;
     }
@@ -243,6 +248,7 @@ export class DeelnemenComponent implements OnInit {
     if (!this.basisGevensDeelnemer.value.email || "") {
       this.bFoutInFormulier = true;
       this.sFoutInFormulier = this.sFoutInFormulier + "Vul uw emailadres in ";
+      this.__NotificationService.showNotification( 'error', 'Vul uw emailadres in!')
       console.log("Vul uw emailadres in!");
       return;
     }
@@ -250,6 +256,7 @@ export class DeelnemenComponent implements OnInit {
     if (!this.CountrysServerSideCtrl.value || "") {
       this.bFoutInFormulier = true;
       this.sFoutInFormulier = this.sFoutInFormulier + "Kies een land! ";
+      this.__NotificationService.showNotification( 'error', 'Kies een land!')
       console.log("Kies een land!");
       return;
     }
@@ -257,13 +264,15 @@ export class DeelnemenComponent implements OnInit {
     if (!this.bezoekGegevensDeelnemer.value.date || "") {
       this.bFoutInFormulier = true;
       this.sFoutInFormulier = this.sFoutInFormulier + "Kies een datum ";
+      this.__NotificationService.showNotification( 'error', 'Kies een datum')
       console.log("Kies een datum");
       return;
     }
 
     if (!this.afbeeldingDeelnemerScr || "") {
       this.bFoutInFormulier = true;
-      this.sFoutInFormulier = this.sFoutInFormulier + "geen afbeelding gevonden ";
+      this.sFoutInFormulier = this.sFoutInFormulier + "Geen afbeelding gevonden ";
+      this.__NotificationService.showNotification( 'error', 'geen afbeelding gevonden')
       console.log("geen afbeelding gevonden");
       return;
     }
@@ -296,11 +305,12 @@ export class DeelnemenComponent implements OnInit {
     this.__NieuweDeelnemerOpsturenService.saveDataToServer(this.SaveNewVisitorEditText).then(
       msg => {
         console.log("done", msg);
-        alert("Gelukt! Bedankt voor het deelnemen");
+        this.__NotificationService.showNotification( 'success', 'Gelukt! Bedankt voor het deelnemen')
+        
       },
       error => {
         console.log("error", error);
-        alert("Mislukt! :-/");
+        this.__NotificationService.showNotification( 'error', 'Mislukt')
       })
   }
 
@@ -321,6 +331,7 @@ export class DeelnemenComponent implements OnInit {
   uploadFiles(files: File): Subscription {
     this.richTextForm.value.imgScr = "/upload/" + files[0].name;
     this.afbeeldingDeelnemer.value.imgScr = "/upload/" + files[0].name;
+    this.afbeeldingDeelnemerScr= "/upload/" + files[0].name;
     this.bSucceedUploadImage = false;
     
     const config = new HttpRequest('POST', this.postUrl, this.myFormData, {
@@ -339,11 +350,11 @@ export class DeelnemenComponent implements OnInit {
         error => {
           console.log(error)
           if (error.status == 200) {
-            this.bSucceedUploadImage = true;
-            alert('Gelukt');
+            this.bSucceedUploadImage = true;          
+            this.__NotificationService.showNotification( 'success', 'Gelukt!')
           } else {
             this.bSucceedUploadImage = false;
-            alert('Upload foto mislukt');
+            this.__NotificationService.showNotification( 'error', 'Upload foto mislukt')
           }
         })
   }
