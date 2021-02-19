@@ -6,23 +6,16 @@ import { c_interviewItem } from '../DatabaseItem';
 import { CLocationDatabase } from "../../clocationDatabase";
 
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: 'my-auth-token'
-  })
-}
-
-
 @Injectable({
   providedIn: 'root'
 })
 export class EditInterviewsDatabaseService {
   editInterviews
   OpenInterViewEditText: interviewItem;
+  bNewImageUploaded: boolean= false; 
 
   Url = new CLocationDatabase;
-  UrlServer: string = this.Url.getUrl() + "saveToInterviews/";
+  UrlServer: string = this.Url.getUrl() + "api/saveToInterviews/";
 
   bDataHaseChangdWithoutSave: boolean = false;
 
@@ -37,6 +30,14 @@ export class EditInterviewsDatabaseService {
 
   setOpenInterViewEditText(interviewDataEdit) {
     this.OpenInterViewEditText = interviewDataEdit;
+  }
+
+  getNewImageUploaded(): boolean {
+    return this.bNewImageUploaded;
+  }
+
+  setNewImageUploaded(newData: boolean) {
+    this.bNewImageUploaded = newData;
   }
 
   getEditInterviews() {
@@ -56,18 +57,22 @@ export class EditInterviewsDatabaseService {
   }
 
   saveDataToServer() {
-    console.log("Save data to server")
+    console.log("Save data to server");
+    
     return new Promise((resole, reject) => {
-      this.http.post<any>(this.UrlServer, this.editInterviews).subscribe(
+      var sendData= {data: this.editInterviews, newImageUploaded: this.bNewImageUploaded}
+      this.http.post<any>(this.UrlServer, sendData).subscribe(
         data => {
           console.log("POST Request is successful ", data);
           this.bDataHaseChangdWithoutSave = false;
+          this.bNewImageUploaded= false;
           resole(data.status);
         },
         error => {
           if (error.status == 200) {
-            console.log("Ok", error.status);
+            //console.log("Ok", error.status);
             this.bDataHaseChangdWithoutSave = false;
+            this.bNewImageUploaded= false;
             resole(error.status);
           } else {
             console.log("Error", error);

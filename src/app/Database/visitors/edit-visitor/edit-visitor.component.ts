@@ -321,6 +321,7 @@ export class EditVisitorComponent implements OnInit {
   uploadFiles(files: File): Subscription {
     this.richTextForm.value.imgScr = "/upload/" + files[0].name;
     this.imagePath = "/upload/" + files[0].name;
+    this.__EditVisitorsDataService.setNewImageUploaded(true);
 
     this.__changeDetectorRef.detectChanges();
     const config = new HttpRequest('POST', this.postUrl, this.myFormData, {

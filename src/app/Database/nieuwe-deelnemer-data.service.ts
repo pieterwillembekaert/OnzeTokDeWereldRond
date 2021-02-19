@@ -14,7 +14,7 @@ export class NieuweDeelnemerDataService {
   
   Url= new CLocationDatabase;
   UrlServer: string= this.Url.getUrl()+"api/nieuwedeelnemerdata/";  
-  UrlServerSave: string= this.Url.getUrl()+"saveToNieweDeelnemersDatabase/"; 
+  UrlServerSave: string= this.Url.getUrl()+"api/saveToNieweDeelnemersDatabase/"; 
 
 
   constructor(
@@ -36,20 +36,17 @@ export class NieuweDeelnemerDataService {
         //console.log(data);
         this.NieuweDeelnemers=data;
         resolve(data);
-        //return data; 
       });
     });
   }
 
   async getDataFromHttp() {
     const data = <any>await this.getDataAsyn();
-    //console.log(data)
     return data
   }
 
   saveDataToServer(){
     console.log("Save data nieuwe deelnemers to server")
-    console.log(this.NieuweDeelnemers); 
     this.http.post<any>(this.UrlServerSave, this.NieuweDeelnemers).subscribe({
       error: error => {
           console.error('There was an error!', error);

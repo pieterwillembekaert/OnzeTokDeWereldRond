@@ -9,27 +9,22 @@ import { c_visitorsItem } from './DatabaseItem';
 import { visitorsItem } from './DatabaseItem';
 import { CLocationDatabase } from "../clocationDatabase";
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'responseType': 'json',
-  })
-}
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class EditVisitorsDataService {
   editVisitors
   OpenVisitorEdit: visitorsItem;
 
   bDataHaseChangdWithoutSave: boolean= false; 
+  bNewImageUploaded: boolean= false; 
 
   Url = new CLocationDatabase;
-  UrlServer: string = this.Url.getUrl() + "saveToDB/";
+  UrlServer: string = this.Url.getUrl() + "api/saveToDB/";
 
   postUrl = this.Url.getUrl() + "upload/";
-
 
   httpEvent: HttpEvent<{}>
 
@@ -44,6 +39,14 @@ export class EditVisitorsDataService {
 
   setEditVisitors(newData) {
     this.editVisitors = newData;
+  }
+
+  getNewImageUploaded(): boolean {
+    return this.bNewImageUploaded;
+  }
+
+  setNewImageUploaded(newData: boolean) {
+    this.bNewImageUploaded = newData;
   }
 
   getOpenVisitorEdit() {
@@ -75,10 +78,12 @@ export class EditVisitorsDataService {
   saveDataToServer()  {
     console.log("Save data to server")
     return new Promise((resole, reject) => {
-      this.http.post<any>(this.UrlServer, this.editVisitors).subscribe(
+      var sendData= {data: this.editVisitors, newImageUploaded: this.bNewImageUploaded}
+      this.http.post<any>(this.UrlServer, sendData).subscribe(
         data => {
           console.log("POST Request is successful ", data);
           this.bDataHaseChangdWithoutSave= false; 
+          this.bNewImageUploaded= false;
           resole(data.status);
         },
         error => {
@@ -95,6 +100,7 @@ export class EditVisitorsDataService {
   }
 
   uploadFiles(files: File, FormData: FormData): Subscription {
+    
     const config = new HttpRequest('POST', this.postUrl, FormData, {
       reportProgress: true
     })

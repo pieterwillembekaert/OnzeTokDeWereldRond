@@ -295,7 +295,6 @@ export class EditInterviewComponent implements OnInit {
 
   closeSelectImage() {
     this.bOpenSelectImage = false;
-
   }
 
   selectImage(row) {
@@ -314,6 +313,8 @@ export class EditInterviewComponent implements OnInit {
   uploadFiles(files: File): Subscription {
     this.richTextForm.value.imgScr = "/upload/" + files[0].name;
     this.imagePath = "/upload/" + files[0].name;
+
+    this.__EditInterviewsDatabaseService.setNewImageUploaded(true);
 
     const config = new HttpRequest('POST', this.postUrl, this.myFormData, {
       reportProgress: true
