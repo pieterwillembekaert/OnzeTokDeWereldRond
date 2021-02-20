@@ -4,17 +4,31 @@
 <div class="container" id="Kaart">
   <h1>Kaart</h1>
   <p>Welke landen bezocht de tok? Op de kaart is een overzicht te zien. Klik op een land en ontdek meer!</p>
-  <button mat-icon-button color="primary" aria-label="Example icon button with a refresh icon">
+  <button mat-icon-button color="primary" matTooltip="Refresh" (click)="refreshData()">
     <mat-icon>refresh</mat-icon>
   </button>
 
-  <button class="btn material-icons" (click)="zoomIn()">zoom_in</button>
-  <button class="btn material-icons" (click)="zoomOut()">zoom_out</button>
-  <button class="btn material-icons" (click)="resetZoom()">replay</button>
-  <button class="btn material-icons" (click)="moveUp()">arrow_drop_up</button>
-  <button class="btn material-icons" (click)="moveDown()">arrow_drop_down</button>
-  <button class="btn material-icons" (click)="moveLeft()">arrow_left</button>
-  <button class="btn material-icons" (click)="moveRight()">arrow_right</button>
+  <button mat-icon-button color="" matTooltip="Zoom in" (click)="zoomIn()">
+    <mat-icon>zoom_in</mat-icon>
+  </button>
+  <button mat-icon-button color="" matTooltip="Zoom uit" (click)="zoomOut()">
+    <mat-icon>zoom_out</mat-icon>
+  </button>
+  <button mat-icon-button color="" matTooltip="Herstel" (click)="resetZoom()">
+    <mat-icon>replay</mat-icon>
+  </button>
+  <button mat-icon-button color="" matTooltip="Beweeg naar boven" (click)="moveUp()">
+    <mat-icon>arrow_drop_up</mat-icon>
+  </button>
+  <button mat-icon-button color="" matTooltip="Beweeg naar beneder" (click)="moveDown()">
+    <mat-icon>arrow_drop_down</mat-icon>
+  </button>
+  <button mat-icon-button color="" matTooltip="Beweeg naar links" (click)="moveLeft()">
+    <mat-icon>arrow_left</mat-icon>
+  </button>
+  <button mat-icon-button color="" matTooltip="Beweeg naar rechts" (click)="moveRight()">
+    <mat-icon>arrow_right</mat-icon>
+  </button>
 </div>
 
 <!--Load data-->
@@ -23,15 +37,24 @@
 <div class="grid-container-map">
 
   <div class="grid-item-map">
-    <object [@transformAnimation]="transformAnimationState" #mySvg id='map' data='./assets/img/map/World_map.svg'
+    <object [@transformAnimation]="transformAnimationState" #kaartSvg id='map' data='./assets/img/map/World_map.svg'
       class="map-svg" type='image/svg+xml'></object>
   </div>
 
   <div *ngIf="OpenBrikboard" class="grid-item-map-data background-Prikbord">
-    <button class="btn material-icons" (click)="zoomIn()">zoom_in</button>
-    <button class="btn material-icons" (click)="zoomOut()">zoom_out</button>
-    <button class="btn material-icons" (click)="resetZoom()">replay</button>
-    <button class="btn red material-icons" (click)="closePBdata()">close</button>
+    <button mat-icon-button matTooltip="Zoom in" (click)="zoomIn()">
+      <mat-icon class="black-btn">zoom_in</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Zoom uit" (click)="zoomOut()">
+      <mat-icon class="black-btn">zoom_out</mat-icon>
+    </button>
+    <button mat-icon-button color="primary" matTooltip="Herstel" (click)="resetZoom()">
+      <mat-icon>replay</mat-icon>
+    </button>
+    <button mat-icon-button color="red" matTooltip="Sluit venster" (click)="closePBdata()">
+      <mat-icon class="red-btn">close</mat-icon>
+    </button>
+
 
     <div>Land: <span [innerHTML]="PbLand"></span><br>Bezoekers: <span [innerHTML]="PbNumbersVisit"></span>
     </div>

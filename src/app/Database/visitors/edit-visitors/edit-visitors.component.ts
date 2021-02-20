@@ -1,11 +1,13 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
+import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 
+/*Service */
 import { VisitorsService } from './../../../visitors.service';
 import { EditVisitorsDataService } from '../../edit-visitors-data.service';
-import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import {NotificationService}from './../../../Notification.service'
+import {NotificationService}from './../../../Notification.service'; 
 
+/*interface and class */
 import { c_visitorsItem } from './../../DatabaseItem';
 import { visitorsItem } from './../../DatabaseItem';
 
@@ -90,11 +92,11 @@ export class EditVisitorsComponent implements OnInit {
         console.log("done", msg);
         this.bDataHaseChange= false;
         this.colorSave= 'black';
-        this.__NotificationService.showNotification( 'success', 'Opgeslaan!')
+        this.__NotificationService.showNotification( 'success', 'Opgeslaan!');
       },
       error => {
         console.log("error", error);
-        this.__NotificationService.showNotification( 'error', 'Mislukt :-/')
+        this.__NotificationService.showNotification( 'error', 'Mislukt :-/'); 
       })
   }
 

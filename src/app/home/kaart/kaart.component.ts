@@ -5,9 +5,11 @@ import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@a
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 
+
 /*Service */
 import { VisitorsService } from '../../visitors.service';
 import { CountriesService } from '../../countries.service';
+import {NotificationService}from './../../Notification.service'; 
 
 
 /*interface and class */
@@ -31,7 +33,7 @@ function clamp(n: number, min: number, max: number) {
 })
 
 export class KaartComponent implements OnInit {
-  @ViewChild('mySvg') mySvg;
+  @ViewChild('kaartSvg') kaartSvg;
   GvCountryClick;
   objElm;
   visitors;
@@ -70,7 +72,7 @@ export class KaartComponent implements OnInit {
     private __CountriesService: CountriesService,
     private __Router: Router,
     private changeDetectorRef: ChangeDetectorRef,
-
+    private __NotificationService: NotificationService,
   ) {
 
   }
@@ -83,26 +85,24 @@ export class KaartComponent implements OnInit {
     }
   }
 
-
-
-
-
+  
   ngAfterViewInit(): void {
-    // initializing the function
-
-
     var $this = this;
-    var __objElm = (this.mySvg.nativeElement as HTMLObjectElement);
+    var __objElm = (this.kaartSvg.nativeElement as HTMLObjectElement);
+    console.log(__objElm)
     __objElm.onload = () => {
       $this.Main(__objElm);
 
     }
   }
 
+   
+  refreshData(){
+    this.visitors = this.__VisitorsService.getData();
 
-  getDataFromServer(): void {
-    console.log("getDataFromServer")
+    this.__NotificationService.showNotification( 'info', 'Herladen!');
   }
+
 
   Main(objElm): void {
     //console.log("main")
@@ -218,7 +218,6 @@ export class KaartComponent implements OnInit {
           if (attrV.length > 1) {
             var kV = attrV[0];
             var vV = attrV[1];
-
           }
           if (kV == 'fill') {
             //toggle green
@@ -231,7 +230,6 @@ export class KaartComponent implements OnInit {
         msv.setAttribute('style', style_valueV);
 
       }
-
 
       //Parsing style attribute values
       var attrs = ms.getAttribute('style').split(' ').join('').split(';');
@@ -255,8 +253,6 @@ export class KaartComponent implements OnInit {
       }
       ms.setAttribute('style', style_value);
     };
-
-
     ms.onmouseover = function (e) {
       ms.style.cursor = 'pointer';
     };
@@ -412,8 +408,8 @@ export class KaartComponent implements OnInit {
 
     const currentScale = this.scale;
     const newScale = clamp(this.scale + Math.sign(e.deltaY) / 10.0, 1, 3.0);
+    console.log("hier")
     if (currentScale !== newScale) {
-
 
       this.translate = this.calculateTranslationToZoomPoint(currentScale, newScale, this.translate, e);
       this.scale = newScale;
@@ -428,6 +424,7 @@ export class KaartComponent implements OnInit {
     // kudos to this awesome answer on stackoverflow:
     // https://stackoverflow.com/a/27611642/1814576
     const [eventLayerX, eventLayerY] = this.projectToLayer(e);
+    console.log("calculateTranslationToZoomPoint")
 
     const xAtCurrentScale = (eventLayerX - currentTranslation[0]) / currentScale;
     const yAtCurrentScale = (eventLayerY - currentTranslation[1]) / currentScale;
@@ -462,7 +459,26 @@ export class KaartComponent implements OnInit {
     }
   }
 
+  // @HostListener("panstart", ["$event"])
+  // onPanStart(e: Event) {
+  //   console.log("onPanStart")
+  //   this.translateOnPanStart = [...this.translate] as [number, number];
+  //   e.preventDefault();
+  // }
 
+  // @HostListener("pan", ["$event"])
+  // onPan(e: Event & { deltaX: number; deltaY: number }) {
+  //   console.log("onPan")
+  //   this.translate = [
+  //     this.translateOnPanStart[0] + e.deltaX,
+  //     this.translateOnPanStart[1] + e.deltaY
+  //   ];
+  //   this.updateTransformAnimationState("0s");
+  //   e.preventDefault();
+  // }
+
+
+  /*Buttons */
   closePBdata() {
     this.OpenBrikboard = false;
   }
@@ -475,45 +491,45 @@ export class KaartComponent implements OnInit {
 
   zoomIn() {
     //console.log("zoom in")
-    this.scale = this.scale + 0.1;
+    this.scale = this.scale + 0.5;
     this.translate = [0, 0];
     this.updateTransformAnimationState();
   }
 
   zoomOut() {
     //console.log("zoom out")
-    this.scale = this.scale - 0.1;
+    this.scale = this.scale - 0.5;
     this.translate = [0, 0];
     this.updateTransformAnimationState();
   }
 
   moveUp() {
-    //console.log("move up")
+    console.log("move up")
     let y = this.translate[0]
     //console.log(y)
     this.translate = [
       this.translateOnPanStart[0],
-      this.translateOnPanStart[1] = this.translateOnPanStart[1] + 10
+      this.translateOnPanStart[1] = this.translateOnPanStart[1] + 20
     ];
     this.updateTransformAnimationState("0s");
   }
 
   moveDown() {
-    //console.log("move up")
+    console.log("move up")
     let y = this.translate[0]
     //console.log(y)
     this.translate = [
       this.translateOnPanStart[0],
-      this.translateOnPanStart[1] = this.translateOnPanStart[1] - 10
+      this.translateOnPanStart[1] = this.translateOnPanStart[1] - 20
     ];
     this.updateTransformAnimationState("0s");
   }
 
   moveLeft() {
-    //console.log("move left")
+    console.log("move left")
 
     this.translate = [
-      this.translateOnPanStart[0] = this.translateOnPanStart[0] - 10,
+      this.translateOnPanStart[0] = this.translateOnPanStart[0] - 20,
       this.translateOnPanStart[1]
     ];
     this.updateTransformAnimationState("0s");
