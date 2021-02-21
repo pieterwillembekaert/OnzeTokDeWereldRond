@@ -12,14 +12,14 @@ import { Subscription } from 'rxjs'
 import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
 import { ErrorStateMatcher } from '@angular/material/core';
 import { QuillModule } from 'ngx-quill';
-
+import { take } from 'rxjs/operators';
 
 
 /*Service */
 import { CountriesService } from './../countries.service';
 import { NieuweDeelnemerOpsturenService } from './nieuwe-deelnemer-opsturen.service';
 import { BondenService } from '../Bonden.service';
-import {NotificationService}from '../Notification.service';
+import { NotificationService } from '../Notification.service';
 
 
 /*interface and class */
@@ -63,7 +63,7 @@ export class DeelnemenComponent implements OnInit {
 
   basisGevensDeelnemer: FormGroup;
   bezoekGegevensDeelnemer: FormGroup;
-;
+  ;
   afbeeldingDeelnemer: FormGroup;
   doneDeelnemer: FormGroup;
   isEditable = true;
@@ -71,9 +71,9 @@ export class DeelnemenComponent implements OnInit {
   sFoutInFormulier: string = ";"
   done: boolean = false;
   bSucceedUploadImage: boolean = false;
-  testImage: string; 
+  testImage: string;
 
-  endResultBond: iBond= new cBond(); 
+  endResultBond: iBond = new cBond();
 
   email = new FormControl('', [Validators.required, Validators.email]);
 
@@ -92,28 +92,29 @@ export class DeelnemenComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
 
-   /** list of countrys */
-   protected countrys: any;
-   protected bonden: any;
- 
-   /** control for the selected bank for server side filtering */
-   public CountrysServerSideCtrl: FormControl = new FormControl();
-   public BondenServerSideCtrl: FormControl = new FormControl();
- 
-   /** control for filter for server side. */
-   public CountrysServerSideFilteringCtrl: FormControl = new FormControl();
-   public BondenServerSideFilteringCtrl: FormControl = new FormControl();
- 
-   /** indicate search operation is in progress */
-   public searchingCountrys = false;
-   public searchingBonden = false;
- 
-   /** list of data filtered after simulating server side search */
-   public filteredServerSideCounrtys: ReplaySubject<String[]> = new ReplaySubject<String[]>(1);
-   public filteredServerSideBonden: ReplaySubject<String[]> = new ReplaySubject<String[]>(1);
- 
-   /** Subject that emits when the component has been destroyed. */
-   protected _onDestroy = new Subject<void>();
+  /** list of elements */
+  protected countrys: any;
+  protected bonden: iBond[];
+
+  /** control for the selected bank for server side filtering */
+  public CountrysServerSideCtrl: FormControl = new FormControl();
+  public BondenServerSideCtrl: FormControl = new FormControl();
+
+  /** control for filter for server side. */
+  public CountrysServerSideFilteringCtrl: FormControl = new FormControl();
+  public BondenServerSideFilteringCtrl: FormControl = new FormControl();
+
+  /** indicate search operation is in progress */
+  public searchingCountrys = false;
+  public searchingBonden = false;
+
+  /** list of data filtered after simulating server side search */
+  public filteredServerSideCounrtys: ReplaySubject<String[]> = new ReplaySubject<String[]>(1);
+  public filteredServerSideBonden: ReplaySubject<iBond[]> = new ReplaySubject<iBond[]>(1);
+
+  @ViewChild('#selectBond') selectBond: MatSelect;
+  /** Subject that emits when the component has been destroyed. */
+  protected _onDestroy = new Subject<void>();
 
   constructor(
     private _fb: FormBuilder,
@@ -121,30 +122,30 @@ export class DeelnemenComponent implements OnInit {
     private __CountriesService: CountriesService,
     public __HttpClient: HttpClient,
     public __NieuweDeelnemerOpsturenService: NieuweDeelnemerOpsturenService,
-    private _formBuilder: FormBuilder,
+    private __formBuilder: FormBuilder,
     private __NotificationService: NotificationService,
   ) { }
 
   ngOnInit(): void {
 
-    this.basisGevensDeelnemer = this._formBuilder.group({
+    this.basisGevensDeelnemer = this.__formBuilder.group({
       name: ['', Validators.required],
       email: ['', Validators.required]
     });
-    this.bezoekGegevensDeelnemer = this._formBuilder.group({
+    this.bezoekGegevensDeelnemer = this.__formBuilder.group({
       distance: ['', Validators.required],
       date: ['', Validators.required]
     });
-    this.afbeeldingDeelnemer = this._formBuilder.group({
+    this.afbeeldingDeelnemer = this.__formBuilder.group({
       imgScr: [''],
     });
-    this.doneDeelnemer = this._formBuilder.group({
+    this.doneDeelnemer = this.__formBuilder.group({
       opmerking: [''],
     });
 
 
     this.countrys = this.__CountriesService.getCountryAllTranslation();
-    this.bonden= this.__BondenService.getBonden();
+    this.bonden = this.__BondenService.getBonden();
 
     // listen for search field value changes
     this.CountrysServerSideFilteringCtrl.valueChanges
@@ -172,47 +173,52 @@ export class DeelnemenComponent implements OnInit {
           // handle error...
         });
 
-         /*Searche bond */
+    /*Searche bond */
+    this.BondenServerSideCtrl.setValue(this.bonden[0]);
+
+    // load the initial bonden list
+    this.filteredServerSideBonden.next(this.bonden.slice());
+
     //listen for search field value changes
     this.BondenServerSideFilteringCtrl.valueChanges
-    .pipe(
-      filter(search => !!search),
-      tap(() => this.searchingBonden = true),
-      takeUntil(this._onDestroy),
-      debounceTime(200),
-      map(search => {
-        if (!this.bonden) {
-          return [];
-        }
+      .pipe(
+        filter(search => !!search),
+        tap(() => this.searchingBonden = true),
+        takeUntil(this._onDestroy),
+        debounceTime(200),
+        map(search => {
+          if (!this.bonden) {
+            return [];
+          }
 
-        // simulate server fetching and filtering data
-        return this.bonden.filter(
-          (bond: any) => {
-            //number in string? 
-            var regex = /\d+/g;
-            var matches = search.match(regex);  // creates array from matches
+          // simulate server fetching and filtering data
+          return this.bonden.filter(
+            (bond: any) => {
+              //number in string? 
+              var regex = /\d+/g;
+              var matches = search.match(regex);  // creates array from matches
 
-            if (!matches) {
-              return bond.bond.toLowerCase().indexOf(search.toLowerCase()) > -1
-            } else {
+              if (!matches) {
+                return bond.bond.toLowerCase().indexOf(search.toLowerCase()) > -1
+              } else {
 
-              let toStringBondCode = String(bond.code);
-              return toStringBondCode.toLowerCase().indexOf(search.toLowerCase()) > -1
+                let toStringBondCode = String(bond.code);
+                return toStringBondCode.toLowerCase().indexOf(search.toLowerCase()) > -1
 
-            }
-          });
-      }),
-      delay(500),
-      takeUntil(this._onDestroy)
-    )
-    .subscribe(filtered => {
-      this.searchingBonden = false;
-      this.filteredServerSideBonden.next(filtered);
-    },
-      error => {
-        // no errors in our simulated example
+              }
+            });
+        }),
+        delay(500),
+        takeUntil(this._onDestroy)
+      )
+      .subscribe(filtered => {
         this.searchingBonden = false;
-      });
+        this.filteredServerSideBonden.next(filtered);
+      },
+        error => {
+          // no errors in our simulated example
+          this.searchingBonden = false;
+        });
 
     this.richTextForm = this._fb.group({
       name: ["", Validators.required],
@@ -233,7 +239,7 @@ export class DeelnemenComponent implements OnInit {
     if (!this.basisGevensDeelnemer.value.name || "") {
       this.bFoutInFormulier = true;
       this.sFoutInFormulier = "Vul uw naam in! ";
-      this.__NotificationService.showNotification( 'error', 'Vul uw naam in!')
+      this.__NotificationService.showNotification('error', 'Vul uw naam in!')
       console.log("Vul uw naam in!");
       return;
     }
@@ -241,7 +247,7 @@ export class DeelnemenComponent implements OnInit {
     if (!this.BondenServerSideCtrl.value || "") {
       this.bFoutInFormulier = true;
       this.sFoutInFormulier = this.sFoutInFormulier + "Kies uw bond! ";
-      this.__NotificationService.showNotification( 'error', 'Kies uw bond!')
+      this.__NotificationService.showNotification('error', 'Kies uw bond!')
       console.log("Kies uw bond!");
       return;
     }
@@ -249,7 +255,7 @@ export class DeelnemenComponent implements OnInit {
     if (!this.basisGevensDeelnemer.value.email || "") {
       this.bFoutInFormulier = true;
       this.sFoutInFormulier = this.sFoutInFormulier + "Vul uw emailadres in ";
-      this.__NotificationService.showNotification( 'error', 'Vul uw emailadres in!')
+      this.__NotificationService.showNotification('error', 'Vul uw emailadres in!')
       console.log("Vul uw emailadres in!");
       return;
     }
@@ -257,7 +263,7 @@ export class DeelnemenComponent implements OnInit {
     if (!this.CountrysServerSideCtrl.value || "") {
       this.bFoutInFormulier = true;
       this.sFoutInFormulier = this.sFoutInFormulier + "Kies een land! ";
-      this.__NotificationService.showNotification( 'error', 'Kies een land!')
+      this.__NotificationService.showNotification('error', 'Kies een land!')
       console.log("Kies een land!");
       return;
     }
@@ -265,7 +271,7 @@ export class DeelnemenComponent implements OnInit {
     if (!this.bezoekGegevensDeelnemer.value.date || "") {
       this.bFoutInFormulier = true;
       this.sFoutInFormulier = this.sFoutInFormulier + "Kies een datum ";
-      this.__NotificationService.showNotification( 'error', 'Kies een datum')
+      this.__NotificationService.showNotification('error', 'Kies een datum')
       console.log("Kies een datum");
       return;
     }
@@ -273,7 +279,7 @@ export class DeelnemenComponent implements OnInit {
     if (!this.afbeeldingDeelnemerScr || "") {
       this.bFoutInFormulier = true;
       this.sFoutInFormulier = this.sFoutInFormulier + "Geen afbeelding gevonden ";
-      this.__NotificationService.showNotification( 'error', 'geen afbeelding gevonden')
+      this.__NotificationService.showNotification('error', 'geen afbeelding gevonden')
       console.log("geen afbeelding gevonden");
       return;
     }
@@ -306,35 +312,35 @@ export class DeelnemenComponent implements OnInit {
     this.__NieuweDeelnemerOpsturenService.saveDataToServer(this.SaveNewVisitorEditText).then(
       msg => {
         console.log("done", msg);
-        this.__NotificationService.showNotification( 'success', 'Gelukt! Bedankt voor het deelnemen')
-        
+        this.__NotificationService.showNotification('success', 'Gelukt! Bedankt voor het deelnemen')
+
       },
       error => {
         console.log("error", error);
-        this.__NotificationService.showNotification( 'error', 'Mislukt')
+        this.__NotificationService.showNotification('error', 'Mislukt')
       })
   }
 
-  reset(){
+  reset() {
     //Reset formulier
     this.bSucceedUploadImage = false;
-    this.done= false; 
+    this.done = false;
   }
 
-  updateBond(){
+  updateBond() {
     console.log("bond");
     console.log(this.BondenServerSideCtrl.value)
-    this.endResultBond= this.BondenServerSideCtrl.value;
+    this.endResultBond = this.BondenServerSideCtrl.value;
 
   }
 
- 
+
   uploadFiles(files: File): Subscription {
     this.richTextForm.value.imgScr = "/upload/" + files[0].name;
     this.afbeeldingDeelnemer.value.imgScr = "/upload/" + files[0].name;
-    this.afbeeldingDeelnemerScr= "/upload/" + files[0].name;
+    this.afbeeldingDeelnemerScr = "/upload/" + files[0].name;
     this.bSucceedUploadImage = false;
-    
+
     const config = new HttpRequest('POST', this.postUrl, this.myFormData, {
       reportProgress: true
     })
@@ -351,13 +357,15 @@ export class DeelnemenComponent implements OnInit {
         error => {
           console.log(error)
           if (error.status == 200) {
-            this.bSucceedUploadImage = true;          
-            this.__NotificationService.showNotification( 'success', 'Gelukt!')
+            this.bSucceedUploadImage = true;
+            this.__NotificationService.showNotification('success', 'Gelukt!')
           } else {
             this.bSucceedUploadImage = false;
-            this.__NotificationService.showNotification( 'error', 'Upload foto mislukt')
+            this.__NotificationService.showNotification('error', 'Upload foto mislukt')
           }
         })
   }
+
+
 
 }

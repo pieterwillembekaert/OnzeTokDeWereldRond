@@ -17,7 +17,7 @@ import { VisitorsService } from '../../visitors.service';
 import { CountriesService } from '../../countries.service';
 import { TotalDistService } from '../../total-dist.service';
 import { GeneralService } from '../../general.service';
-import { BondenService} from '../../Bonden.service';
+import { BondenService } from '../../Bonden.service';
 
 /*interface and class */
 import { cDashbordVars, DashboardVars } from './DashboardVars';
@@ -33,35 +33,34 @@ export class DashboardComponent implements OnInit {
 
   data = new cDashbordVars;
   dataVisitors;
-  LoadData: boolean= false;
+  LoadData: boolean = false;
 
   SelectYear = ["alles"];
   bShowSelection: boolean = false;
   selectedYear = this.__GeneralService.getFullYear();
 
-    /**picker*/
-   Country: String;
-   Bond: String;
+  /**picker*/
+  Country: String;
+  Bond: String;
 
-   /** list of elements */
-   protected bonden: iBond[];
- 
-   /** control for the selected bank for server side filtering */
-   public BondenServerSideCtrl: FormControl = new FormControl();
- 
-   /** control for filter for server side. */
-   public BondenServerSideFilteringCtrl: FormControl = new FormControl();
- 
-   /** indicate search operation is in progress */
-   public searchingBonden = false;
- 
-   /** list of data filtered after simulating server side search */
-   public filteredServerSideBonden: ReplaySubject<iBond[]> = new ReplaySubject<iBond[]>(1);
+  /** list of elements */
+  protected bonden: iBond[];
 
-   @ViewChild('#selectBond') selectBond: MatSelect;
- 
-   /** Subject that emits when the component has been destroyed. */
-   protected _onDestroy = new Subject<void>();
+  /** control for the selected bank for server side filtering */
+  public BondenServerSideCtrl: FormControl = new FormControl();
+
+  /** control for filter for server side. */
+  public BondenServerSideFilteringCtrl: FormControl = new FormControl();
+
+  /** indicate search operation is in progress */
+  public searchingBonden = false;
+
+  /** list of data filtered after simulating server side search */
+  public filteredServerSideBonden: ReplaySubject<iBond[]> = new ReplaySubject<iBond[]>(1);
+
+
+  /** Subject that emits when the component has been destroyed. */
+  protected _onDestroy = new Subject<void>();
 
   constructor(
     private _fb: FormBuilder,
@@ -75,11 +74,11 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
-    let currentYear = this.__GeneralService.getFullYear();
-    this.bonden= this.__BondenService.getBonden();
 
-        
+    let currentYear = this.__GeneralService.getFullYear();
+    this.bonden = this.__BondenService.getBonden();
+
+
     //Get data
     this.__TotalDistService.getDataFromHttp(currentYear).then(
       (response) => {
@@ -105,52 +104,53 @@ export class DashboardComponent implements OnInit {
         console.log("error: ", error)
       }
     )
-   
-       /*Searche bond */
-      this.BondenServerSideCtrl.setValue(this.bonden[0]);
 
-    // load the initial bank list
+    /*Searche bond */
+    this.BondenServerSideCtrl.setValue(this.bonden[0]);
+
+    // load the initial bonden list
     this.filteredServerSideBonden.next(this.bonden.slice());
+
     //listen for search field value changes
     this.BondenServerSideFilteringCtrl.valueChanges
-    .pipe(
-      filter(search => !!search),
-      tap(() => this.searchingBonden = true),
-      takeUntil(this._onDestroy),
-      debounceTime(200),
-      map(search => {
-        if (!this.bonden) {
-          return [];
-        }
+      .pipe(
+        filter(search => !!search),
+        tap(() => this.searchingBonden = true),
+        takeUntil(this._onDestroy),
+        debounceTime(200),
+        map(search => {
+          if (!this.bonden) {
+            return [];
+          }
 
-        // simulate server fetching and filtering data
-        return this.bonden.filter(
-          (bond: any) => {
-            //number in string? 
-            var regex = /\d+/g;
-            var matches = search.match(regex);  // creates array from matches
+          // simulate server fetching and filtering data
+          return this.bonden.filter(
+            (bond: any) => {
+              //number in string? 
+              var regex = /\d+/g;
+              var matches = search.match(regex);  // creates array from matches
 
-            if (!matches) {
-              return bond.bond.toLowerCase().indexOf(search.toLowerCase()) > -1
-            } else {
+              if (!matches) {
+                return bond.bond.toLowerCase().indexOf(search.toLowerCase()) > -1
+              } else {
 
-              let toStringBondCode = String(bond.code);
-              return toStringBondCode.toLowerCase().indexOf(search.toLowerCase()) > -1
+                let toStringBondCode = String(bond.code);
+                return toStringBondCode.toLowerCase().indexOf(search.toLowerCase()) > -1
 
-            }
-          });
-      }),
-      delay(500),
-      takeUntil(this._onDestroy)
-    )
-    .subscribe(filtered => {
-      this.searchingBonden = false;
-      this.filteredServerSideBonden.next(filtered);
-    },
-      error => {
-        // no errors in our simulated example
+              }
+            });
+        }),
+        delay(500),
+        takeUntil(this._onDestroy)
+      )
+      .subscribe(filtered => {
         this.searchingBonden = false;
-      });
+        this.filteredServerSideBonden.next(filtered);
+      },
+        error => {
+          // no errors in our simulated example
+          this.searchingBonden = false;
+        });
 
   }
 
@@ -200,12 +200,5 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  protected setInitialValue() {
-    this.filteredServerSideBonden
-      .pipe(take(1), takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.selectBond.compareWith = (a: iBond, b: iBond) => a && b && a.code === b.code;
-      });
-  }
 
 }
