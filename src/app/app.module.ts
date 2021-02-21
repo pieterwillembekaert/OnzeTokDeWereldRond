@@ -50,6 +50,7 @@ import { MatProgressBarModule} from '@angular/material/progress-bar';
 
 import { ChartsModule } from 'ng2-charts';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
+
 /*Modules*/
 import { HomeRoutingModule } from './home/home-routing.module';
 import { DatabaseRoutingModule } from './Database/database-routing.module';

@@ -5,11 +5,10 @@ import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@a
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 
-
 /*Service */
 import { VisitorsService } from '../../visitors.service';
 import { CountriesService } from '../../countries.service';
-import {NotificationService}from './../../Notification.service'; 
+import { NotificationService } from './../../Notification.service';
 
 
 /*interface and class */
@@ -33,7 +32,9 @@ function clamp(n: number, min: number, max: number) {
 })
 
 export class KaartComponent implements OnInit {
-  @ViewChild('kaartSvg') kaartSvg;
+  //@ViewChild('kaartSvg') kaartSvg;
+  @ViewChild('kaartSvg', { static: false }) kaartSvg: ElementRef;
+
   GvCountryClick;
   objElm;
   visitors;
@@ -83,24 +84,27 @@ export class KaartComponent implements OnInit {
     if (!this.visitors) {
       this.__Router.navigate(['/']);
     }
+
+
   }
 
-  
+
   ngAfterViewInit(): void {
-    var $this = this;
+
+
     var __objElm = (this.kaartSvg.nativeElement as HTMLObjectElement);
     console.log(__objElm)
     __objElm.onload = () => {
-      $this.Main(__objElm);
+      this.Main(__objElm);
 
     }
   }
 
-   
-  refreshData(){
+
+  refreshData() {
     this.visitors = this.__VisitorsService.getData();
 
-    this.__NotificationService.showNotification( 'info', 'Herladen!');
+    this.__NotificationService.showNotification('info', 'Herladen!');
   }
 
 
@@ -184,7 +188,10 @@ export class KaartComponent implements OnInit {
 
     ms.onclick = function (e) {
       var color = '#34642d';
-      //console.log($this.GvCountryClick)
+      console.log($this.GvCountryClick);
+      console.log(e);
+
+      $this.zoomToCountry(e.clientX, e.clientY)
 
       var style_valueV = '';
       var style_value = '';
@@ -394,7 +401,7 @@ export class KaartComponent implements OnInit {
         //data toevoegen
         this.aPrikboardList.push(NewData)
 
-        console.log( this.aPrikboardList)
+        console.log(this.aPrikboardList)
 
         lastID = i;
       }
@@ -402,23 +409,7 @@ export class KaartComponent implements OnInit {
     return numberOfFound;
   }
 
-  //zoom
-  @HostListener('mousewheel', ['$event'])
-  onMouseWheel(e: MouseWheelEvent) {
-
-    const currentScale = this.scale;
-    const newScale = clamp(this.scale + Math.sign(e.deltaY) / 10.0, 1, 3.0);
-    console.log("hier")
-    if (currentScale !== newScale) {
-
-      this.translate = this.calculateTranslationToZoomPoint(currentScale, newScale, this.translate, e);
-      this.scale = newScale;
-
-      this.updateTransformAnimationState();
-    }
-
-    e.preventDefault();
-  }
+  
 
   private calculateTranslationToZoomPoint(currentScale: number, newScale: number, currentTranslation: [number, number], e: { clientX: number, clientY: number },): [number, number] {
     // kudos to this awesome answer on stackoverflow:
@@ -459,23 +450,19 @@ export class KaartComponent implements OnInit {
     }
   }
 
-  // @HostListener("panstart", ["$event"])
-  // onPanStart(e: Event) {
-  //   console.log("onPanStart")
-  //   this.translateOnPanStart = [...this.translate] as [number, number];
-  //   e.preventDefault();
-  // }
 
-  // @HostListener("pan", ["$event"])
-  // onPan(e: Event & { deltaX: number; deltaY: number }) {
-  //   console.log("onPan")
-  //   this.translate = [
-  //     this.translateOnPanStart[0] + e.deltaX,
-  //     this.translateOnPanStart[1] + e.deltaY
-  //   ];
-  //   this.updateTransformAnimationState("0s");
-  //   e.preventDefault();
-  // }
+
+  zoomToCountry(posX, posY) {
+
+    const offsetX = 950 / 2 - posX
+    const offsetY = 625.5 / 2 - posY
+
+    if (this.scale <= 1) this.scale = 1.5;
+
+    this.translate = [offsetX, offsetY];
+    this.updateTransformAnimationState();
+
+  }
 
 
   /*Buttons */
@@ -490,11 +477,13 @@ export class KaartComponent implements OnInit {
   }
 
   zoomIn() {
-    //console.log("zoom in")
+
+    console.log("zoom in")
     this.scale = this.scale + 0.5;
     this.translate = [0, 0];
     this.updateTransformAnimationState();
   }
+
 
   zoomOut() {
     //console.log("zoom out")
@@ -544,17 +533,5 @@ export class KaartComponent implements OnInit {
     ];
     this.updateTransformAnimationState("0s");
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
 }

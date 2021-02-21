@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 
+/*interface and class */
+import { c_nieuweDeelnemerItem, nieuweDeelnemerItem, iBond, cBond } from './Database/DatabaseItem';
+
 @Injectable({
     providedIn: 'root'
   })
@@ -7,7 +10,7 @@ export class BondenService {
 
     constructor() { }
 
-    bonden = [
+    bonden: iBond[] =[
         { code: 0, bond: "KSA" },
         { code: 6000, bond: "KSA NOORDZEEGOUW" },
         { code: 6002, bond: "KSA AARSELE" },
@@ -78,7 +81,6 @@ export class BondenService {
     ]
 
     getBonden() {
-        console.log("get bond")
         return this.bonden;
     }
 

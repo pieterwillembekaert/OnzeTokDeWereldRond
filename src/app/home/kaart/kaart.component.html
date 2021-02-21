@@ -1,6 +1,7 @@
 <br>
 <br>
 <br>
+<div>
 <div class="container" id="Kaart">
   <h1>Kaart</h1>
   <p>Welke landen bezocht de tok? Op de kaart is een overzicht te zien. Klik op een land en ontdek meer!</p>
@@ -32,11 +33,14 @@
 </div>
 
 <!--Load data-->
+
+
 <mat-progress-bar *ngIf="!visitors" mode="indeterminate"></mat-progress-bar>
 
 <div class="grid-container-map">
 
-  <div class="grid-item-map">
+
+  <div id='mapMapSvg' class="grid-item-map">
     <object [@transformAnimation]="transformAnimationState" #kaartSvg id='map' data='./assets/img/map/World_map.svg'
       class="map-svg" type='image/svg+xml'></object>
   </div>

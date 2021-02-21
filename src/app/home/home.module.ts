@@ -36,6 +36,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatListModule } from '@angular/material/list';
 
+import {QuillModule} from 'ngx-quill'
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+
 /*Components */
 import {HomeComponent } from './home.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
@@ -79,13 +82,16 @@ import { HomeRoutingModule } from './home-routing.module';
     DragDropModule,
     MatTreeModule,
     MatListModule,
-    RouterModule
+    RouterModule,
+    QuillModule.forRoot(),
+    NgxMatSelectSearchModule,
   ],
   declarations: [
     HomeComponent,
     DashboardComponent,
     KaartComponent,
     PageLoadComponent,
+ 
 
   ]
 })
