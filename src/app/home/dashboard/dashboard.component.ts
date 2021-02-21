@@ -15,7 +15,6 @@ import { take } from 'rxjs/operators';
 /*Service*/
 import { VisitorsService } from '../../visitors.service';
 import { CountriesService } from '../../countries.service';
-import { TotalDistService } from '../../total-dist.service';
 import { GeneralService } from '../../general.service';
 import { BondenService } from '../../Bonden.service';
 
@@ -30,7 +29,6 @@ import { c_nieuweDeelnemerItem, nieuweDeelnemerItem, iBond, cBond } from '../../
 })
 export class DashboardComponent implements OnInit {
 
-
   data = new cDashbordVars;
   dataVisitors;
   LoadData: boolean = false;
@@ -38,6 +36,9 @@ export class DashboardComponent implements OnInit {
   SelectYear = ["alles"];
   bShowSelection: boolean = false;
   selectedYear = this.__GeneralService.getFullYear();
+
+  bCalcTotal: boolean = true;
+  bFilterBond: boolean = true;
 
   /**picker*/
   Country: String;
@@ -66,8 +67,6 @@ export class DashboardComponent implements OnInit {
     private _fb: FormBuilder,
     private __BondenService: BondenService,
     private __VisitorsService: VisitorsService,
-    private __CountriesService: CountriesService,
-    private __TotalDistService: TotalDistService,
     private __GeneralService: GeneralService,
   ) { }
 
@@ -75,27 +74,12 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let currentYear = this.__GeneralService.getFullYear();
     this.bonden = this.__BondenService.getBonden();
-
-
-    //Get data
-    this.__TotalDistService.getDataFromHttp(currentYear).then(
-      (response) => {
-        this.data = response;
-        this.LoadData = true;
-        //console.log(response)
-
-      },
-      (error) => {
-        this.LoadData = false;
-        console.log("error: ", error)
-      }
-    )
 
     this.__VisitorsService.getDataFromHttp().then(
       response => {
-        //console.log(response)
+        this.data = this.__VisitorsService.computedTotalDistYear(this.selectedYear, true, false, new cBond())
+        this.LoadData = true;
 
         this.dataVisitors = response;
         this.searchYearInDataFromDb();
@@ -133,10 +117,9 @@ export class DashboardComponent implements OnInit {
               if (!matches) {
                 return bond.bond.toLowerCase().indexOf(search.toLowerCase()) > -1
               } else {
-
+               
                 let toStringBondCode = String(bond.code);
-                return toStringBondCode.toLowerCase().indexOf(search.toLowerCase()) > -1
-
+                return toStringBondCode.toLowerCase().indexOf(search.toLowerCase()) > -1;
               }
             });
         }),
@@ -151,7 +134,6 @@ export class DashboardComponent implements OnInit {
           // no errors in our simulated example
           this.searchingBonden = false;
         });
-
   }
 
   searchYearInDataFromDb(): void {
@@ -174,31 +156,30 @@ export class DashboardComponent implements OnInit {
     this.bShowSelection = true;
   }
 
-  changeData(): void {
-    this.LoadData = false;
-
-    //Get data
-    this.__TotalDistService.getDataFromHttp(this.selectedYear).then(
-      (response) => {
-        this.data = response;
-        this.LoadData = true;
-        //console.log(response)
-      },
-      (error) => {
-        this.LoadData = false;
-        console.log("error: ", error)
-      }
-    )
-  }
-
-
+ 
 
   selectYear(event: Event) {
 
+    if ((event.target as HTMLSelectElement).value === "alles") {
+      this.bCalcTotal = true;
+    }else{
+      this.bCalcTotal = false;
+
+    }
+
     this.selectedYear = Number((event.target as HTMLSelectElement).value);
-    this.changeData();
+
+    this.calcDistance(); 
   }
 
+  calcDistance() {
 
+    if (this.BondenServerSideCtrl.value.code == 0) {
+      this.bFilterBond = false;
+    }
+
+    this.data = this.__VisitorsService.computedTotalDistYear(this.selectedYear, this.bCalcTotal, this.bFilterBond, this.BondenServerSideCtrl.value);
+
+  }
 
 }

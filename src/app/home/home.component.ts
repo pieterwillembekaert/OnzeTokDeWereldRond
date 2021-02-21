@@ -4,12 +4,6 @@ import { FormControl } from '@angular/forms';
 import { CarouselModule, WavesModule } from 'angular-bootstrap-md';
 
 
-import { VisitorsService } from '../visitors.service';
-import { CountriesService } from '../countries.service';
-import { TotalDistService } from '../total-dist.service';
-import { GeneralService } from '../general.service';
-
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -36,13 +30,7 @@ export class HomeComponent implements OnInit {
 
   
   
-  constructor(
-    private __VisitorsService: VisitorsService,
-    private __CountriesService: CountriesService,
-    private __TotalDistService: TotalDistService,
-    private __GeneralService: GeneralService,
-
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
     

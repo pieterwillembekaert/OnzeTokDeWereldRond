@@ -51,7 +51,7 @@
      <!--Kies een bond-->
      <mat-form-field>
       <mat-label>Kies een bond</mat-label>
-      <mat-select [formControl]="BondenServerSideCtrl" placeholder="{{Bond}}" #selectBond>
+      <mat-select [formControl]="BondenServerSideCtrl" placeholder="{{Bond}}" #selectBond (selectionChange)="calcDistance()">
         <!--place ngx-mat-select-search inside mat-option to allow opening without initial selection-->
         <mat-option>
           <ngx-mat-select-search [formControl]="BondenServerSideFilteringCtrl" [searching]="searchingBonden"
